@@ -95,6 +95,23 @@ regexpFlow.controller('MainController', function ($scope) {
         if (indexToRemove >= 0) {
             transitions.splice(indexToRemove, 1); // remove item at that index
         }
+    };
+
+    $scope.addFlowTransition = function (flowTransition) {
+        // FIXME wybor transitiona z selecta obok plusa - albo przerobic to na <select> + ngclick
+        var transitions = $scope.flowChain.transitions;
+        var indexToRemove = -1;
+        for (var i in transitions) {
+            if (transitions[i] == flowTransition) {
+                indexToRemove = i;
+                break;
+            }
+        }
+
+        if (indexToRemove >= 0) {
+            var newTransition = new RegexpFlowReplacementTransition('Lorem', '<b style="padding: 0 5px; background-color: black; color: white;">$&</b>');
+            transitions.splice(indexToRemove, 1, flowTransition, newTransition); // remove item at that index
+        }
     }
 });
 

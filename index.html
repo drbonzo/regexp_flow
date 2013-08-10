@@ -29,7 +29,7 @@
                 <div class="header">
                     {{ flowTransition.typeName }}
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-xs btn-success">&plus;</button>
+                        <button type="button" class="btn btn-xs btn-success" ng-click="addFlowTransition(flowTransition)">&plus;</button>
                         <button type="button" class="btn btn-xs btn-info" ng-click="showHelp = !showHelp">?</button>
                         <button type="button" class="btn btn-xs btn-danger" ng-click="removeFlowTransition(flowTransition)">&times;</button>
                     </div>
