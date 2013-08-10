@@ -12,6 +12,17 @@ textarea
 .flowTransition
 {
     border: solid 1px #666;
+}
+
+.flowTransition .header
+{
+    background-color: #ccc;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.flowTransition form
+{
     padding: 5px;
 }
 

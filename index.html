@@ -26,32 +26,33 @@
         </div>
         <div class="col-lg-6">
             <div class="row flowTransition" ng-repeat="flowTransition in flowChain.transitions">
+                <div class="header">
+                    {{ flowTransition.typeName }}
+                    <button type="button" ng-click="showHelp = !showHelp" class="btn btn-xs btn-info pull-right">Help</button>
+                </div>
                 <form>
                     <fieldset>
                         <div class="form-group">
-                            <label>Search regexp
-                                <button type="button" ng-click="showHelp = !showHelp" class="btn btn-xs btn-info">Help</button>
-                            </label>
+                            <label>Search regexp</label>
                             <input type="text" class="form-control" ng-model="flowTransition.searchString" placeholder="search regular expression"/>
+                        </div>
+                        <div class="form-group form-inline">
+                            <div class="checkbox ">
+                                <label>
+                                    <input type="checkbox" ng-model="flowTransition.searchFlagGlobal"> Global
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="flowTransition.searchFlagMultiline"> Multiline
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="flowTransition.searchFlagCaseInsensitive"> Case Insensitive
+                                </label>
+                            </div>
 
-                            <p ng-show="showHelp" class="help-block">flags: m (multiline), i (ignore case), g (global match)</p>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-inline">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="flowTransition.searchFlagGlobal"> Global
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="flowTransition.searchFlagMultiline"> Multiline
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="flowTransition.searchFlagCaseInsensitive"> Case Insensitive
-                            </label>
                         </div>
                     </fieldset>
                     <fieldset>
@@ -65,8 +66,8 @@
                                 $` Inserts the portion of the string that precedes the matched substring.
                                 $' Inserts the portion of the string that follows the matched substring.
                                 $n or $nn
-                                Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.</p>
-
+                                Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.
+                            </p>
                         </div>
                     </fieldset>
                 </form>

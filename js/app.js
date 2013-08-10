@@ -73,6 +73,10 @@ regexpFlow.controller('MainController', function ($scope) {
 
 //        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
         flowChain.transitions.push(new RegexpFlowReplacementTransition('sed', '<b style="padding: 0 5px; background-color: yellow">$&</b>'));
+        var t2 = new RegexpFlowReplacementTransition('lorem', '<b style="padding: 0 5px; background-color: limegreen">$&</b>');
+        t2.searchFlagCaseInsensitive = true;
+        flowChain.transitions.push(t2);
+        flowChain.transitions.push(new RegexpFlowReplacementTransition('vel', '<b style="padding: 0 5px; background-color: red">$&</b>'));
 
     }($scope.input, $scope.flowChain));
 });
@@ -86,6 +90,7 @@ function RegexpFlowChain() {
 }
 
 function RegexpFlowTransition() {
+    this.name = '';
     this.searchString = '';
     this.searchFlagGlobal = false;
     this.searchFlagCaseInsensitive = false;
@@ -107,9 +112,7 @@ RegexpFlowTransition.prototype.buildRegExp = function () {
         flags.push('m');
     }
 
-    var regexp = new RegExp(this.searchString, flags.join(''));
-    console.log(regexp);
-    return regexp;
+    return new RegExp(this.searchString, flags.join(''));
 };
 
 // TODO RegexpFlowTransition.prototype.processText = function(){
@@ -122,6 +125,8 @@ RegexpFlowTransition.prototype.buildRegExp = function () {
  * @constructor
  */
 function RegexpFlowReplacementTransition(searchString, replaceString) {
+
+    this.typeName = 'Replace in text';
 
     /**
      * @type {string}
@@ -160,6 +165,8 @@ RegexpFlowReplacementTransition.prototype.processText = function (inputText) {
  */
 function RegexpFlowMatchLineTransition(searchString) {
 
+    this.typeName = 'Match lines';
+
     /**
      * @type {string}
      */
@@ -196,6 +203,8 @@ RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
  * @constructor
  */
 function RegexpFlowMatchInLineTransition(searchRegexp, replaceString) {
+
+    this.typeName = 'Match in line';
 
     /**
      * @type {RegExp}
