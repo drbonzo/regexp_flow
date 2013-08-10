@@ -71,7 +71,7 @@ regexpFlow.controller('MainController', function ($scope) {
 //            "Phasellus laoreet id purus id semper.";
             '';
 
-        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
+//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
         flowChain.transitions.push(new RegexpFlowReplacementTransition('sed', '<b style="padding: 0 5px; background-color: yellow">$&</b>'));
 
     }($scope.input, $scope.flowChain));
@@ -85,12 +85,44 @@ function RegexpFlowChain() {
     this.transitions = [];
 }
 
+function RegexpFlowTransition() {
+    this.searchString = '';
+    this.searchFlagGlobal = false;
+    this.searchFlagCaseInsensitive = false;
+    this.searchFlagMultiline = false;
+}
+
+RegexpFlowTransition.prototype.buildRegExp = function () {
+
+    var flags = [];
+    if (this.searchFlagGlobal) {
+        flags.push('g');
+    }
+
+    if (this.searchFlagCaseInsensitive) {
+        flags.push('i');
+    }
+
+    if (this.searchFlagMultiline) {
+        flags.push('m');
+    }
+
+    var regexp = new RegExp(this.searchString, flags.join(''));
+    console.log(regexp);
+    return regexp;
+};
+
+// TODO RegexpFlowTransition.prototype.processText = function(){
+//    throw new Error("Please implement me!");
+//};
+
 /**
  * @param {string} searchString
  * @param replaceString
  * @constructor
  */
 function RegexpFlowReplacementTransition(searchString, replaceString) {
+
     /**
      * @type {string}
      */
@@ -100,7 +132,16 @@ function RegexpFlowReplacementTransition(searchString, replaceString) {
      * @type {string}
      */
     this.replaceString = replaceString;
+
+    /**
+     * We almost always want to replace everything
+     *
+     * @type {boolean}
+     */
+    this.searchFlagGlobal = true;
 }
+
+RegexpFlowReplacementTransition.prototype = new RegexpFlowTransition();
 
 /**
  * @param {string} inputText
@@ -108,7 +149,7 @@ function RegexpFlowReplacementTransition(searchString, replaceString) {
  */
 RegexpFlowReplacementTransition.prototype.processText = function (inputText) {
 
-    var searchRegexp = new RegExp(this.searchString);
+    var searchRegexp = this.buildRegExp();
     return inputText.replace(searchRegexp, this.replaceString);
 };
 
@@ -125,18 +166,19 @@ function RegexpFlowMatchLineTransition(searchString) {
     this.searchString = searchString;
 }
 
+RegexpFlowMatchLineTransition.prototype = new RegexpFlowTransition();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
 RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
-    var lines = inputText.split(/(?:\r\n|\n|\r)/); // ?: fixuje rozbijanie tekstu za bardzo
 
+    var lines = inputText.split(/(?:\r\n|\n|\r)/); // ?: fixuje rozbijanie tekstu za bardzo
     var line;
     var matchedLines = [];
 
-    var searchRegexp = new RegExp(this.searchString);
+    var searchRegexp = this.buildRegExp();
     for (var l in lines) {
         line = lines[l];
         if (line.match(searchRegexp)) {
@@ -161,11 +203,14 @@ function RegexpFlowMatchInLineTransition(searchRegexp, replaceString) {
     this.searchRegexp = searchRegexp;
 }
 
+RegexpFlowMatchInLineTransition.prototype = new RegexpFlowTransition();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
 RegexpFlowMatchInLineTransition.prototype.processText = function (inputText) {
-//    return inputText.replace(this.searchRegexp, this.replaceString);
+//  FIXME   return inputText.replace(this.searchRegexp, this.replaceString);
+    // FIXME var searchRegexp = this.buildRegExp();
+    return inputText;
 };
