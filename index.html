@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="app">
+<html ng-app="RegexpFlowApplication">
 <head>
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
@@ -11,10 +11,22 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
+<div class="container" ng-controller="MainController">
+    <div class="page-header">
+        <h1>Regexp Flow</h1>
     </div>
-</div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row">
+                <textarea ng-model="input.text"></textarea>
+            </div>
+            <div class="row">
+                <div class="outputPanel"><span ng-bind-html-unsafe="output.text"></span></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+        </div>
+    </div>
 
 </body>
 </html>

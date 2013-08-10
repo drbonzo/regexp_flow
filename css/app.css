@@ -1,0 +1,10 @@
+textarea
+{
+    width: 95%;
+    height: 200px;
+}
+
+.outputPanel
+{
+    white-space: pre
+}
