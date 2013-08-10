@@ -79,6 +79,23 @@ regexpFlow.controller('MainController', function ($scope) {
         flowChain.transitions.push(new RegexpFlowReplacementTransition('vel', '<b style="padding: 0 5px; background-color: red">$&</b>'));
 
     }($scope.input, $scope.flowChain));
+
+
+    $scope.removeFlowTransition = function (flowTransition) {
+
+        var transitions = $scope.flowChain.transitions;
+        var indexToRemove = -1;
+        for (var i in transitions) {
+            if (transitions[i] == flowTransition) {
+                indexToRemove = i;
+                break;
+            }
+        }
+
+        if (indexToRemove >= 0) {
+            transitions.splice(indexToRemove, 1); // remove item at that index
+        }
+    }
 });
 
 

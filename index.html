@@ -28,7 +28,12 @@
             <div class="row flowTransition" ng-repeat="flowTransition in flowChain.transitions">
                 <div class="header">
                     {{ flowTransition.typeName }}
-                    <button type="button" ng-click="showHelp = !showHelp" class="btn btn-xs btn-info pull-right">Help</button>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-xs btn-success">&plus;</button>
+                        <button type="button" class="btn btn-xs btn-info" ng-click="showHelp = !showHelp">?</button>
+                        <button type="button" class="btn btn-xs btn-danger" ng-click="removeFlowTransition(flowTransition)">&times;</button>
+                    </div>
+
                 </div>
                 <form>
                     <fieldset>
