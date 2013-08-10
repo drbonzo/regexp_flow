@@ -8,3 +8,19 @@ textarea
 {
     white-space: pre
 }
+
+.flowTransition
+{
+    border: solid 1px #666;
+    padding: 5px;
+}
+
+.flowTransition + .flowTransition
+{
+    margin-top: 10px;
+}
+
+.help-block
+{
+    font-size: 0.8em;
+}
