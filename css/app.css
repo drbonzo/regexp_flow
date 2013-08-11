@@ -6,6 +6,7 @@ html, body
 textarea
 {
     width: 95%;
+    height: 350px;
 }
 
 .outputPanel
