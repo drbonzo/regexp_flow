@@ -1,5 +1,12 @@
 $(document).ready(function () {
-    $('.flowChainPanelContents').height($(window).height() - 110)
+
+    $(window).resize(function () {
+        var wh = $(window).height() - 110;
+        $('.flowChainPanelContents').height(wh);
+        $('.inputPanel textarea').height(parseInt(wh * 0.45));
+    });
+
+    $(window).resize();
 });
 
 var regexpFlow = angular.module('RegexpFlowApplication', []);
