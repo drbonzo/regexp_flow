@@ -72,3 +72,10 @@ textarea
     background-color: #69C370;
     text-align: center;
 }
+
+
+.flowChainPanel
+{
+    max-height: 500px;
+    overflow-y: scroll;
+}
