@@ -226,6 +226,10 @@ RegexpFlowReplacementTransition.prototype = new RegexpFlowTransition();
  */
 RegexpFlowReplacementTransition.prototype.processText = function (inputText) {
 
+    if (!this.searchString) {
+        return inputText; // dont change anything when there is no regular expression
+    }
+
     var searchRegexp = this.buildRegExp();
     return inputText.replace(searchRegexp, this.replaceString);
 };
@@ -252,6 +256,10 @@ RegexpFlowMatchLineTransition.prototype = new RegexpFlowTransition();
  * @returns {string}
  */
 RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
+
+    if (!this.searchString) {
+        return inputText; // dont change anything when there is no regular expression
+    }
 
     var lines = inputText.split(/(?:\r\n|\n|\r)/); // ?: fixuje rozbijanie tekstu za bardzo // FIXME DRY
     var line;
@@ -291,6 +299,9 @@ RegexpFlowMatchInLineTransition.prototype = new RegexpFlowTransition();
  */
 RegexpFlowMatchInLineTransition.prototype.processText = function (inputText) {
 
+    if (!this.searchString) {
+        return inputText; // dont change anything when there is no regular expression
+    }
     var lines = inputText.split(/(?:\r\n|\n|\r)/); // FIXME DRY
     var line;
     var matchedInLines = [];
