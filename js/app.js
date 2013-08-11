@@ -185,6 +185,15 @@ RegexpFlowTransition.prototype.buildRegExp = function () {
 
 /**
  * @param {string} inputText
+ * @return {Array|string[]}
+ */
+RegexpFlowTransition.prototype.splitTextIntoLines = function (inputText) {
+    // regexp without ?: will mess this split
+    return inputText.split(/(?:\r\n|\n|\r)/);
+};
+
+/**
+ * @param {string} inputText
  * @return {string}
  */
 RegexpFlowTransition.prototype.processText = function (inputText) {
@@ -261,7 +270,7 @@ RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
         return inputText; // dont change anything when there is no regular expression
     }
 
-    var lines = inputText.split(/(?:\r\n|\n|\r)/); // ?: fixuje rozbijanie tekstu za bardzo // FIXME DRY
+    var lines = this.splitTextIntoLines(inputText);
     var line;
     var matchedLines = [];
 
@@ -302,7 +311,7 @@ RegexpFlowMatchInLineTransition.prototype.processText = function (inputText) {
     if (!this.searchString) {
         return inputText; // dont change anything when there is no regular expression
     }
-    var lines = inputText.split(/(?:\r\n|\n|\r)/); // FIXME DRY
+    var lines = this.splitTextIntoLines(inputText);
     var line;
     var matchedInLines = [];
 
