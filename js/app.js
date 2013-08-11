@@ -22,7 +22,7 @@ regexpFlow.controller('MainController', function ($scope) {
         var outputText = inputText;
 
         /**
-         * @type {RegexpFlowReplacementTransition|RegexpFlowMatchLineTransition|RegexpFlowMatchInLineTransition}
+         * @type {RegexpFlowTransition}
          */
         var transition;
 
@@ -73,10 +73,10 @@ regexpFlow.controller('MainController', function ($scope) {
 
 //        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
         flowChain.transitions.push(new RegexpFlowReplacementTransition('sed', '<b style="padding: 0 5px; background-color: yellow">$&</b>'));
-        var t2 = new RegexpFlowReplacementTransition('lorem', '<b style="padding: 0 5px; background-color: limegreen">$&</b>');
-        t2.searchFlagCaseInsensitive = true;
-        flowChain.transitions.push(t2);
-        flowChain.transitions.push(new RegexpFlowReplacementTransition('vel', '<b style="padding: 0 5px; background-color: red">$&</b>'));
+//        var t2 = new RegexpFlowReplacementTransition('lorem', '<b style="padding: 0 5px; background-color: limegreen">$&</b>');
+//        t2.searchFlagCaseInsensitive = true;
+//        flowChain.transitions.push(t2);
+//        flowChain.transitions.push(new RegexpFlowReplacementTransition('vel', '<b style="padding: 0 5px; background-color: red">$&</b>'));
 
     }($scope.input, $scope.flowChain));
 
@@ -96,8 +96,6 @@ regexpFlow.controller('MainController', function ($scope) {
             transitions.splice(indexToRemove, 1); // remove item at that index
         }
     };
-
-    $scope.newTransitionType = '--';
 
     /**
      * @param {RegexpFlowTransition|null} previousFlowTransition
@@ -119,7 +117,8 @@ regexpFlow.controller('MainController', function ($scope) {
      * @param {RegexpFlowTransition|null} previousFlowTransition
      */
     $scope.addMatchInLineTransition = function (previousFlowTransition) {
-        // fixme - not implemented
+        var newTransition = new RegexpFlowMatchInLineTransition('^.+$'); // will match whole line
+        $scope.addFlowTransition(newTransition, previousFlowTransition);
     };
 
     /**
@@ -127,9 +126,6 @@ regexpFlow.controller('MainController', function ($scope) {
      * @param {RegexpFlowTransition|null} previousFlowTransition if null - new Transition will be added at the end, else it will be added after previousFlowTransition
      */
     $scope.addFlowTransition = function (newTransition, previousFlowTransition) {
-
-        // FIXME nie dziala
-        var typeName = $scope.newTransitionType;
 
         var transitions = $scope.flowChain.transitions;
         var shouldAddAfterOtherTransition = !!previousFlowTransition;
@@ -187,9 +183,13 @@ RegexpFlowTransition.prototype.buildRegExp = function () {
     return new RegExp(this.searchString, flags.join(''));
 };
 
-// TODO RegexpFlowTransition.prototype.processText = function(){
-//    throw new Error("Please implement me!");
-//};
+/**
+ * @param {string} inputText
+ * @return {string}
+ */
+RegexpFlowTransition.prototype.processText = function (inputText) {
+    throw new Error("Please implement me!");
+};
 
 /**
  * @param {string} searchString
@@ -253,7 +253,7 @@ RegexpFlowMatchLineTransition.prototype = new RegexpFlowTransition();
  */
 RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
 
-    var lines = inputText.split(/(?:\r\n|\n|\r)/); // ?: fixuje rozbijanie tekstu za bardzo
+    var lines = inputText.split(/(?:\r\n|\n|\r)/); // ?: fixuje rozbijanie tekstu za bardzo // FIXME DRY
     var line;
     var matchedLines = [];
 
@@ -271,10 +271,9 @@ RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
 
 /**
  * @param {string} searchString
- * @param {string} replaceString
  * @constructor
  */
-function RegexpFlowMatchInLineTransition(searchString, replaceString) {
+function RegexpFlowMatchInLineTransition(searchString) {
 
     this.typeName = 'Match in line';
 
@@ -291,7 +290,22 @@ RegexpFlowMatchInLineTransition.prototype = new RegexpFlowTransition();
  * @returns {string}
  */
 RegexpFlowMatchInLineTransition.prototype.processText = function (inputText) {
-//  FIXME   return inputText.replace(this.searchString, this.replaceString);
-    // FIXME var searchRegexp = this.buildRegExp();
-    return inputText;
+
+    var lines = inputText.split(/(?:\r\n|\n|\r)/); // FIXME DRY
+    var line;
+    var matchedInLines = [];
+
+    var searchRegexp = this.buildRegExp();
+    var match;
+    for (var l in lines) {
+        line = lines[l];
+        // TODO can match global
+        match = line.match(searchRegexp);
+
+        if (match) {
+            matchedInLines.push(match.join(''));
+        }
+    }
+
+    return matchedInLines.join("\n");
 };
