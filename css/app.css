@@ -35,3 +35,15 @@ textarea
 {
     font-size: 0.8em;
 }
+
+.addTransitionButtonGroup
+{
+    margin-right: 10px;
+}
+
+.addTransitionButtonGroup button,
+.regexpHelpButton
+{
+    padding-right: 10px;
+    padding-left: 10px;
+}
