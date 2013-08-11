@@ -9,115 +9,128 @@
     <link rel="stylesheet" href="css/bootstrap-glyphicons.css">
     <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
+<body ng-controller="MainController">
 
-<div class="container" ng-controller="MainController">
+<div class="navbar navbar-fixed-top">
+    <a class="navbar-brand" href="">RegexpFlow</a>
+    <ul class="nav navbar-nav pull-right">
+        <li>
+            <button type="button" class="btn btn-info btn-sm navbar-btn" ng-click="createSampleFlow()">Create sample flow</button>
+            <!-- For buttons not residing in a <form>, add this class to vertically center buttons within a navbar. -->
+        </li>
+    </ul>
+</div>
+
+
+<div class="container MainController">
     <div class="row">
-        <h1>Regexp Flow</h1>
-    </div>
-    <div class="row">
-        <div class="col-6 inputPanel">
-            <div class="row">
+        <div class="col-7 inputPanel">
+            <div class="row inputTextPanel">
                 <h3>Input text</h3>
+                <textarea ng-model="input.text" class="inputText"></textarea>
             </div>
-            <div class="row">
-                <textarea ng-model="input.text"></textarea>
-            </div>
-            <div class="row">
+            <div class="row outputTextPanel">
                 <h3>Output text</h3>
-            </div>
-            <div class="row">
-                <div class="outputPanel"><span ng-bind-html-unsafe="output.text"></span></div>
+
+                <div class="outputPanel"><textarea ng-bind-html-unsafe="output.text" class="outputText"></textarea></div>
             </div>
         </div>
-        <div class="col-6 flowChainPanel">
-            <div class="row">
-                <h3>Flow chain</h3>
+        <div class="col-5 flowChainPanel">
+            <div class="row flowChainHeader">
+                <h3>Flow chain ({{ flowChain.transitions.length }})</h3>
             </div>
-            <div class="row" ng-show="chainHasNoTransitions()">
-                <div class="col-12 blankSlateHelper">
-                    <div class="row">
-                        <div class="header">Add new Transition</div>
+            <div class="row flowChainPanelContents">
+                <div class="col-12">
+                    <div class="row" ng-show="chainHasNoTransitions()">
+                        <div class="col-12 blankSlateHelper">
+                            <div class="row">
+                                <div class="header">Add new Transition</div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-4 transitionOption">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addReplaceTransition(null)">&plus;R</button>
+                                    <p>Replace text with other text using regular expressions</p>
+                                </div>
+                                <div class="col-4 transitionOption">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addMatchLineTransition(null)">&plus;ML</button>
+                                    <p>Leave only lines that match regular expression</p>
+                                </div>
+                                <div class="col-4 transitionOption">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addMatchInLineTransition(null)">&plus;MIL</button>
+                                    <p>Leave only lines that match regular expression and leave only matched text</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="row flowTransition" ng-repeat="flowTransition in flowChain.transitions">
+                        <div class="header">
+                            {{ $index+1 }}. {{ flowTransition.typeName }}
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp">?</button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeFlowTransition(flowTransition)">&times;</button>
+                            </div>
 
-                    <div class="row">
+                            <div class="btn-group pull-right addTransitionButtonGroup">
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addReplaceTransition(flowTransition)">&plus;R</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addMatchLineTransition(flowTransition)">&plus;ML</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addMatchInLineTransition(flowTransition)">&plus;MIL</button>
+                            </div>
+                        </div>
+                        <form>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label>Search regexp</label>
+                                    <input type="text" class="form-control input-sm" ng-model="flowTransition.searchString" placeholder="search regular expression"/>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <div class="checkbox ">
+                                        <label>
+                                            <input type="checkbox" ng-model="flowTransition.searchFlagGlobal"> Global
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="flowTransition.searchFlagMultiline"> Multiline
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="flowTransition.searchFlagCaseInsensitive"> Case Insensitive
+                                        </label>
+                                    </div>
 
-                        <div class="col-4 transitionOption">
-                            <button type="button" class="btn btn-lg btn-success" ng-click="addReplaceTransition(null)">&plus;R</button>
-                            <p>Replace text with other text using regular expressions</p>
-                        </div>
-                        <div class="col-4 transitionOption">
-                            <button type="button" class="btn btn-lg btn-success" ng-click="addMatchLineTransition(null)">&plus;ML</button>
-                            <p>Leave only lines that match regular expression</p>
-                        </div>
-                        <div class="col-4 transitionOption">
-                            <button type="button" class="btn btn-lg btn-success" ng-click="addMatchInLineTransition(null)">&plus;MIL</button>
-                            <p>Leave only lines that match regular expression and leave only matched text</p>
-                        </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label>Replacement string</label>
+                                    <input type="text" class="form-control input-sm" ng-model="flowTransition.replaceString" placeholder="replacement regular expression"/>
+
+                                    <p ng-show="showHelp" class="help-block">$1, $2, $3 - for groups.
+                                        $$ Inserts a "$".
+                                        $& Inserts the matched substring.
+                                        $` Inserts the portion of the string that precedes the matched substring.
+                                        $' Inserts the portion of the string that follows the matched substring.
+                                        $n or $nn
+                                        Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.
+                                    </p>
+                                </div>
+                            </fieldset>
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="row flowTransition" ng-repeat="flowTransition in flowChain.transitions">
-                <div class="header">
-                    {{ flowTransition.typeName }}
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp">?</button>
-                        <button type="button" class="btn btn-xs btn-danger" ng-click="removeFlowTransition(flowTransition)">&times;</button>
-                    </div>
-
-                    <div class="btn-group pull-right addTransitionButtonGroup">
-                        <button type="button" class="btn btn-xs btn-success" ng-click="addReplaceTransition(flowTransition)">&plus;R</button>
-                        <button type="button" class="btn btn-xs btn-success" ng-click="addMatchLineTransition(flowTransition)">&plus;ML</button>
-                        <button type="button" class="btn btn-xs btn-success" ng-click="addMatchInLineTransition(flowTransition)">&plus;MIL</button>
-                    </div>
-                </div>
-                <form>
-                    <fieldset>
-                        <div class="form-group">
-                            <label>Search regexp</label>
-                            <input type="text" class="form-control input-sm" ng-model="flowTransition.searchString" placeholder="search regular expression"/>
-                        </div>
-                        <div class="form-group form-inline">
-                            <div class="checkbox ">
-                                <label>
-                                    <input type="checkbox" ng-model="flowTransition.searchFlagGlobal"> Global
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" ng-model="flowTransition.searchFlagMultiline"> Multiline
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" ng-model="flowTransition.searchFlagCaseInsensitive"> Case Insensitive
-                                </label>
-                            </div>
-
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="form-group">
-                            <label>Replacement string</label>
-                            <input type="text" class="form-control input-sm" ng-model="flowTransition.replaceString" placeholder="replacement regular expression"/>
-
-                            <p ng-show="showHelp" class="help-block">$1, $2, $3 - for groups.
-                                $$ Inserts a "$".
-                                $& Inserts the matched substring.
-                                $` Inserts the portion of the string that precedes the matched substring.
-                                $' Inserts the portion of the string that follows the matched substring.
-                                $n or $nn
-                                Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.
-                            </p>
-                        </div>
-                    </fieldset>
-                </form>
             </div>
         </div>
     </div>
-    <div class="row panel-footer">
+</div>
+<!-- TODO remove?
+<div class="navbar navbar-fixed-bottom">
+    <div class="navbar-brand">
         &copy; Created by dr_bonzo. Uses: <a href="http://jquery.com/">jQuery</a>, <a href="http://getbootstrap.com/">Twitter Bootstrap</a>, <a href="http://angularjs.org/">AngularJS</a>
     </div>
 </div>
+-->
 </body>
 </html>

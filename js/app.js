@@ -150,7 +150,11 @@ regexpFlow.controller('MainController', function ($scope) {
 
     $scope.chainHasNoTransitions = function () {
         return ($scope.flowChain.transitions.length == 0);
-    }
+    };
+
+    $scope.createSampleFlow = function () {
+        console.warn('Finish me!!');
+    };
 });
 
 
