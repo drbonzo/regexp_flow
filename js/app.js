@@ -97,22 +97,60 @@ regexpFlow.controller('MainController', function ($scope) {
         }
     };
 
-    $scope.addFlowTransition = function (flowTransition) {
-        // FIXME wybor transitiona z selecta obok plusa - albo przerobic to na <select> + ngclick
+    $scope.newTransitionType = '--';
+
+    /**
+     * @param {RegexpFlowTransition|null} previousFlowTransition
+     */
+    $scope.addReplaceTransition = function (previousFlowTransition) {
+        var newTransition = new RegexpFlowReplacementTransition('^', '');
+        $scope.addFlowTransition(newTransition, previousFlowTransition);
+    };
+
+    /**
+     * @param {RegexpFlowTransition|null} previousFlowTransition
+     */
+    $scope.addMatchLineTransition = function (previousFlowTransition) {
+        var newTransition = new RegexpFlowMatchLineTransition(''); // will match all lines
+        $scope.addFlowTransition(newTransition, previousFlowTransition);
+    };
+
+    /**
+     * @param {RegexpFlowTransition|null} previousFlowTransition
+     */
+    $scope.addMatchInLineTransition = function (previousFlowTransition) {
+        // fixme - not implemented
+    };
+
+    /**
+     * @param {RegexpFlowTransition} newTransition
+     * @param {RegexpFlowTransition|null} previousFlowTransition if null - new Transition will be added at the end, else it will be added after previousFlowTransition
+     */
+    $scope.addFlowTransition = function (newTransition, previousFlowTransition) {
+
+        // FIXME nie dziala
+        var typeName = $scope.newTransitionType;
+
         var transitions = $scope.flowChain.transitions;
-        var indexToRemove = -1;
-        for (var i in transitions) {
-            if (transitions[i] == flowTransition) {
-                indexToRemove = i;
-                break;
+        var shouldAddAfterOtherTransition = !!previousFlowTransition;
+        if (shouldAddAfterOtherTransition) {
+            var index = -1;
+            for (var i in transitions) {
+                if (transitions[i] == previousFlowTransition) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index >= 0) {
+                // insert newTransition after previousFlowTransition
+                transitions.splice(index, 1, previousFlowTransition, newTransition);
             }
         }
-
-        if (indexToRemove >= 0) {
-            var newTransition = new RegexpFlowReplacementTransition('Lorem', '<b style="padding: 0 5px; background-color: black; color: white;">$&</b>');
-            transitions.splice(indexToRemove, 1, flowTransition, newTransition); // remove item at that index
+        else {
+            newTransition.push(newTransition);
         }
-    }
+    };
 });
 
 
@@ -232,18 +270,18 @@ RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
 
 
 /**
- * @param {RegExp} searchRegexp
+ * @param {string} searchString
  * @param {string} replaceString
  * @constructor
  */
-function RegexpFlowMatchInLineTransition(searchRegexp, replaceString) {
+function RegexpFlowMatchInLineTransition(searchString, replaceString) {
 
     this.typeName = 'Match in line';
 
     /**
-     * @type {RegExp}
+     * @type {string}
      */
-    this.searchRegexp = searchRegexp;
+    this.searchString = searchString;
 }
 
 RegexpFlowMatchInLineTransition.prototype = new RegexpFlowTransition();
@@ -253,7 +291,7 @@ RegexpFlowMatchInLineTransition.prototype = new RegexpFlowTransition();
  * @returns {string}
  */
 RegexpFlowMatchInLineTransition.prototype.processText = function (inputText) {
-//  FIXME   return inputText.replace(this.searchRegexp, this.replaceString);
+//  FIXME   return inputText.replace(this.searchString, this.replaceString);
     // FIXME var searchRegexp = this.buildRegExp();
     return inputText;
 };
