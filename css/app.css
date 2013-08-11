@@ -17,13 +17,13 @@ textarea
 .flowTransition .header
 {
     background-color: #ccc;
-    padding: 5px;
+    padding: 3px;
     font-size: 20px;
 }
 
 .flowTransition form
 {
-    padding: 5px;
+    padding: 3px;
 }
 
 .flowTransition + .flowTransition
@@ -46,4 +46,29 @@ textarea
 {
     padding-right: 10px;
     padding-left: 10px;
+}
+
+.blankSlateHelper
+{
+    border: dashed 1px #69C370;
+}
+
+.blankSlateHelper .transitionOption
+{
+    text-align: center;
+}
+
+.blankSlateHelper .transitionOption p
+{
+    margin-top: 20px;
+}
+
+.blankSlateHelper .header
+{
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    background-color: #69C370;
+    text-align: center;
 }

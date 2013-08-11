@@ -12,19 +12,51 @@
 <body>
 
 <div class="container" ng-controller="MainController">
-    <div class="page-header">
+    <div class="row">
         <h1>Regexp Flow</h1>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-6">
+            <div class="row">
+                <h3>Input text</h3>
+            </div>
             <div class="row">
                 <textarea ng-model="input.text"></textarea>
+            </div>
+            <div class="row">
+                <h3>Output text</h3>
             </div>
             <div class="row">
                 <div class="outputPanel"><span ng-bind-html-unsafe="output.text"></span></div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-6">
+            <div class="row">
+                <h3>Flow chain</h3>
+            </div>
+            <div class="row" ng-show="chainHasNoTransitions()">
+                <div class="col-12 blankSlateHelper">
+                    <div class="row">
+                        <div class="header">Add new Transition</div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-4 transitionOption">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="addReplaceTransition(null)">&plus;R</button>
+                            <p>Replace text with other text using regular expressions</p>
+                        </div>
+                        <div class="col-4 transitionOption">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="addMatchLineTransition(null)">&plus;ML</button>
+                            <p>Leave only lines that match regular expression</p>
+                        </div>
+                        <div class="col-4 transitionOption">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="addMatchInLineTransition(null)">&plus;MIL</button>
+                            <p>Leave only lines that match regular expression and leave only matched text</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row flowTransition" ng-repeat="flowTransition in flowChain.transitions">
                 <div class="header">
                     {{ flowTransition.typeName }}
@@ -83,6 +115,6 @@
             </div>
         </div>
     </div>
-
+</div>
 </body>
 </html>

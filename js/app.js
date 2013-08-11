@@ -72,7 +72,7 @@ regexpFlow.controller('MainController', function ($scope) {
             '';
 
 //        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-        flowChain.transitions.push(new RegexpFlowReplacementTransition('sed', '<b style="padding: 0 5px; background-color: yellow">$&</b>'));
+//        flowChain.transitions.push(new RegexpFlowReplacementTransition('sed', '<b style="padding: 0 5px; background-color: yellow">$&</b>'));
 //        var t2 = new RegexpFlowReplacementTransition('lorem', '<b style="padding: 0 5px; background-color: limegreen">$&</b>');
 //        t2.searchFlagCaseInsensitive = true;
 //        flowChain.transitions.push(t2);
@@ -144,9 +144,13 @@ regexpFlow.controller('MainController', function ($scope) {
             }
         }
         else {
-            newTransition.push(newTransition);
+            transitions.push(newTransition);
         }
     };
+
+    $scope.chainHasNoTransitions = function () {
+        return ($scope.flowChain.transitions.length == 0);
+    }
 });
 
 
