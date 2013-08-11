@@ -22,13 +22,13 @@ textarea
 .flowTransition .header
 {
     background-color: #ccc;
-    padding: 3px;
+    padding: 3px 5px;
     font-size: 20px;
 }
 
 .flowTransition form
 {
-    padding: 3px;
+    padding: 5px;
 }
 
 .flowTransition + .flowTransition
