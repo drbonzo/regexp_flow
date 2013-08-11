@@ -35,69 +35,69 @@
                 <div class="outputPanel"><textarea ng-model="output.text" class="outputText"></textarea></div>
             </div>
         </div>
-        <div class="col-5 flowChainPanel">
-            <div class="row flowChainHeader">
-                <h3>Flow chain ({{ flowChain.transitions.length }})</h3>
+        <div class="col-5 flowPanel">
+            <div class="row flowHeader">
+                <h3>Flow chain ({{ flow.activities.length }})</h3>
             </div>
-            <div class="row flowChainPanelContents">
+            <div class="row flowPanelContents">
                 <div class="col-12">
-                    <div class="row" ng-show="chainHasNoTransitions()">
+                    <div class="row" ng-show="chainHasNoActivities()">
                         <div class="col-12 blankSlateHelper">
                             <div class="row">
-                                <div class="header">Add new Transition</div>
+                                <div class="header">Add new Activity</div>
                             </div>
 
                             <div class="row">
 
-                                <div class="col-4 transitionOption">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addReplaceTransition(null)">&plus;R</button>
+                                <div class="col-4 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewReplaceActivity(null)">&plus;R</button>
                                     <p>Replace text with other text using regular expressions</p>
                                 </div>
-                                <div class="col-4 transitionOption">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addMatchLineTransition(null)">&plus;ML</button>
+                                <div class="col-4 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchLineActivity(null)">&plus;ML</button>
                                     <p>Leave only lines that match regular expression</p>
                                 </div>
-                                <div class="col-4 transitionOption">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addMatchInLineTransition(null)">&plus;MIL</button>
+                                <div class="col-4 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineActivity(null)">&plus;MIL</button>
                                     <p>Leave only lines that match regular expression and leave only matched text</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row flowTransition" ng-repeat="flowTransition in flowChain.transitions">
+                    <div class="row activity" ng-repeat="activity in flow.activities">
                         <div class="header">
-                            {{ $index+1 }}. {{ flowTransition.typeName }}
+                            {{ $index+1 }}. {{ activity.typeName }}
                             <div class="btn-group pull-right">
                                 <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp">?</button>
-                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeFlowTransition(flowTransition)">&times;</button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)">&times;</button>
                             </div>
 
-                            <div class="btn-group pull-right addTransitionButtonGroup">
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addReplaceTransition(flowTransition)">&plus;R</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addMatchLineTransition(flowTransition)">&plus;ML</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addMatchInLineTransition(flowTransition)">&plus;MIL</button>
+                            <div class="btn-group pull-right addActivityButtonGroup">
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(activity)">&plus;R</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)">&plus;ML</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)">&plus;MIL</button>
                             </div>
                         </div>
                         <form>
                             <fieldset>
                                 <div class="form-group">
                                     <label>Search regexp</label>
-                                    <input type="text" class="form-control input-sm" ng-model="flowTransition.searchString" placeholder="search regular expression"/>
+                                    <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="search regular expression"/>
                                 </div>
                                 <div class="form-group form-inline">
                                     <div class="checkbox ">
                                         <label>
-                                            <input type="checkbox" ng-model="flowTransition.searchFlagGlobal"> Global
+                                            <input type="checkbox" ng-model="activity.searchFlagGlobal"> Global
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" ng-model="flowTransition.searchFlagMultiline"> Multiline
+                                            <input type="checkbox" ng-model="activity.searchFlagMultiline"> Multiline
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" ng-model="flowTransition.searchFlagCaseInsensitive"> Case Insensitive
+                                            <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
                                         </label>
                                     </div>
 
@@ -106,7 +106,7 @@
                             <fieldset>
                                 <div class="form-group">
                                     <label>Replacement string</label>
-                                    <input type="text" class="form-control input-sm" ng-model="flowTransition.replaceString" placeholder="replacement regular expression"/>
+                                    <input type="text" class="form-control input-sm" ng-model="activity.replaceString" placeholder="replacement regular expression"/>
 
                                     <ul ng-show="showHelp" class="help-block">
                                         <li>$1, $2, $3 - for groups.</li>

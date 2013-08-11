@@ -14,24 +14,24 @@ textarea
     white-space: pre-wrap;
 }
 
-.flowTransition
+.activity
 {
     border: solid 1px #666;
 }
 
-.flowTransition .header
+.activity .header
 {
     background-color: #ccc;
     padding: 3px 5px;
     font-size: 20px;
 }
 
-.flowTransition form
+.activity form
 {
     padding: 5px;
 }
 
-.flowTransition + .flowTransition
+.activity + .activity
 {
     margin-top: 10px;
 }
@@ -41,12 +41,12 @@ textarea
     font-size: 0.8em;
 }
 
-.addTransitionButtonGroup
+.addActivityButtonGroup
 {
     margin-right: 10px;
 }
 
-.addTransitionButtonGroup button,
+.addActivityButtonGroup button,
 .regexpHelpButton
 {
     padding-right: 10px;
@@ -58,12 +58,12 @@ textarea
     border: dashed 1px #69C370;
 }
 
-.blankSlateHelper .transitionOption
+.blankSlateHelper .newActivityPanel
 {
     text-align: center;
 }
 
-.blankSlateHelper .transitionOption p
+.blankSlateHelper .newActivityPanel p
 {
     margin-top: 20px;
 }
@@ -88,7 +88,7 @@ textarea
     overflow-y: scroll;
 }
 
-.flowTransition
+.activity
 {
     background-color: #f0f0f0;
 }

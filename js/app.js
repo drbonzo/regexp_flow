@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $(window).resize(function () {
         var wh = $(window).height() - 110;
-        $('.flowChainPanelContents').height(wh);
+        $('.flowPanelContents').height(wh);
         $('.inputPanel textarea').height(parseInt(wh * 0.45));
     });
 
@@ -23,9 +23,9 @@ regexpFlow.controller('MainController', function ($scope) {
     $scope.showHelp = false;
 
     /**
-     * @type {RegexpFlowChain}
+     * @type {RegexpFlow}
      */
-    $scope.flowChain = new RegexpFlowChain();
+    $scope.flow = new RegexpFlow();
 
     var processInputTextHandler = function () {
 
@@ -33,161 +33,96 @@ regexpFlow.controller('MainController', function ($scope) {
         var outputText = inputText;
 
         /**
-         * @type {RegexpFlowTransition}
+         * @type {RegexpActivity}
          */
-        var transition;
+        var activity;
 
-        for (var t in $scope.flowChain.transitions) {
-            transition = $scope.flowChain.transitions[t];
+        for (var t in $scope.flow.activities) {
+            activity = $scope.flow.activities[t];
 
-            outputText = transition.processText(inputText);
+            outputText = activity.processText(inputText);
             inputText = outputText;
         }
 
         $scope.output.text = outputText;
     };
 
-    $scope.$watch('flowChain.transitions', processInputTextHandler, true);
+    $scope.$watch('flow.activities', processInputTextHandler, true);
 
     $scope.$watch('input', processInputTextHandler, true);
 
-    // FIXME remove this
-    (function initializeStuff(inputObject, flowChain) {
-//        inputObject.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
-//            "Cras ut pharetra ipsum, in interdum risus.\n" +
-//            "Donec ante mauris, pellentesque condimentum felis sed, dictum pulvinar elit.\n" +
-//            "Sed nulla metus, sagittis eu elit vel, adipdsdsdiscing interdum risus.\n" +
-//            "Mauris vitae ligula massa.\n" +
-//            "Integer in blandit arcu.\n" +
-//            "\n" +
-//            "Aliquam laoreet justo a lorem pellentesque scelerisque.\n" +
-//            "Curabitur varius et odio ut condimentum.\n" +
-//            "Etiam cursus nunc et porttitor cursus.\n" +
-//            "Nulla blandit hendrerit metus, a auctor magna ullamcorper non.\n" +
-//            "Cras vitae metus tortor.\n" +
-//            "Proin venenatis eros et sem consectetur vehicula.\n" +
-//            "Donec commodo sit amet metus a scelerisque.\n" +
-//            "Sed vitae dapibus lorem.\n" +
-//            "Vestibulum sed varius nisl.\n" +
-//            "\n" +
-//            "Curabitur id lobortis dui.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse egestas ultrices eros et cursus.\n" +
-//            "In quam erat, fermentum in volutpat eu, ornare eget enim.\n" +
-//            "Vivamus eu pharetra sem.\n" +
-//            "Mauris id congue urna.\n" +
-//            "Proin leo augue, pretium eu pulvinar sit amet, placerat eget sapien.\n" +
-//            "Phasellus porta nunc euismod ultricies dignissim.\n" +
-//            "Mauris luctus bibendum vehicula.\n" +
-//            "In hac habitasse platea dictumst.\n" +
-//            "Curabitur posuere ac felis non interdum.\n" +
-//            "Phasellus laoreet id purus id semper." +
-//            '';
+    /**
+     * @param {RegexpActivity} activityToRemove
+     */
+    $scope.removeActivity = function (activityToRemove) {
 
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowMatchLineTransition('sed'));
-//        flowChain.transitions.push(new RegexpFlowReplacementTransition('sed', '<b style="padding: 0 5px; background-color: yellow">$&</b>'));
-//        var t2 = new RegexpFlowReplacementTransition('lorem', '<b style="padding: 0 5px; background-color: limegreen">$&</b>');
-//        t2.searchFlagCaseInsensitive = true;
-//        flowChain.transitions.push(t2);
-//        flowChain.transitions.push(new RegexpFlowReplacementTransition('vel', '<b style="padding: 0 5px; background-color: red">$&</b>'));
-
-    }($scope.input, $scope.flowChain));
-
-
-    $scope.removeFlowTransition = function (flowTransition) {
-
-        var transitions = $scope.flowChain.transitions;
+        var activities = $scope.flow.activities;
         var indexToRemove = -1;
-        for (var i in transitions) {
-            if (transitions[i] == flowTransition) {
+        for (var i in activities) {
+            if (activities[i] == activityToRemove) {
                 indexToRemove = i;
                 break;
             }
         }
 
         if (indexToRemove >= 0) {
-            transitions.splice(indexToRemove, 1); // remove item at that index
+            activities.splice(indexToRemove, 1); // remove item at that index
         }
     };
 
     /**
-     * @param {RegexpFlowTransition|null} previousFlowTransition
+     * @param {RegexpActivity|null} selectedActivity
      */
-    $scope.addReplaceTransition = function (previousFlowTransition) {
-        var newTransition = new RegexpFlowReplacementTransition('^', '');
-        $scope.addFlowTransition(newTransition, previousFlowTransition);
+    $scope.addNewReplaceActivity = function (selectedActivity) {
+        var newActivity = new RegexpReplaceActivity('^', '');
+        $scope.addActivity(newActivity, selectedActivity);
     };
 
     /**
-     * @param {RegexpFlowTransition|null} previousFlowTransition
+     * @param {RegexpActivity|null} selectedActivity
      */
-    $scope.addMatchLineTransition = function (previousFlowTransition) {
-        var newTransition = new RegexpFlowMatchLineTransition(''); // will match all lines
-        $scope.addFlowTransition(newTransition, previousFlowTransition);
+    $scope.addNewMatchLineActivity = function (selectedActivity) {
+        var newActivity = new RegexpMatchLineActivity(''); // will match all lines
+        $scope.addActivity(newActivity, selectedActivity);
     };
 
     /**
-     * @param {RegexpFlowTransition|null} previousFlowTransition
+     * @param {RegexpActivity|null} selectedActivity
      */
-    $scope.addMatchInLineTransition = function (previousFlowTransition) {
-        var newTransition = new RegexpFlowMatchInLineTransition('^.*$'); // will match whole line
-        $scope.addFlowTransition(newTransition, previousFlowTransition);
+    $scope.addNewMatchInLineActivity = function (selectedActivity) {
+        var newActivity = new RegexpMatchInLineActivity('^.*$'); // will match whole line
+        $scope.addActivity(newActivity, selectedActivity);
     };
 
     /**
-     * @param {RegexpFlowTransition} newTransition
-     * @param {RegexpFlowTransition|null} previousFlowTransition if null - new Transition will be added at the end, else it will be added after previousFlowTransition
+     * @param {RegexpActivity} newActivity
+     * @param {RegexpActivity|null} selectedActivity if null - new RegexpActivity will be added at the end, else it will be added after selectedActivity
      */
-    $scope.addFlowTransition = function (newTransition, previousFlowTransition) {
+    $scope.addActivity = function (newActivity, selectedActivity) {
 
-        var transitions = $scope.flowChain.transitions;
-        var shouldAddAfterOtherTransition = !!previousFlowTransition;
-        if (shouldAddAfterOtherTransition) {
+        var activities = $scope.flow.activities;
+        var shouldAddAfterOtherActivity = !!selectedActivity;
+        if (shouldAddAfterOtherActivity) {
             var index = -1;
-            for (var i in transitions) {
-                if (transitions[i] == previousFlowTransition) {
+            for (var i in activities) {
+                if (activities[i] == selectedActivity) {
                     index = i;
                     break;
                 }
             }
 
             if (index >= 0) {
-                // insert newTransition after previousFlowTransition
-                transitions.splice(index, 1, previousFlowTransition, newTransition);
+                // insert newActivity after selectedActivity
+                activities.splice(index, 1, selectedActivity, newActivity);
             }
         }
         else {
-            transitions.push(newTransition);
+            activities.push(newActivity);
         }
     };
 
-    $scope.chainHasNoTransitions = function () {
-        return ($scope.flowChain.transitions.length == 0);
+    $scope.chainHasNoActivities = function () {
+        return ($scope.flow.activities.length == 0);
     };
 
     $scope.createSampleFlow = function () {
@@ -220,31 +155,31 @@ regexpFlow.controller('MainController', function ($scope) {
             "Phasellus laoreet id purus id semper." +
             '';
 
-        var transitions = $scope.flowChain.transitions;
+        var activities = $scope.flow.activities;
         {
-            transitions.push(new RegexpFlowMatchLineTransition('or'));
+            activities.push(new RegexpMatchLineActivity('or'));
 
-            var t2 = new RegexpFlowMatchLineTransition('lorem');
+            var t2 = new RegexpMatchLineActivity('lorem');
             t2.searchFlagCaseInsensitive = true;
-            transitions.push(t2);
+            activities.push(t2);
 
-            var t3 = new RegexpFlowReplacementTransition('^(.+?)\\s(\\w+)', '$1 ***$2***');
+            var t3 = new RegexpReplaceActivity('^(.+?)\\s(\\w+)', '$1 ***$2***');
             t3.searchFlagCaseInsensitive = true;
             t3.searchFlagMultiline = true;
-            transitions.push(t3);
+            activities.push(t3);
         }
     };
 });
 
 
-function RegexpFlowChain() {
+function RegexpFlow() {
     /**
-     * @type {Array|RegexpFlowReplacementTransition[]|RegexpFlowMatchLineTransition[]|RegexpFlowMatchInLineTransition[]}
+     * @type {Array|RegexpActivity[]}
      */
-    this.transitions = [];
+    this.activities = [];
 }
 
-function RegexpFlowTransition() {
+function RegexpActivity() {
     this.name = '';
     this.searchString = '';
     this.searchFlagGlobal = false;
@@ -252,7 +187,7 @@ function RegexpFlowTransition() {
     this.searchFlagMultiline = false;
 }
 
-RegexpFlowTransition.prototype.buildRegExp = function () {
+RegexpActivity.prototype.buildRegExp = function () {
 
     var flags = [];
     if (this.searchFlagGlobal) {
@@ -274,7 +209,7 @@ RegexpFlowTransition.prototype.buildRegExp = function () {
  * @param {string} inputText
  * @return {Array|string[]}
  */
-RegexpFlowTransition.prototype.splitTextIntoLines = function (inputText) {
+RegexpActivity.prototype.splitTextIntoLines = function (inputText) {
     // regexp without ?: will mess this split
     return inputText.split(/(?:\r\n|\n|\r)/);
 };
@@ -283,7 +218,7 @@ RegexpFlowTransition.prototype.splitTextIntoLines = function (inputText) {
  * @param {string} inputText
  * @return {string}
  */
-RegexpFlowTransition.prototype.processText = function (inputText) {
+RegexpActivity.prototype.processText = function (inputText) {
     throw new Error("Please implement me!");
 };
 
@@ -292,7 +227,7 @@ RegexpFlowTransition.prototype.processText = function (inputText) {
  * @param replaceString
  * @constructor
  */
-function RegexpFlowReplacementTransition(searchString, replaceString) {
+function RegexpReplaceActivity(searchString, replaceString) {
 
     this.typeName = 'Replace in text';
 
@@ -314,13 +249,13 @@ function RegexpFlowReplacementTransition(searchString, replaceString) {
     this.searchFlagGlobal = true;
 }
 
-RegexpFlowReplacementTransition.prototype = new RegexpFlowTransition();
+RegexpReplaceActivity.prototype = new RegexpActivity();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
-RegexpFlowReplacementTransition.prototype.processText = function (inputText) {
+RegexpReplaceActivity.prototype.processText = function (inputText) {
 
     if (!this.searchString) {
         return inputText; // dont change anything when there is no regular expression
@@ -335,7 +270,7 @@ RegexpFlowReplacementTransition.prototype.processText = function (inputText) {
  * @param {string} searchString
  * @constructor
  */
-function RegexpFlowMatchLineTransition(searchString) {
+function RegexpMatchLineActivity(searchString) {
 
     this.typeName = 'Match lines';
 
@@ -345,13 +280,13 @@ function RegexpFlowMatchLineTransition(searchString) {
     this.searchString = searchString;
 }
 
-RegexpFlowMatchLineTransition.prototype = new RegexpFlowTransition();
+RegexpMatchLineActivity.prototype = new RegexpActivity();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
-RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
+RegexpMatchLineActivity.prototype.processText = function (inputText) {
 
     if (!this.searchString) {
         return inputText; // dont change anything when there is no regular expression
@@ -377,7 +312,7 @@ RegexpFlowMatchLineTransition.prototype.processText = function (inputText) {
  * @param {string} searchString
  * @constructor
  */
-function RegexpFlowMatchInLineTransition(searchString) {
+function RegexpMatchInLineActivity(searchString) {
 
     this.typeName = 'Match in line';
 
@@ -387,13 +322,13 @@ function RegexpFlowMatchInLineTransition(searchString) {
     this.searchString = searchString;
 }
 
-RegexpFlowMatchInLineTransition.prototype = new RegexpFlowTransition();
+RegexpMatchInLineActivity.prototype = new RegexpActivity();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
-RegexpFlowMatchInLineTransition.prototype.processText = function (inputText) {
+RegexpMatchInLineActivity.prototype.processText = function (inputText) {
 
     if (!this.searchString) {
         return inputText; // dont change anything when there is no regular expression
