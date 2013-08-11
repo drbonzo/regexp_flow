@@ -117,7 +117,7 @@ regexpFlow.controller('MainController', function ($scope) {
      * @param {RegexpFlowTransition|null} previousFlowTransition
      */
     $scope.addMatchInLineTransition = function (previousFlowTransition) {
-        var newTransition = new RegexpFlowMatchInLineTransition('^.+$'); // will match whole line
+        var newTransition = new RegexpFlowMatchInLineTransition('^.*$'); // will match whole line
         $scope.addFlowTransition(newTransition, previousFlowTransition);
     };
 
