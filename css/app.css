@@ -6,7 +6,6 @@ html, body
 textarea
 {
     width: 95%;
-    height: 200px;
 }
 
 .outputPanel
@@ -76,6 +75,7 @@ textarea
     margin-bottom: 20px;
     background-color: #69C370;
     text-align: center;
+    color: white;
 }
 
 .flowChainPanel
@@ -84,7 +84,6 @@ textarea
 
 .flowChainPanelContents
 {
-    max-height: 550px;
     overflow-y: scroll;
 }
 
@@ -96,17 +95,14 @@ textarea
 .MainController
 {
     padding-top: 35px;
-    padding-bottom: 35px;
 }
 
 .inputTextPanel
 {
-    height: 50%;
 }
 
 .outputTextPanel
 {
-    height: 50%;
 }
 
 .inputTextPanel textarea,

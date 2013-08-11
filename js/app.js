@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    $('.flowChainPanelContents').height($(window).height() - 110)
+});
+
 var regexpFlow = angular.module('RegexpFlowApplication', []);
 
 regexpFlow.controller('MainController', function ($scope) {
