@@ -329,6 +329,11 @@ function RegexpMatchInLineActivity(searchString) {
 RegexpMatchInLineActivity.prototype = new RegexpActivity();
 
 /**
+ * Splits text into lines.
+ * Processes each line
+ * - if line matches regular expression - then the match is being returned
+ *      - if groups were used in regular expression
+ * - if line does not match regular expression - then that line is being ommited (not included in result)
  * @param {string} inputText
  * @returns {string}
  */
@@ -343,13 +348,15 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
 
     var searchRegexp = this.buildRegExp();
     var match;
+    var matchedText;
     for (var l in lines) {
         line = lines[l];
         // TODO can match global
         match = line.match(searchRegexp);
 
         if (match) {
-            matchedInLines.push(match.join(''));
+            matchedText = match[1] ? match[1] : match[0]; // when no groups were used - then $0 is used, else first group is used
+            matchedInLines.push(matchedText);
         }
     }
 
