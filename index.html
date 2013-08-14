@@ -69,15 +69,15 @@
                         <div class="header">
                             {{ $index+1 }}. {{ activity.displayName }}
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp">?</button>
-                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)"><span class="glyphicon glyphicon-ban-circle"></span></button>
-                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)">&times;</button>
+                                <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
+                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)" title="Disable/enable activity"><span class="glyphicon glyphicon-ban-circle"></span></button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)" title="Remove activity">&times;</button>
                             </div>
 
                             <div class="btn-group pull-right addActivityButtonGroup">
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(activity)">&plus;R</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)">&plus;ML</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)">&plus;MIL</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(activity)" title="Add Replace Activity">&plus;R</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)" title="Add MatchLine Activity">&plus;ML</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)" title="Add MatchInLine Activity">&plus;MIL</button>
                             </div>
                         </div>
                         <div class="activityForm" ng-switch="activity.typeName">
