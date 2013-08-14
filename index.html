@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row activity" ng-repeat="activity in flow.activities">
+                    <div class="row activity activity_{{ $index }}" ng-repeat="activity in flow.activities">
                         <div class="header">
                             {{ $index+1 }}. {{ activity.displayName }}
                             <div class="btn-group pull-right">

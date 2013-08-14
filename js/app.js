@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 var regexpFlow = angular.module('RegexpFlowApplication', []);
 
-regexpFlow.controller('MainController', function ($scope) {
+regexpFlow.controller('MainController', function ($scope, $timeout) {
     $scope.input = {
         text: ''
     };
@@ -102,11 +102,12 @@ regexpFlow.controller('MainController', function ($scope) {
 
         var activities = $scope.flow.activities;
         var shouldAddAfterOtherActivity = !!selectedActivity;
+        var newActivityIndex;
         if (shouldAddAfterOtherActivity) {
             var index = -1;
             for (var i in activities) {
                 if (activities[i] == selectedActivity) {
-                    index = i;
+                    index = parseInt(i); // for () returns indices as strings - wtf
                     break;
                 }
             }
@@ -114,11 +115,22 @@ regexpFlow.controller('MainController', function ($scope) {
             if (index >= 0) {
                 // insert newActivity after selectedActivity
                 activities.splice(index, 1, selectedActivity, newActivity);
+                newActivityIndex = index + 1;
+            }
+            else {
+                activities.push(newActivity);
+                newActivityIndex = activities.length;
             }
         }
         else {
             activities.push(newActivity);
+            newActivityIndex = activities.length;
         }
+
+        $timeout(function () {
+            // focus on first input of new Activity form
+            $('.activity_' + newActivityIndex + ' input:first').focus().select();
+        }, 0);
     };
 
     $scope.chainHasNoActivities = function () {
