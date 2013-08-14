@@ -79,48 +79,101 @@
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)">&plus;MIL</button>
                             </div>
                         </div>
-                        <form>
-                            <fieldset>
-                                <div class="form-group">
-                                    <label>Search regexp</label>
-                                    <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="search regular expression"/>
-                                </div>
-                                <div class="form-group form-inline">
-                                    <div class="checkbox ">
-                                        <label>
-                                            <input type="checkbox" ng-model="activity.searchFlagGlobal"> Global
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" ng-model="activity.searchFlagMultiline"> Multiline
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
-                                        </label>
-                                    </div>
-
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-group">
-                                    <label>Replacement string</label>
-                                    <input type="text" class="form-control input-sm" ng-model="activity.replaceString" placeholder="replacement regular expression"/>
-
-                                    <ul ng-show="showHelp" class="help-block">
-                                        <li>$1, $2, $3 - for groups.</li>
-                                        <li>$$ Inserts a "$".</li>
-                                        <li>$& Inserts the matched substring.</li>
-                                        <li>$` Inserts the portion of the string that precedes the matched substring.</li>
-                                        <li>$' Inserts the portion of the string that follows the matched substring.</li>
-                                        <li>$n or $nn</li>
-                                        <li>Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.</li>
-                                    </ul>
-                                </div>
-                            </fieldset>
-                        </form>
+                        <div ng-switch="activity.typeName">
+                            <div ng-switch-when="RegexpReplaceActivity">
+                                <form>
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Search for</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagGlobal"> Global
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagMultiline"> Multiline
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>and replace with</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.replaceString" placeholder="replacement string"/>
+                                            <ul ng-show="showHelp" class="help-block">
+                                                <li>$1, $2, $3 - for groups.</li>
+                                                <li>$$ Inserts a "$".</li>
+                                                <li>$& Inserts the matched substring.</li>
+                                                <li>$` Inserts the portion of the string that precedes the matched substring.</li>
+                                                <li>$' Inserts the portion of the string that follows the matched substring.</li>
+                                                <li>$n or $nn</li>
+                                                <li>Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.</li>
+                                                <li>\t, \n - to insert tab/newline characters</li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpMatchLineActivity">
+                                <form>
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Get lines matching</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                            <ul ng-show="showHelp" class="help-block">
+                                                <li>returns whole lines that are matched by regular expression</li>
+                                                <li>if 'invert' flag is checked - then returns lines that DO NOT match regular expression</li>
+                                                <li>lines are returned, joined with \n character - not their original newline character!</li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpMatchInLineActivity">
+                                <form>
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>From each line, extract text matching</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <ul ng-show="showHelp" class="help-block">
+                                            <li>checks each line of input - if it matches regular expression</li>
+                                            <li>if line matches regular expression - then the match from regular expression is being returned
+                                                <ul>
+                                                    <li>if regular expression had no groups - then full match is being returned ($&/$0)</li>
+                                                    <li>if regular expression did had groups - then only first group is being returned ($1)</li>
+                                                </ul>
+                                            </li>
+                                            <li>if line does not match - then it is being ommited in result</li>
+                                        </ul>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <!--<div ng-switch-default>default</div>-->
+                        </div>
                     </div>
                 </div>
             </div>
