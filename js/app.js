@@ -292,6 +292,10 @@ function RegexpReplaceActivity(searchString, replaceString) {
      */
     this.searchFlagMultiline = false;
 
+    /**
+     * @type {number}
+     */
+    this.replacementsCount = 0;
 }
 
 RegexpReplaceActivity.prototype = new RegexpActivity();
@@ -302,11 +306,15 @@ RegexpReplaceActivity.prototype = new RegexpActivity();
  */
 RegexpReplaceActivity.prototype.processText = function (inputText) {
 
+    this.replacementsCount = 0;
+
     if (!this.searchString) {
         return inputText; // dont change anything when there is no regular expression
     }
 
     var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
+    var matches = inputText.match(searchRegexp);
+    this.replacementsCount = matches.length;
     return inputText.replace(searchRegexp, this.replaceString);
 };
 
