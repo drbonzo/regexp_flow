@@ -357,12 +357,14 @@ RegexpMatchLineActivity.prototype = new RegexpActivity();
  */
 RegexpMatchLineActivity.prototype.processText = function (inputText) {
 
+    var lines = this.splitTextIntoLines(inputText);
+    this.totalLinesCount = lines.length;
+
     if (!this.searchString) {
+        this.linesMatchedCount = this.totalLinesCount;
         return inputText; // dont change anything when there is no regular expression
     }
 
-    var lines = this.splitTextIntoLines(inputText);
-    this.totalLinesCount = lines.length;
     var line;
     var matchedLines = [];
 
@@ -425,11 +427,13 @@ RegexpMatchInLineActivity.prototype = new RegexpActivity();
  */
 RegexpMatchInLineActivity.prototype.processText = function (inputText) {
 
-    if (!this.searchString) {
-        return inputText; // dont change anything when there is no regular expression
-    }
     var lines = this.splitTextIntoLines(inputText);
     this.totalLinesCount = lines.length;
+
+    if (!this.searchString) {
+        this.linesMatchedCount = this.totalLinesCount;
+        return inputText; // dont change anything when there is no regular expression
+    }
 
     var line;
     var matchesInLines = [];
