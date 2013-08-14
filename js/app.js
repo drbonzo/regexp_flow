@@ -329,6 +329,16 @@ function RegexpMatchLineActivity(searchString) {
      * @type {boolean}
      */
     this.searchFlagCaseInsensitive = false;
+
+    /**
+     * @type {number}
+     */
+    this.totalLinesCount = 0;
+
+    /**
+     * @type {number}
+     */
+    this.linesMatchedCount = 0;
 }
 
 RegexpMatchLineActivity.prototype = new RegexpActivity();
@@ -344,6 +354,7 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
     }
 
     var lines = this.splitTextIntoLines(inputText);
+    this.totalLinesCount = lines.length;
     var line;
     var matchedLines = [];
 
@@ -355,6 +366,8 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
             matchedLines.push(line);
         }
     }
+
+    this.linesMatchedCount = matchedLines.length;
 
     return matchedLines.join("\n");
 };
@@ -378,6 +391,17 @@ function RegexpMatchInLineActivity(searchString) {
      * @type {boolean}
      */
     this.searchFlagCaseInsensitive = false;
+
+    /**
+     * @type {number}
+     */
+    this.totalLinesCount = 0;
+
+    /**
+     * @type {number}
+     */
+    this.linesMatchedCount = 0;
+
 }
 
 RegexpMatchInLineActivity.prototype = new RegexpActivity();
@@ -397,8 +421,10 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
         return inputText; // dont change anything when there is no regular expression
     }
     var lines = this.splitTextIntoLines(inputText);
+    this.totalLinesCount = lines.length;
+
     var line;
-    var matchedInLines = [];
+    var matchesInLines = [];
 
     var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
     var match;
@@ -409,9 +435,11 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
 
         if (match) {
             matchedText = match[1] ? match[1] : match[0]; // when no groups were used - then $0 is used, else first group is used
-            matchedInLines.push(matchedText);
+            matchesInLines.push(matchedText);
         }
     }
 
-    return matchedInLines.join("\n");
+    this.linesMatchedCount = matchesInLines.length;
+
+    return matchesInLines.join("\n");
 };
