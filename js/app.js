@@ -119,12 +119,12 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
             }
             else {
                 activities.push(newActivity);
-                newActivityIndex = activities.length;
+                newActivityIndex = activities.length - 1;
             }
         }
         else {
             activities.push(newActivity);
-            newActivityIndex = activities.length;
+            newActivityIndex = activities.length - 1;
         }
 
         $timeout(function () {
