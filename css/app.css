@@ -110,3 +110,13 @@ textarea
 .outputTextPanel textarea
 {
 }
+
+.activityDisabled .activityForm
+{
+    display: none;
+}
+
+.activityDisabled .header
+{
+    color: #999;
+}

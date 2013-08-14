@@ -65,11 +65,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row activity activity_{{ $index }}" ng-repeat="activity in flow.activities">
+                    <div class="row activity activity_{{ $index }}" ng-repeat="activity in flow.activities" ng-class="{ activityDisabled: !activity.isEnabled }">
                         <div class="header">
                             {{ $index+1 }}. {{ activity.displayName }}
                             <div class="btn-group pull-right">
                                 <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp">?</button>
+                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)"><span class="glyphicon glyphicon-ban-circle"></span></button>
                                 <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)">&times;</button>
                             </div>
 
@@ -79,7 +80,7 @@
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)">&plus;MIL</button>
                             </div>
                         </div>
-                        <div ng-switch="activity.typeName">
+                        <div class="activityForm" ng-switch="activity.typeName">
                             <div ng-switch-when="RegexpReplaceActivity">
                                 <form>
                                     <fieldset>

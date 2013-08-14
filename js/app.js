@@ -40,8 +40,10 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
         for (var a in $scope.flow.activities) {
             activity = $scope.flow.activities[a];
 
-            outputText = activity.processText(inputText);
-            inputText = outputText;
+            if (activity.isEnabled) {
+                outputText = activity.processText(inputText);
+                inputText = outputText;
+            }
         }
 
         $scope.output.text = outputText;
@@ -68,6 +70,13 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
         if (indexToRemove >= 0) {
             activities.splice(indexToRemove, 1); // remove item at that index
         }
+    };
+
+    /**
+     * @param {RegexpActivity} activity
+     */
+    $scope.toggleEnabledFlag = function (activity) {
+        activity.isEnabled = !activity.isEnabled;
     };
 
     /**
@@ -199,6 +208,7 @@ RegexpFlow.prototype.removeAllActivities = function () {
 function RegexpActivity() {
     this.typeName = '';
     this.displayName = '';
+    this.isEnabled = true;
 }
 
 /**
@@ -395,7 +405,6 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
     var matchedText;
     for (var l in lines) {
         line = lines[l];
-        // TODO can match global
         match = line.match(searchRegexp);
 
         if (match) {
