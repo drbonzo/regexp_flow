@@ -167,6 +167,7 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
             "Phasellus laoreet id purus id semper." +
             '';
 
+        $scope.flow.removeAllActivities();
         var activities = $scope.flow.activities;
         {
             activities.push(new RegexpMatchLineActivity('or'));
@@ -190,6 +191,10 @@ function RegexpFlow() {
      */
     this.activities = [];
 }
+
+RegexpFlow.prototype.removeAllActivities = function () {
+    this.activities.length = 0;
+};
 
 function RegexpActivity() {
     this.typeName = '';
