@@ -199,28 +199,33 @@ RegexpFlow.prototype.removeAllActivities = function () {
 function RegexpActivity() {
     this.typeName = '';
     this.displayName = '';
-    this.searchString = '';
-    this.searchFlagGlobal = false;
-    this.searchFlagCaseInsensitive = false;
-    this.searchFlagMultiline = false;
 }
 
-RegexpActivity.prototype.buildRegExp = function () {
+/**
+ * Builds regular expression from string + flags
+ *
+ * @param {string} regularExpressionString
+ * @param {bool|null} flagCaseInsensitive
+ * @param {bool|null} flagGlobal if null - then it means FALSE
+ * @param {bool|null} flagMultiline
+ * @returns {RegExp}
+ */
+RegexpActivity.prototype.buildRegExp = function (regularExpressionString, flagCaseInsensitive, flagGlobal, flagMultiline) {
 
     var flags = [];
-    if (this.searchFlagGlobal) {
+    if (flagGlobal) {
         flags.push('g');
     }
 
-    if (this.searchFlagCaseInsensitive) {
+    if (flagCaseInsensitive) {
         flags.push('i');
     }
 
-    if (this.searchFlagMultiline) {
+    if (flagMultiline) {
         flags.push('m');
     }
 
-    return new RegExp(this.searchString, flags.join(''));
+    return new RegExp(regularExpressionString, flags.join(''));
 };
 
 /**
@@ -266,6 +271,17 @@ function RegexpReplaceActivity(searchString, replaceString) {
      * @type {boolean}
      */
     this.searchFlagGlobal = true;
+
+    /**
+     * @type {boolean}
+     */
+    this.searchFlagCaseInsensitive = false;
+
+    /**
+     * @type {boolean}
+     */
+    this.searchFlagMultiline = false;
+
 }
 
 RegexpReplaceActivity.prototype = new RegexpActivity();
@@ -280,7 +296,7 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
         return inputText; // dont change anything when there is no regular expression
     }
 
-    var searchRegexp = this.buildRegExp();
+    var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
     return inputText.replace(searchRegexp, this.replaceString);
 };
 
@@ -298,6 +314,11 @@ function RegexpMatchLineActivity(searchString) {
      * @type {string}
      */
     this.searchString = searchString;
+
+    /**
+     * @type {boolean}
+     */
+    this.searchFlagCaseInsensitive = false;
 }
 
 RegexpMatchLineActivity.prototype = new RegexpActivity();
@@ -316,7 +337,8 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
     var line;
     var matchedLines = [];
 
-    var searchRegexp = this.buildRegExp();
+    var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
+
     for (var l in lines) {
         line = lines[l];
         if (line.match(searchRegexp)) {
@@ -341,6 +363,11 @@ function RegexpMatchInLineActivity(searchString) {
      * @type {string}
      */
     this.searchString = searchString;
+
+    /**
+     * @type {boolean}
+     */
+    this.searchFlagCaseInsensitive = false;
 }
 
 RegexpMatchInLineActivity.prototype = new RegexpActivity();
@@ -363,7 +390,7 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
     var line;
     var matchedInLines = [];
 
-    var searchRegexp = this.buildRegExp();
+    var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
     var match;
     var matchedText;
     for (var l in lines) {
