@@ -314,7 +314,7 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
 
     var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
     var matches = inputText.match(searchRegexp);
-    this.replacementsCount = matches.length;
+    this.replacementsCount = ( matches ? matches.length : 0 ); // matches is null when no match is found
     return inputText.replace(searchRegexp, this.replaceString);
 };
 
