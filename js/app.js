@@ -37,8 +37,8 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
          */
         var activity;
 
-        for (var t in $scope.flow.activities) {
-            activity = $scope.flow.activities[t];
+        for (var a in $scope.flow.activities) {
+            activity = $scope.flow.activities[a];
 
             outputText = activity.processText(inputText);
             inputText = outputText;
@@ -58,9 +58,9 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
 
         var activities = $scope.flow.activities;
         var indexToRemove = -1;
-        for (var i in activities) {
-            if (activities[i] == activityToRemove) {
-                indexToRemove = i;
+        for (var a in activities) {
+            if (activities[a] == activityToRemove) {
+                indexToRemove = a;
                 break;
             }
         }
@@ -105,9 +105,9 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
         var newActivityIndex;
         if (shouldAddAfterOtherActivity) {
             var index = -1;
-            for (var i in activities) {
-                if (activities[i] == selectedActivity) {
-                    index = parseInt(i); // for () returns indices as strings - wtf
+            for (var a in activities) {
+                if (activities[a] == selectedActivity) {
+                    index = parseInt(a); // for () returns indices as strings - wtf
                     break;
                 }
             }
