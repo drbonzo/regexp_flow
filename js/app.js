@@ -180,7 +180,8 @@ function RegexpFlow() {
 }
 
 function RegexpActivity() {
-    this.name = '';
+    this.typeName = '';
+    this.displayName = '';
     this.searchString = '';
     this.searchFlagGlobal = false;
     this.searchFlagCaseInsensitive = false;
@@ -229,7 +230,8 @@ RegexpActivity.prototype.processText = function (inputText) {
  */
 function RegexpReplaceActivity(searchString, replaceString) {
 
-    this.typeName = 'Replace in text';
+    this.displayName = 'Replace in text';
+    this.typeName = 'RegexpReplaceActivity';
 
     /**
      * @type {string}
@@ -272,7 +274,8 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
  */
 function RegexpMatchLineActivity(searchString) {
 
-    this.typeName = 'Match lines';
+    this.displayName = 'Match lines';
+    this.typeName = 'RegexpMatchLineActivity';
 
     /**
      * @type {string}
@@ -314,7 +317,8 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
  */
 function RegexpMatchInLineActivity(searchString) {
 
-    this.typeName = 'Match in line';
+    this.displayName = 'Match in line';
+    this.typeName = 'RegexpMatchInLineActivity';
 
     /**
      * @type {string}

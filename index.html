@@ -67,7 +67,7 @@
                     </div>
                     <div class="row activity" ng-repeat="activity in flow.activities">
                         <div class="header">
-                            {{ $index+1 }}. {{ activity.typeName }}
+                            {{ $index+1 }}. {{ activity.displayName }}
                             <div class="btn-group pull-right">
                                 <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp">?</button>
                                 <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)">&times;</button>
