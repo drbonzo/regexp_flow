@@ -217,6 +217,9 @@ function RegexpActivity() {
     this.typeName = '';
     this.displayName = '';
     this.isEnabled = true;
+
+    this.regexpIsValid = true;
+    this.regexpValidationMessage = '';
 }
 
 /**
@@ -262,6 +265,18 @@ RegexpActivity.prototype.splitTextIntoLines = function (inputText) {
 RegexpActivity.prototype.processText = function (inputText) {
     throw new Error("Please implement me!");
 };
+
+
+RegexpActivity.prototype.resetRegExpValidation = function () {
+    this.regexpIsValid = true;
+    this.regexpValidationMessage = '';
+};
+
+RegexpActivity.prototype.setupValidationFromError = function (error) {
+    this.regexpIsValid = false;
+    this.regexpValidationMessage = error.toString();
+};
+
 
 /**
  * @param {string} searchString
@@ -314,40 +329,49 @@ RegexpReplaceActivity.prototype = new RegexpActivity();
  */
 RegexpReplaceActivity.prototype.processText = function (inputText) {
 
-    this.replacementsCount = 0;
+    try {
 
-    if (!this.searchString) {
-        return inputText; // dont change anything when there is no regular expression
-    }
+        this.resetRegExpValidation();
+        this.replacementsCount = 0;
 
-    var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
-    var matches = inputText.match(searchRegexp);
-    this.replacementsCount = ( matches ? matches.length : 0 ); // matches is null when no match is found
-
-    var replacement = this.replaceString;
-
-    // replace \n with newline character (same with \t - tab character)
-    // but dont replace \\n (nor \\t)
-    replacement = replacement.replace(/(\\)?(\\[nt])/, function (group1, group2) {
-        // if (\\)? group has been found then we have two values: group1 and group2 - then dont change anything, as we got \\n
-        // if this group has NOT been found - then group2 is undefined - we can replace \n with newline character
-
-        if (group2) {
-            // return unchanged string, as it found \\n
-            return group1 + group2;
+        if (!this.searchString) {
+            return inputText; // dont change anything when there is no regular expression
         }
-        else {
-            // replace just \n with newline character
-            if (group1 == '\\n') {
-                return "\n";
+
+        var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
+        var matches = inputText.match(searchRegexp);
+        this.replacementsCount = ( matches ? matches.length : 0 ); // matches is null when no match is found
+
+        var replacement = this.replaceString;
+
+        // replace \n with newline character (same with \t - tab character)
+        // but dont replace \\n (nor \\t)
+        replacement = replacement.replace(/(\\)?(\\[nt])/, function (group1, group2) {
+            // if (\\)? group has been found then we have two values: group1 and group2 - then dont change anything, as we got \\n
+            // if this group has NOT been found - then group2 is undefined - we can replace \n with newline character
+
+            if (group2) {
+                // return unchanged string, as it found \\n
+                return group1 + group2;
             }
             else {
-                return "\t";
+                // replace just \n with newline character
+                if (group1 == '\\n') {
+                    return "\n";
+                }
+                else {
+                    return "\t";
+                }
             }
-        }
-    });
+        });
 
-    return inputText.replace(searchRegexp, replacement);
+        return inputText.replace(searchRegexp, replacement);
+    }
+    catch (e) {
+        this.setupValidationFromError(e);
+
+        return '';
+    }
 };
 
 /**
@@ -396,22 +420,31 @@ RegexpFindAllActivity.prototype = new RegexpActivity();
  */
 RegexpFindAllActivity.prototype.processText = function (inputText) {
 
-    this.matchesCount = 0;
+    try {
 
-    if (!this.searchString) {
-        return inputText; // dont change anything when there is no regular expression
-    }
-
-    var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
-    // as this regexp is always with /g flag - then it returns only whole matches (no groups)
-    // 'lorem ipsum dolor sid amet' - so searching for (\w\w)(\w{3}) in this text will return array with five letter words, no matter whether we use groups or not
-    var matches = inputText.match(searchRegexp);
-    if (matches) {
-        this.matchesCount = matches.length;
-        return matches.join("\n");
-    }
-    else {
+        this.resetRegExpValidation();
         this.matchesCount = 0;
+
+        if (!this.searchString) {
+            return inputText; // dont change anything when there is no regular expression
+        }
+
+        var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
+        // as this regexp is always with /g flag - then it returns only whole matches (no groups)
+        // 'lorem ipsum dolor sid amet' - so searching for (\w\w)(\w{3}) in this text will return array with five letter words, no matter whether we use groups or not
+        var matches = inputText.match(searchRegexp);
+        if (matches) {
+            this.matchesCount = matches.length;
+            return matches.join("\n");
+        }
+        else {
+            this.matchesCount = 0;
+            return '';
+        }
+    }
+    catch (e) {
+        this.setupValidationFromError(e);
+
         return '';
     }
 };
@@ -460,37 +493,46 @@ RegexpMatchLineActivity.prototype = new RegexpActivity();
  */
 RegexpMatchLineActivity.prototype.processText = function (inputText) {
 
-    var lines = this.splitTextIntoLines(inputText);
-    this.totalLinesCount = lines.length;
+    try {
 
-    if (!this.searchString) {
-        this.linesMatchedCount = this.totalLinesCount;
-        return inputText; // dont change anything when there is no regular expression
-    }
+        this.resetRegExpValidation();
+        var lines = this.splitTextIntoLines(inputText);
+        this.totalLinesCount = lines.length;
+        this.linesMatchedCount = 0;
 
-    var line;
-    var matchedLines = [];
+        if (!this.searchString) {
+            this.linesMatchedCount = this.totalLinesCount;
+            return inputText; // dont change anything when there is no regular expression
+        }
+        var line;
+        var matchedLines = [];
 
-    var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
+        var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
 
-    for (var l in lines) {
-        line = lines[l];
+        for (var l in lines) {
+            line = lines[l];
 
-        if (this.flagInvertMatch) {
-            if (!line.match(searchRegexp)) {
-                matchedLines.push(line);
+            if (this.flagInvertMatch) {
+                if (!line.match(searchRegexp)) {
+                    matchedLines.push(line);
+                }
+            }
+            else {
+                if (line.match(searchRegexp)) {
+                    matchedLines.push(line);
+                }
             }
         }
-        else {
-        if (line.match(searchRegexp)) {
-            matchedLines.push(line);
-        }
-    }
-    }
 
-    this.linesMatchedCount = matchedLines.length;
+        this.linesMatchedCount = matchedLines.length;
 
-    return matchedLines.join("\n");
+        return matchedLines.join("\n");
+    }
+    catch (e) {
+        this.setupValidationFromError(e);
+
+        return '';
+    }
 };
 
 
@@ -538,31 +580,40 @@ RegexpMatchInLineActivity.prototype = new RegexpActivity();
  */
 RegexpMatchInLineActivity.prototype.processText = function (inputText) {
 
-    var lines = this.splitTextIntoLines(inputText);
-    this.totalLinesCount = lines.length;
+    try {
 
-    if (!this.searchString) {
-        this.linesMatchedCount = this.totalLinesCount;
-        return inputText; // dont change anything when there is no regular expression
-    }
+        this.resetRegExpValidation();
+        var lines = this.splitTextIntoLines(inputText);
+        this.totalLinesCount = lines.length;
+        this.linesMatchedCount = 0;
 
-    var line;
-    var matchesInLines = [];
-
-    var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
-    var match;
-    var matchedText;
-    for (var l in lines) {
-        line = lines[l];
-        match = line.match(searchRegexp);
-
-        if (match) {
-            matchedText = match[1] ? match[1] : match[0]; // when no groups were used - then $0 is used, else first group is used
-            matchesInLines.push(matchedText);
+        if (!this.searchString) {
+            this.linesMatchedCount = this.totalLinesCount;
+            return inputText; // dont change anything when there is no regular expression
         }
+
+        var line;
+        var matchesInLines = [];
+
+        var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
+        var match;
+        var matchedText;
+        for (var l in lines) {
+            line = lines[l];
+            match = line.match(searchRegexp);
+
+            if (match) {
+                matchedText = match[1] ? match[1] : match[0]; // when no groups were used - then $0 is used, else first group is used
+                matchesInLines.push(matchedText);
+            }
+        }
+
+        this.linesMatchedCount = matchesInLines.length;
+
+        return matchesInLines.join("\n");
     }
-
-    this.linesMatchedCount = matchesInLines.length;
-
-    return matchesInLines.join("\n");
+    catch (e) {
+        this.setupValidationFromError(e);
+        return '';
+    }
 };

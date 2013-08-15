@@ -120,3 +120,15 @@ textarea
 {
     color: #999;
 }
+
+form.regExpErrors
+{
+    background-color: #ffcccc;
+}
+
+p.regExpErrorsDescrioption
+{
+    padding: 5px 0;
+    font-style: italic;
+    font-size: 12px;
+}
