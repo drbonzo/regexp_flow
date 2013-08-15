@@ -315,7 +315,31 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
     var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
     var matches = inputText.match(searchRegexp);
     this.replacementsCount = ( matches ? matches.length : 0 ); // matches is null when no match is found
-    return inputText.replace(searchRegexp, this.replaceString);
+
+    var replacement = this.replaceString;
+
+    // replace \n with newline character (same with \t - tab character)
+    // but dont replace \\n (nor \\t)
+    replacement = replacement.replace(/(\\)?(\\[nt])/, function (group1, group2) {
+        // if (\\)? group has been found then we have two values: group1 and group2 - then dont change anything, as we got \\n
+        // if this group has NOT been found - then group2 is undefined - we can replace \n with newline character
+
+        if (group2) {
+            // return unchanged string, as it found \\n
+            return group1 + group2;
+        }
+        else {
+            // replace just \n with newline character
+            if (group1 == '\\n') {
+                return "\n";
+            }
+            else {
+                return "\t";
+            }
+        }
+    });
+
+    return inputText.replace(searchRegexp, replacement);
 };
 
 
