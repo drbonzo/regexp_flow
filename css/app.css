@@ -79,11 +79,11 @@ textarea
     color: white;
 }
 
-.flowChainPanel
+.flowPanel
 {
 }
 
-.flowChainPanelContents
+.flowPanelContents
 {
     overflow-y: scroll;
 }
