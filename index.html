@@ -39,7 +39,13 @@
         </div>
         <div class="col-5 flowPanel">
             <div class="row flowHeader">
-                <h3>Flow chain ({{ flow.activities.length }})</h3>
+                <h3>Flow chain ({{ flow.activities.length }})
+                    <button type="button" class="btn btn-xs btn-default" ng-click="exportFlowToJSON()" title="Export Flow to JSON">Export</button>
+                </h3>
+            </div>
+            <div class="row exportPanel" ng-show="exportPanelVisible">
+                <textarea ng-model="exportData"></textarea>
+                <button type="button" class="btn btn-xs btn-default" ng-click="exportPanelVisible = false">Close</button>
             </div>
             <div class="row flowPanelContents">
                 <div class="col-12">

@@ -20,6 +20,9 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
         text: ''
     };
 
+    $scope.exportPanelVisible = false;
+    $scope.exportData = '';
+
     $scope.showHelp = false;
 
     /**
@@ -152,6 +155,20 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
 
     $scope.chainHasNoActivities = function () {
         return ($scope.flow.activities.length == 0);
+    };
+
+    $scope.exportFlowToJSON = function () {
+        $scope.exportPanelVisible = true;
+
+        var exportDataObject = {};
+        exportDataObject.activities = [];
+
+        for (var a in $scope.flow.activities) {
+            var activity = $scope.flow.activities[a];
+            exportDataObject.activities.push(activity);
+        }
+
+        $scope.exportData = angular.toJson(exportDataObject);
     };
 
     $scope.createSampleFlow = function () {
