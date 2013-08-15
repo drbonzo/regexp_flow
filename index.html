@@ -50,15 +50,19 @@
 
                             <div class="row">
 
-                                <div class="col-4 newActivityPanel">
+                                <div class="col-3 newActivityPanel">
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewReplaceActivity(null)">&plus;R</button>
                                     <p>Replace text with other text using regular expressions</p>
                                 </div>
-                                <div class="col-4 newActivityPanel">
+                                <div class="col-3 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewFindAllActivity(null)">&plus;FA</button>
+                                    <p>Find all matches, and return them in lines</p>
+                                </div>
+                                <div class="col-3 newActivityPanel">
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchLineActivity(null)">&plus;ML</button>
                                     <p>Leave only lines that match regular expression</p>
                                 </div>
-                                <div class="col-4 newActivityPanel">
+                                <div class="col-3 newActivityPanel">
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineActivity(null)">&plus;MIL</button>
                                     <p>Leave only lines that match regular expression and leave only matched text</p>
                                 </div>
@@ -76,6 +80,7 @@
 
                             <div class="btn-group pull-right addActivityButtonGroup">
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(activity)" title="Add Replace Activity">&plus;R</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllActivity(activity)" title="Add Replace Activity">&plus;R</button>
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)" title="Add MatchLine Activity">&plus;ML</button>
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)" title="Add MatchInLine Activity">&plus;MIL</button>
                             </div>
@@ -120,6 +125,23 @@
                                                 <li>Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.</li>
                                                 <li>\t, \n - to insert tab/newline characters</li>
                                             </ul>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpFindAllActivity">
+                                <form>
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Find all matches (Found: {{ activity.matchesCount }})</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
                                         </div>
                                     </fieldset>
                                 </form>
