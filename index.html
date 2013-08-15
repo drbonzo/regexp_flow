@@ -150,13 +150,18 @@
                                 <form>
                                     <fieldset>
                                         <div class="form-group">
-                                            <label>Get lines matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
+                                            <label>Get lines <span ng-show="activity.flagInvertMatch">not</span> matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.flagInvertMatch"> Invert match?
                                                 </label>
                                             </div>
                                             <ul ng-show="showHelp" class="help-block">

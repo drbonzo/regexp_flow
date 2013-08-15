@@ -444,6 +444,12 @@ function RegexpMatchLineActivity(searchString) {
      * @type {number}
      */
     this.linesMatchedCount = 0;
+
+    /**
+     * If true - then we discard lines matching regexp
+     * @type {boolean}
+     */
+    this.flagInvertMatch = false;
 }
 
 RegexpMatchLineActivity.prototype = new RegexpActivity();
@@ -469,9 +475,17 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
 
     for (var l in lines) {
         line = lines[l];
+
+        if (this.flagInvertMatch) {
+            if (!line.match(searchRegexp)) {
+                matchedLines.push(line);
+            }
+        }
+        else {
         if (line.match(searchRegexp)) {
             matchedLines.push(line);
         }
+    }
     }
 
     this.linesMatchedCount = matchedLines.length;
