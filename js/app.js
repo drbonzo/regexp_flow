@@ -169,6 +169,10 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
         }
 
         $scope.exportData = angular.toJson(exportDataObject);
+
+        $timeout(function () {
+            $('.exportPanel textarea:first').focus().select();
+        }, 0);
     };
 
     $scope.createSampleFlow = function () {
