@@ -3,10 +3,12 @@ html, body
     height: 100%;
 }
 
-textarea
+.inputPanel textarea
 {
     width: 95%;
     height: 350px;
+    font-family: monospace;
+    font-size: 12px;
 }
 
 .outputPanel
@@ -85,7 +87,7 @@ textarea
 
 .flowPanelContents
 {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .activity
