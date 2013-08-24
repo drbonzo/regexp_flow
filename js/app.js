@@ -203,40 +203,23 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
         var activityData;
         var activityType;
         var activity;
-        var fieldsToCopy = [];
+        var activityConstructors = {
+            'RegexpReplaceActivity': RegexpReplaceActivity,
+            'RegexpFindAllActivity': RegexpFindAllActivity,
+            'RegexpMatchLineActivity': RegexpMatchLineActivity,
+            'RegexpMatchInLineActivity': RegexpMatchInLineActivity
+        };
 
         for (var a in flowObject.activities) {
             activityData = flowObject.activities[a];
             activityType = activityData.typeName;
-            activity = null;
-            fieldsToCopy = [];
-            // FIXME assign constructor name to object
-            if (activityType == 'RegexpReplaceActivity') {
-                activity = new RegexpReplaceActivity(activityData.searchString, activityData.replaceString);
-                fieldsToCopy.push('searchFlagGlobal', 'searchFlagCaseInsensitive', 'searchFlagMultiline');
-            }
-            else if (activityType == 'RegexpFindAllActivity') {
-                activity = new RegexpFindAllActivity(activityData.searchString);
-                fieldsToCopy.push('searchFlagCaseInsensitive');
-            }
-            else if (activityType == 'RegexpMatchLineActivity') {
-                activity = new RegexpMatchLineActivity(activityData.searchString);
-                fieldsToCopy.push('searchFlagCaseInsensitive', 'flagInvertMatch');
-            }
-            else if (activityType == 'RegexpMatchInLineActivity') {
-                activity = new RegexpMatchInLineActivity(activityData.searchString);
-                fieldsToCopy.push('searchFlagCaseInsensitive');
-            }
-            else {
-                console.warn("Skipping: ");
-                console.log(activityData);
-            }
 
-            if (activity) {
-                for (var f in fieldsToCopy) {
-                    var fieldName = fieldsToCopy[f];
-                    activity[fieldName] = activityData[fieldName];
-                }
+            if (activityType in activityConstructors) {
+                // build Activity by activity type name
+                activity = new activityConstructors[activityType]('', ''); // pass empty strings
+                // fill it with data
+                activity.initializeFromObject(activityData);
+                // add to Flow
                 $scope.flow.activities.push(activity);
             }
         }
@@ -355,6 +338,24 @@ RegexpActivity.prototype.processText = function (inputText) {
     throw new Error("Please implement me!");
 };
 
+/**
+ * Initializes object from generic data object - copies specific fields between objects
+ * @param {Object} dataObject
+ */
+RegexpActivity.prototype.initializeFromObject = function (dataObject) {
+    throw new Error("Please implement me!");
+};
+
+/**
+ * @param {Object} dataObject
+ * @param {Array|string[]} propertyNames
+ */
+RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyNames) {
+    for (var p in propertyNames) {
+        var propertyName = propertyNames[p];
+        this[propertyName] = dataObject[propertyName];
+    }
+};
 
 RegexpActivity.prototype.resetRegExpValidation = function () {
     this.regexpIsValid = true;
@@ -463,6 +464,10 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
     }
 };
 
+RegexpReplaceActivity.prototype.initializeFromObject = function (dataObject) {
+    this.copyPropertiesFrom(dataObject, ['searchString', 'replaceString', 'searchFlagGlobal', 'searchFlagMultiline', 'searchFlagCaseInsensitive']);
+};
+
 /**
  * @param {string} searchString
  * @constructor
@@ -536,6 +541,10 @@ RegexpFindAllActivity.prototype.processText = function (inputText) {
 
         return '';
     }
+};
+
+RegexpFindAllActivity.prototype.initializeFromObject = function (dataObject) {
+    this.copyPropertiesFrom(dataObject, ['searchString', 'searchFlagCaseInsensitive']);
 };
 
 /**
@@ -624,6 +633,9 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
     }
 };
 
+RegexpMatchLineActivity.prototype.initializeFromObject = function (dataObject) {
+    this.copyPropertiesFrom(dataObject, ['searchString', 'searchFlagCaseInsensitive', 'flagInvertMatch']);
+};
 
 /**
  * @param {string} searchString
@@ -705,4 +717,8 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
         this.setupValidationFromError(e);
         return '';
     }
+};
+
+RegexpMatchInLineActivity.prototype.initializeFromObject = function (dataObject) {
+    this.copyPropertiesFrom(dataObject, ['searchString', 'searchFlagCaseInsensitive']);
 };
