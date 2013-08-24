@@ -3,6 +3,18 @@ html, body
     height: 100%;
 }
 
+.navbar-default
+{
+    height: 52px;
+}
+
+.navbar-brand
+{
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .inputPanel textarea
 {
     width: 95%;
@@ -97,7 +109,7 @@ html, body
 
 .MainController
 {
-    padding-top: 35px;
+    padding-top: 40px;
 }
 
 .inputTextPanel

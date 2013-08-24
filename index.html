@@ -12,12 +12,12 @@
 </head>
 <body ng-controller="MainController">
 
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top">
     <span class="navbar-brand">RegexpFlow</span>
-    <span class="btn btn-danger navbar-text">of course it's beta</span>
+    <span class="navbar-text"><span class="btn btn-xs btn-danger disabled">of course it's beta</span></span>
     <ul class="nav navbar-nav pull-right">
         <li>
-            <button type="button" class="btn btn-info btn-sm navbar-btn" ng-click="createSampleFlow()">Create sample flow</button>
+            <span class="navbar-text"><button type="button" class="btn btn-info btn-sm" ng-click="createSampleFlow()">Create sample flow</button></span>
             <!-- For buttons not residing in a <form>, add this class to vertically center buttons within a navbar. -->
         </li>
     </ul>
@@ -229,12 +229,5 @@
         </div>
     </div>
 </div>
-<!-- TODO remove?
-<div class="navbar navbar-fixed-bottom">
-    <div class="navbar-brand">
-        &copy; Created by dr_bonzo. Uses: <a href="http://jquery.com/">jQuery</a>, <a href="http://getbootstrap.com/">Twitter Bootstrap</a>, <a href="http://angularjs.org/">AngularJS</a>
-    </div>
-</div>
--->
 </body>
 </html>
