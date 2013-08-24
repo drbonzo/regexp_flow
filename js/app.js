@@ -22,6 +22,8 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
 
     $scope.exportPanelVisible = false;
     $scope.exportData = '';
+    $scope.importPanelVisible = false;
+    $scope.importData = '';
 
     $scope.showHelp = false;
 
@@ -158,7 +160,10 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
     };
 
     $scope.exportFlowToJSON = function () {
+        // show export panel
+        // hide import panel
         $scope.exportPanelVisible = true;
+        $scope.importPanelVisible = false;
 
         var exportDataObject = {};
         exportDataObject.activities = [];
@@ -174,6 +179,69 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
             $('.exportPanel textarea:first').focus().select();
         }, 0);
     };
+
+    $scope.toggleImportPanel = function () {
+        // toggle import panel
+        // hide export panel
+        // focus in textarea if showing import panel
+        $scope.importPanelVisible = !$scope.importPanelVisible;
+        $scope.exportPanelVisible = false;
+
+        if ($scope.importPanelVisible) {
+
+            $timeout(function () {
+                $('.importPanel textarea:first').focus().select();
+            }, 0);
+        }
+    };
+
+    $scope.importFlowFromJSON = function () {
+        var flowObject = angular.fromJson($scope.importData);
+
+        $scope.flow.removeAllActivities();
+
+        var activityData;
+        var activityType;
+        var activity;
+        var fieldsToCopy = [];
+
+        for (var a in flowObject.activities) {
+            activityData = flowObject.activities[a];
+            activityType = activityData.typeName;
+            activity = null;
+            fieldsToCopy = [];
+            // FIXME assign constructor name to object
+            if (activityType == 'RegexpReplaceActivity') {
+                activity = new RegexpReplaceActivity(activityData.searchString, activityData.replaceString);
+                fieldsToCopy.push('searchFlagGlobal', 'searchFlagCaseInsensitive', 'searchFlagMultiline');
+            }
+            else if (activityType == 'RegexpFindAllActivity') {
+                activity = new RegexpFindAllActivity(activityData.searchString);
+                fieldsToCopy.push('searchFlagCaseInsensitive');
+            }
+            else if (activityType == 'RegexpMatchLineActivity') {
+                activity = new RegexpMatchLineActivity(activityData.searchString);
+                fieldsToCopy.push('searchFlagCaseInsensitive', 'flagInvertMatch');
+            }
+            else if (activityType == 'RegexpMatchInLineActivity') {
+                activity = new RegexpMatchInLineActivity(activityData.searchString);
+                fieldsToCopy.push('searchFlagCaseInsensitive');
+            }
+            else {
+                console.warn("Skipping: ");
+                console.log(activityData);
+            }
+
+            if (activity) {
+                for (var f in fieldsToCopy) {
+                    var fieldName = fieldsToCopy[f];
+                    activity[fieldName] = activityData[fieldName];
+                }
+                $scope.flow.activities.push(activity);
+            }
+        }
+    };
+
 
     $scope.createSampleFlow = function () {
         $scope.input.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
