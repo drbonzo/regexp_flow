@@ -1,0 +1,13 @@
+{
+    "name": "regexp_flow"
+  , "description": "Tool for processing small texts with regular expressions: match lines, grep, replace, etc..."
+  , "version": "0.6.0"
+  , "keywords": ["regexp", "flow"]
+  , "homepage": "https://github.com/drbonzo/regexp_flow"
+  , "author": "dr_bonzo"
+  , "devDependencies": {
+      "grunt": "~0.4.1"
+    , "grunt-contrib-watch": "~0.5.1"
+    , "grunt-recess": "~0.3.3"
+  }
+}
