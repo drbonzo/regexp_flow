@@ -17,7 +17,7 @@
     <span class="navbar-text"><span class="btn btn-xs btn-danger disabled">of course it's beta</span></span>
     <ul class="nav navbar-nav pull-right">
         <li>
-            <span class="navbar-text"><button type="button" class="btn btn-info btn-sm" ng-click="createSampleFlow()">Create sample flow</button></span>
+            <span class="navbar-text"><button type="button" class="btn btn-info btn-xs" ng-click="createSampleFlow()">Create sample flow</button></span>
             <!-- For buttons not residing in a <form>, add this class to vertically center buttons within a navbar. -->
         </li>
     </ul>
@@ -106,7 +106,7 @@
                                             <label>Search for</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescrioption" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
@@ -151,7 +151,7 @@
                                             <label>Find all matches (Found: {{ activity.matchesCount }})</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescrioption" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
@@ -170,7 +170,7 @@
                                             <label>Get lines <span ng-show="activity.flagInvertMatch">not</span> matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescrioption" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
@@ -199,7 +199,7 @@
                                             <label>From each line, extract text matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescrioption" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">

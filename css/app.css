@@ -1,165 +1,121 @@
-html, body
-{
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
-
-.navbar-default
-{
-    height: 52px;
+.navbar-default {
+  height: 35px;
+  min-height: 35px;
 }
-
-.navbar-brand
-{
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
+.navbar-brand {
+  padding: 5px;
+  margin-left: 20px;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
 }
-
-.inputPanel textarea
-{
-    width: 95%;
-    height: 350px;
-    font-family: monospace;
-    font-size: 12px;
+.navbar-text {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
-
-.outputPanel
-{
-    white-space: pre-wrap;
+.inputPanel textarea {
+  width: 95%;
+  height: 350px;
+  font-family: monospace;
+  font-size: 12px;
 }
-
-.activity
-{
-    border: solid 1px #666;
+.outputPanel textarea {
+  width: 95%;
+  height: 350px;
+  font-family: monospace;
+  font-size: 12px;
 }
-
-.activity .header
-{
-    background-color: #ccc;
-    padding: 3px 5px;
-    font-size: 20px;
+.outputPanel textarea {
+  white-space: pre-wrap;
 }
-
-.activity form
-{
-    padding: 5px;
+.activity {
+  border: solid 1px #666;
+  background-color: #f0f0f0;
 }
-
-.activity + .activity
-{
-    margin-top: 10px;
+.activity .header {
+  background-color: #ccc;
+  padding: 3px 5px;
+  font-size: 20px;
 }
-
-.help-block
-{
-    font-size: 0.8em;
+.activity form {
+  padding: 5px;
 }
-
-.addActivityButtonGroup
-{
-    margin-right: 10px;
+.activity + .activity {
+  margin-top: 10px;
 }
-
-.addActivityButtonGroup button,
-.regexpHelpButton
-{
-    padding-right: 10px;
-    padding-left: 10px;
+.help-block {
+  font-size: 0.8em;
 }
-
-.blankSlateHelper
-{
-    border: dashed 1px #69C370;
+.addActivityButtonGroup {
+  margin-right: 10px;
 }
-
-.blankSlateHelper .newActivityPanel
-{
-    text-align: center;
+.addActivityButtonGroup button {
+  padding-right: 10px;
+  padding-left: 10px;
 }
-
-.blankSlateHelper .newActivityPanel p
-{
-    margin-top: 20px;
+.regexpHelpButton {
+  padding-right: 10px;
+  padding-left: 10px;
 }
-
-.blankSlateHelper .header
-{
-    font-size: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    background-color: #69C370;
-    text-align: center;
-    color: white;
+.blankSlateHelper {
+  border: dashed 1px #69C370;
 }
-
-.flowPanel
-{
+.blankSlateHelper .newActivityPanel {
+  text-align: center;
 }
-
-.flowPanelContents
-{
-    overflow-y: auto;
+.blankSlateHelper .newActivityPanel p {
+  margin-top: 20px;
 }
-
-.activity
-{
-    background-color: #f0f0f0;
+.blankSlateHelper .header {
+  font-size: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  background-color: #69C370;
+  text-align: center;
+  color: white;
 }
-
-.MainController
-{
-    padding-top: 40px;
+.flowPanelContents {
+  overflow-y: auto;
 }
-
-.inputTextPanel
-{
+.MainController {
+  padding-top: 30px;
 }
-
-.outputTextPanel
-{
+.activityDisabled .activityForm {
+  display: none;
 }
-
-.inputTextPanel textarea,
-.outputTextPanel textarea
-{
+.activityDisabled .header {
+  color: #999;
 }
-
-.activityDisabled .activityForm
-{
-    display: none;
+form .regExpErrors {
+  background-color: #ffcccc;
 }
-
-.activityDisabled .header
-{
-    color: #999;
+p.regExpErrorsDescription {
+  padding: 5px 0;
+  font-style: italic;
+  font-size: 12px;
 }
-
-form.regExpErrors
-{
-    background-color: #ffcccc;
+.exportPanel {
+  margin: 10px 0;
 }
-
-p.regExpErrorsDescrioption
-{
-    padding: 5px 0;
-    font-style: italic;
-    font-size: 12px;
+.exportPanel textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 12px;
+  font-family: monospace;
+  margin-bottom: 5px;
 }
-
-.exportPanel,
-.importPanel
-{
-    margin: 10px 0;
+.importPanel {
+  margin: 10px 0;
 }
-
-.exportPanel textarea,
-.importPanel textarea
-{
-    width: 100%;
-    height: 100px;
-    font-size: 12px;
-    font-family: monospace;
-    margin-bottom: 5px;
+.importPanel textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 12px;
+  font-family: monospace;
+  margin-bottom: 5px;
 }
-
