@@ -2,6 +2,15 @@ html,
 body {
   height: 100%;
 }
+h3 {
+  font-size: 20px;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+.input-sm {
+  height: 25px;
+}
 .navbar-default {
   height: 35px;
   min-height: 35px;
@@ -39,7 +48,7 @@ body {
 .activity .header {
   background-color: #ccc;
   padding: 3px 5px;
-  font-size: 20px;
+  font-size: 16px;
 }
 .activity form {
   padding: 5px;
@@ -72,8 +81,8 @@ body {
 }
 .blankSlateHelper .header {
   font-size: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin-bottom: 20px;
   background-color: #69C370;
   text-align: center;
@@ -90,6 +99,9 @@ body {
 }
 .activityDisabled .header {
   color: #999;
+}
+.activityForm label {
+  font-weight: normal;
 }
 form .regExpErrors {
   background-color: #ffcccc;
