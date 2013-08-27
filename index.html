@@ -12,7 +12,7 @@
 </head>
 <body ng-controller="MainController">
 
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top PageHeader">
     <span class="navbar-brand">RegexpFlow</span>
     <span class="navbar-text"><span class="btn btn-xs btn-danger disabled">of course it's beta</span></span>
     <ul class="nav navbar-nav pull-right">
@@ -24,20 +24,20 @@
 </div>
 
 
-<div class="container MainController">
+<div class="container PageContent">
     <div class="row">
-        <div class="col-lg-7 inputPanel">
-            <div class="row inputTextPanel">
+        <div class="col-lg-7 inputOutputColumn">
+            <div class="row inputPanel">
                 <h3>Input text</h3>
                 <textarea ng-model="input.text" class="inputText"></textarea>
             </div>
-            <div class="row outputTextPanel">
+            <div class="row outputPanel">
                 <h3>Output text</h3>
 
                 <div class="outputPanel"><textarea ng-model="output.text" class="outputText"></textarea></div>
             </div>
         </div>
-        <div class="col-lg-5 flowPanel">
+        <div class="col-lg-5 flowColumn">
             <div class="row flowHeader">
                 <h3>Flow chain ({{ flow.activities.length }})
                     <button type="button" class="btn btn-xs btn-default" ng-click="toggleImportPanel()" title="Import Flow from JSON">Import</button>
@@ -53,10 +53,10 @@
                 <button type="button" class="btn btn-xs btn-info" ng-click="importFlowFromJSON()">Import</button>
                 <button type="button" class="btn btn-xs btn-default" ng-click="importPanelVisible = false">Close</button>
             </div>
-            <div class="row flowPanelContents">
+            <div class="row flowColumnContents">
                 <div class="col-lg-12">
-                    <div class="row" ng-show="chainHasNoActivities()">
-                        <div class="col-lg-12 blankSlateHelper">
+                    <div class="row blankSlate" ng-show="chainHasNoActivities()">
+                        <div class="col-lg-12">
                             <div class="row">
                                 <div class="header">Add new Activity</div>
                             </div>
@@ -106,7 +106,7 @@
                                             <label>Search for</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
@@ -151,7 +151,7 @@
                                             <label>Find all matches (Found: {{ activity.matchesCount }})</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
@@ -170,7 +170,7 @@
                                             <label>Get lines <span ng-show="activity.flagInvertMatch">not</span> matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
@@ -199,7 +199,7 @@
                                             <label>From each line, extract text matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
                                             <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorsDescription" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">

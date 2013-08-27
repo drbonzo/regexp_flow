@@ -2,8 +2,8 @@ $(document).ready(function () {
 
     $(window).resize(function () {
         var wh = $(window).height() - 110;
-        $('.flowPanelContents').height(wh);
-        $('.inputPanel textarea').height(parseInt(wh * 0.45));
+        $('.flowColumnContents').height(wh);
+        $('.inputOutputColumn textarea').height(parseInt(wh * 0.45)); // FIXME
     });
 
     $(window).resize();

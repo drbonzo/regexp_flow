@@ -1,210 +1,207 @@
+@import "fixes.less";
+
+@activityHeaderFontSize: 16px;
+
 html, body
 {
-  height: 100%;
+    height: 100%;
 }
 
-h3
+.PageContent
 {
-  font-size: 20px;
+    padding-top: 30px;
+    .inputOutputColumn;
+    .flowColumn
+    {
+        .flowColumn;
+    }
 }
 
-.form-group
-{
-  margin-bottom: 5px;
-}
+.inputOutputColumn() {
 
-.input-sm
-{
-  height: 25px;
-}
+    .inputOutputColumn
+    {
+        .inputPanel
+        {
+            .textareaWithText;
+        }
 
-.navbar-default
-{
-  height: 35px;
-  min-height: 35px;
-}
-
-.navbar-brand
-{
-  padding: 5px;
-  margin-left: 20px;
-  color: black;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.navbar-text
-{
-  margin-top: 5px;
-  margin-bottom: 5px;
+        .outputPanel
+        {
+            .textareaWithText;
+        }
+    }
 }
 
 .textareaWithText() {
 
-  textarea
-  {
-    width: 95%;
-    height: 350px;
-    font-family: monospace;
-    font-size: 12px;
-  }
-}
-
-.inputPanel
-{
-  .textareaWithText;
-}
-
-.outputPanel
-{
-  .textareaWithText;
-
-  textarea
-  {
-    white-space: pre-wrap;
-  }
-}
-
-.activity
-{
-  border: solid 1px #666;
-  background-color: #f0f0f0;
-
-  .header
-  {
-    background-color: #ccc;
-    padding: 3px 5px;
-    font-size: 16px;
-  }
-
-  form
-  {
-    padding: 5px;
-  }
-  &+.activity
-  {
-    margin-top: 10px;
-  }
-}
-
-.help-block
-{
-  font-size: 0.8em;
-}
-
-.addActivityButtonGroup
-{
-  margin-right: 10px;
-
-  button
-  {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-}
-
-.regexpHelpButton
-{
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-.blankSlateHelper
-{
-  border: dashed 1px #69C370;
-
-  .newActivityPanel
-  {
-    text-align: center;
-    p
+    textarea
     {
-      margin-top: 20px;
+        width: 95%;
+        height: 350px;
+        font-family: monospace;
+        font-size: 12px;
+        white-space: pre-wrap;
     }
-  }
-
-  .header
-  {
-    font-size: 20px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-    background-color: #69C370;
-    text-align: center;
-    color: white;
-  }
 }
 
-.flowPanel
-{
+.flowColumn() {
+
+    .flowHeader
+    {
+
+    }
+
+    .exportPanel;
+
+    .importPanel;
+
+    .flowColumnContents
+    {
+        overflow-y: auto;
+    }
+
+    .blankSlate
+    {
+        @blankSlateColor: #69C370;
+        border: dashed 1px @blankSlateColor;
+
+        .newActivityPanel
+        {
+            text-align: center;
+            p
+            {
+                margin-top: 20px;
+            }
+        }
+
+        .header
+        {
+            font-size: @activityHeaderFontSize;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            background-color: @blankSlateColor;
+            text-align: center;
+            color: white;
+        }
+    }
+
+    .activity
+    {
+        .activity;
+    }
 }
 
-.flowPanelContents
-{
-  overflow-y: auto;
-}
+.activity() {
 
-.MainController
-{
-  padding-top: 30px;
-}
+    border: solid 1px #666;
+    background-color: #f0f0f0;
 
-.activityDisabled
-{
-  .activityForm
-  {
-    display: none;
-  }
+    &+.activity
+    {
+        margin-top: 10px;
+    }
 
-  .header
-  {
-    color: #999;
-  }
+    &.activityDisabled
+    {
+        .activityForm
+        {
+            display: none;
+        }
 
-}
+        .header
+        {
+            color: #999;
+        }
+    }
 
-.activityForm
-{
-  label
-  {
-    font-weight: normal;
-  }
-}
+    .header
+    {
+        font-size: @activityHeaderFontSize;
+        background-color: #ccc;
+        padding: 3px 5px;
 
-form
-{
-  .regExpErrors
-  {
-    background-color: #ffcccc;
-  }
-}
+        .addActivityButtonGroup
+        {
+            margin-right: 10px;
 
-p.regExpErrorsDescription /* FIXME name */
-{
-  padding: 5px 0;
-  font-style: italic;
-  font-size: 12px;
-}
+            button
+            {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+        }
 
-.importExportPanel() {
-  margin: 10px 0;
+        .regexpHelpButton
+        {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+    }
 
-  textarea
-  {
-    width: 100%;
-    height: 100px;
-    font-size: 12px;
-    font-family: monospace;
-    margin-bottom: 5px;
-  }
+    form
+    {
+        padding: 5px;
+    }
+
+    .help-block
+    {
+        font-size: 0.8em;
+    }
+
+    .activityForm
+    {
+        label
+        {
+            font-weight: normal;
+        }
+
+        form
+        {
+            &.regExpErrors
+            {
+                background-color: #ffcccc;
+            }
+
+            p.regExpErrorMessages
+            {
+                padding: 5px 0;
+                font-style: italic;
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+    }
 
 }
 
 .exportPanel
 {
-  .importExportPanel;
+    .exportPanel
+    {
+        .importExportPanel;
+    }
 }
 
 .importPanel
 {
-  .importExportPanel;
+    .importPanel
+    {
+        .importExportPanel;
+    }
 }
+
+.importExportPanel() {
+    margin: 10px 0;
+
+    textarea
+    {
+        width: 100%;
+        height: 100px;
+        font-size: 12px;
+        font-family: monospace;
+        margin-bottom: 5px;
+    }
+}
+

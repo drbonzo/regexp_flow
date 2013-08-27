@@ -1,0 +1,24 @@
+h3 {
+  font-size: 20px;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+.input-sm {
+  height: 25px;
+}
+.navbar-default {
+  height: 35px;
+  min-height: 35px;
+}
+.navbar-brand {
+  padding: 5px;
+  margin-left: 20px;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+}
+.navbar-text {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

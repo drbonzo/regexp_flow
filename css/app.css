@@ -1,7 +1,3 @@
-html,
-body {
-  height: 100%;
-}
 h3 {
   font-size: 20px;
 }
@@ -26,105 +22,129 @@ h3 {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.inputPanel textarea {
-  width: 95%;
-  height: 350px;
-  font-family: monospace;
-  font-size: 12px;
+html,
+body {
+  height: 100%;
 }
-.outputPanel textarea {
-  width: 95%;
-  height: 350px;
-  font-family: monospace;
-  font-size: 12px;
-}
-.outputPanel textarea {
-  white-space: pre-wrap;
-}
-.activity {
-  border: solid 1px #666;
-  background-color: #f0f0f0;
-}
-.activity .header {
-  background-color: #ccc;
-  padding: 3px 5px;
-  font-size: 16px;
-}
-.activity form {
-  padding: 5px;
-}
-.activity + .activity {
-  margin-top: 10px;
-}
-.help-block {
-  font-size: 0.8em;
-}
-.addActivityButtonGroup {
-  margin-right: 10px;
-}
-.addActivityButtonGroup button {
-  padding-right: 10px;
-  padding-left: 10px;
-}
-.regexpHelpButton {
-  padding-right: 10px;
-  padding-left: 10px;
-}
-.blankSlateHelper {
-  border: dashed 1px #69C370;
-}
-.blankSlateHelper .newActivityPanel {
-  text-align: center;
-}
-.blankSlateHelper .newActivityPanel p {
-  margin-top: 20px;
-}
-.blankSlateHelper .header {
-  font-size: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-bottom: 20px;
-  background-color: #69C370;
-  text-align: center;
-  color: white;
-}
-.flowPanelContents {
-  overflow-y: auto;
-}
-.MainController {
+.PageContent {
   padding-top: 30px;
 }
-.activityDisabled .activityForm {
-  display: none;
-}
-.activityDisabled .header {
-  color: #999;
-}
-.activityForm label {
-  font-weight: normal;
-}
-form .regExpErrors {
-  background-color: #ffcccc;
-}
-p.regExpErrorsDescription {
-  padding: 5px 0;
-  font-style: italic;
+.PageContent .inputOutputColumn .inputPanel textarea {
+  width: 95%;
+  height: 350px;
+  font-family: monospace;
   font-size: 12px;
+  white-space: pre-wrap;
 }
-.exportPanel {
+.PageContent .inputOutputColumn .outputPanel textarea {
+  width: 95%;
+  height: 350px;
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+.PageContent .flowColumn .exportPanel {
   margin: 10px 0;
 }
-.exportPanel textarea {
+.PageContent .flowColumn .exportPanel textarea {
   width: 100%;
   height: 100px;
   font-size: 12px;
   font-family: monospace;
   margin-bottom: 5px;
 }
-.importPanel {
+.PageContent .flowColumn .importPanel {
   margin: 10px 0;
 }
-.importPanel textarea {
+.PageContent .flowColumn .importPanel textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 12px;
+  font-family: monospace;
+  margin-bottom: 5px;
+}
+.PageContent .flowColumn .flowColumnContents {
+  overflow-y: auto;
+}
+.PageContent .flowColumn .blankSlate {
+  border: dashed 1px #69c370;
+}
+.PageContent .flowColumn .blankSlate .newActivityPanel {
+  text-align: center;
+}
+.PageContent .flowColumn .blankSlate .newActivityPanel p {
+  margin-top: 20px;
+}
+.PageContent .flowColumn .blankSlate .header {
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  background-color: #69c370;
+  text-align: center;
+  color: white;
+}
+.PageContent .flowColumn .activity {
+  border: solid 1px #666;
+  background-color: #f0f0f0;
+}
+.PageContent .flowColumn .activity + .activity {
+  margin-top: 10px;
+}
+.PageContent .flowColumn .activity.activityDisabled .activityForm {
+  display: none;
+}
+.PageContent .flowColumn .activity.activityDisabled .header {
+  color: #999;
+}
+.PageContent .flowColumn .activity .header {
+  font-size: 16px;
+  background-color: #ccc;
+  padding: 3px 5px;
+}
+.PageContent .flowColumn .activity .header .addActivityButtonGroup {
+  margin-right: 10px;
+}
+.PageContent .flowColumn .activity .header .addActivityButtonGroup button {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.PageContent .flowColumn .activity .header .regexpHelpButton {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.PageContent .flowColumn .activity form {
+  padding: 5px;
+}
+.PageContent .flowColumn .activity .help-block {
+  font-size: 0.8em;
+}
+.PageContent .flowColumn .activity .activityForm label {
+  font-weight: normal;
+}
+.PageContent .flowColumn .activity .activityForm form.regExpErrors {
+  background-color: #ffcccc;
+}
+.PageContent .flowColumn .activity .activityForm form p.regExpErrorMessages {
+  padding: 5px 0;
+  font-style: italic;
+  font-size: 12px;
+  font-weight: bold;
+}
+.exportPanel .exportPanel {
+  margin: 10px 0;
+}
+.exportPanel .exportPanel textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 12px;
+  font-family: monospace;
+  margin-bottom: 5px;
+}
+.importPanel .importPanel {
+  margin: 10px 0;
+}
+.importPanel .importPanel textarea {
   width: 100%;
   height: 100px;
   font-size: 12px;
