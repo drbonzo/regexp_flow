@@ -1,11 +1,16 @@
 $(document).ready(function () {
 
     $(window).resize(function () {
-        var wh = $(window).height() - 35;
-        $('.flowColumnContents').height(wh);
-        var ph = parseInt(wh * 0.49);
-        $('.inputOutputColumn .row').height(ph + 'px');
-        $('.inputOutputColumn .row textarea').height((ph - 52) + 'px');
+        var columnHeaderHeight = 52;
+        var navbarHeight = 35;
+
+        var baseHeight = $(window).height() - navbarHeight;
+
+        var panelHeight = parseInt(baseHeight * 0.49);
+        $('.inputOutputColumn .row').height(panelHeight + 'px');
+        $('.inputOutputColumn .row textarea').height((panelHeight - columnHeaderHeight) + 'px');
+
+        $('.flowColumnContents').height(parseInt(baseHeight - columnHeaderHeight) * 0.98);
     });
 
     $(window).resize();
