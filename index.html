@@ -47,7 +47,7 @@
             </div>
             <div class="row importPanel" ng-show="importPanelVisible">
                 <textarea ng-model="importData"></textarea>
-                <button type="button" class="btn btn-xs btn-info" ng-click="importFlowFromJSON()">Import</button>
+                <button type="button" class="btn btn-xs btn-info" ng-click="importFlowFromJSON()" ng-disabled="!importData">Import</button>
                 <button type="button" class="btn btn-xs btn-default" ng-click="importPanelVisible = false">Close</button>
             </div>
             <div class="row flowChain">

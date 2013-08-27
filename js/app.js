@@ -203,9 +203,15 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
     };
 
     $scope.importFlowFromJSON = function () {
-        var flowObject = angular.fromJson($scope.importData);
 
         $scope.flow.removeAllActivities();
+
+        if ($scope.importData == '' || !$scope.importData) {
+            return;
+        }
+
+        var flowObject = angular.fromJson($scope.importData);
+
 
         var activityData;
         var activityType;
