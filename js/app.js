@@ -1,9 +1,11 @@
 $(document).ready(function () {
 
     $(window).resize(function () {
-        var wh = $(window).height() - 110;
+        var wh = $(window).height() - 35;
         $('.flowColumnContents').height(wh);
-        $('.inputOutputColumn textarea').height(parseInt(wh * 0.45)); // FIXME
+        var ph = parseInt(wh * 0.49);
+        $('.inputOutputColumn .row').height(ph + 'px');
+        $('.inputOutputColumn .row textarea').height((ph - 52) + 'px');
     });
 
     $(window).resize();
