@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 var regexpFlow = angular.module('RegexpFlowApplication', []);
 
-regexpFlow.controller('MainController', function ($scope, $timeout) {
+regexpFlow.controller('MainController', function ($scope, $timeout, $http) {
     $scope.input = {
         text: ''
     };
@@ -38,6 +38,14 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
      * @type {RegexpFlow}
      */
     $scope.flow = new RegexpFlow();
+
+	// FIXME if URL is present with param - then load it and process
+	// relative to current URL
+	$http.get('php_app/app/public/flow/Cy4ks')
+	.success(function(data, status, headers, config) {
+		$scope.flow.removeAllActivities();
+		$scope.doImportFlowFromObject(data);
+	});
 
     var processInputTextHandler = function () {
 
@@ -212,7 +220,10 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
 
         var flowObject = angular.fromJson($scope.importData);
 
+		$scope.doImportFlowFromObject(flowObject);
+    };
 
+	$scope.doImportFlowFromObject = function(flowObject){
         var activityData;
         var activityType;
         var activity;
@@ -236,8 +247,7 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
                 $scope.flow.activities.push(activity);
             }
         }
-    };
-
+	};
 
     $scope.createSampleFlow = function () {
         $scope.input.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
