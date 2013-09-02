@@ -74,5 +74,16 @@ RegexpFindAllActivity.prototype.processText = function (inputText) {
 };
 
 RegexpFindAllActivity.prototype.initializeFromObject = function (dataObject) {
-    this.copyPropertiesFrom(dataObject, ['searchString', 'searchFlagCaseInsensitive']);
+    this.copyPropertiesFrom(dataObject, this.getSerializablePropertyNames());
+};
+
+RegexpFindAllActivity.prototype.getExportObject = function () {
+    return this.extractPropertiesToObject(this.getSerializablePropertyNames());
+};
+
+/**
+ * @returns {Array|string[]}
+ */
+RegexpFindAllActivity.prototype.getSerializablePropertyNames = function () {
+    return ['searchString', 'searchFlagCaseInsensitive'];
 };

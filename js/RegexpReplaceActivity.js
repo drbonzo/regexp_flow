@@ -95,5 +95,16 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
 };
 
 RegexpReplaceActivity.prototype.initializeFromObject = function (dataObject) {
-    this.copyPropertiesFrom(dataObject, ['searchString', 'replaceString', 'searchFlagGlobal', 'searchFlagMultiline', 'searchFlagCaseInsensitive']);
+    this.copyPropertiesFrom(dataObject, this.getSerializablePropertyNames());
+};
+
+RegexpReplaceActivity.prototype.getExportObject = function () {
+    return this.extractPropertiesToObject(this.getSerializablePropertyNames());
+};
+
+/**
+ * @returns {Array|string[]}
+ */
+RegexpReplaceActivity.prototype.getSerializablePropertyNames = function () {
+    return ['searchString', 'replaceString', 'searchFlagGlobal', 'searchFlagMultiline', 'searchFlagCaseInsensitive'];
 };

@@ -60,6 +60,14 @@ RegexpActivity.prototype.initializeFromObject = function (dataObject) {
 };
 
 /**
+ * Returns object to be serialized during export operation
+ * @return {Object}
+ */
+RegexpActivity.prototype.getExportObject = function () { // FIXME rename to something like serializableObject
+    throw new Error("Please implement me!");
+};
+
+/**
  * @param {Object} dataObject
  * @param {Array|string[]} propertyNames
  */
@@ -68,6 +76,23 @@ RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyName
         var propertyName = propertyNames[p];
         this[propertyName] = dataObject[propertyName];
     }
+};
+
+/**
+ * Builds new object, by copying some properties of this object.
+ *
+ * @param {Array|string[]} propertyNames
+ * @return {Object}
+ */
+RegexpActivity.prototype.extractPropertiesToObject = function (propertyNames) {
+    var retval = {};
+
+    for (var p in propertyNames) {
+        var propertyName = propertyNames[p];
+        retval[propertyName] = this[propertyName];
+    }
+
+    return retval;
 };
 
 RegexpActivity.prototype.resetRegExpValidation = function () {

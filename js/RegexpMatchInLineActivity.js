@@ -81,5 +81,16 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
 };
 
 RegexpMatchInLineActivity.prototype.initializeFromObject = function (dataObject) {
-    this.copyPropertiesFrom(dataObject, ['searchString', 'searchFlagCaseInsensitive']);
+    this.copyPropertiesFrom(dataObject, this.getSerializablePropertyNames());
+};
+
+RegexpMatchInLineActivity.prototype.getExportObject = function () {
+    return this.extractPropertiesToObject(this.getSerializablePropertyNames());
+};
+
+/**
+ * @returns {Array|string[]}
+ */
+RegexpMatchInLineActivity.prototype.getSerializablePropertyNames = function () {
+    return ['searchString', 'searchFlagCaseInsensitive'];
 };

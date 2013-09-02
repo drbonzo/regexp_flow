@@ -177,7 +177,7 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
 
         for (var a in $scope.flow.activities) {
             var activity = $scope.flow.activities[a];
-            exportDataObject.activities.push(activity);
+            exportDataObject.activities.push(activity.getExportObject());
         }
 
         $scope.exportData = angular.toJson(exportDataObject);
