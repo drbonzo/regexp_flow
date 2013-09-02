@@ -181,7 +181,7 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
         }
 
         exportDataObject.inputText = $scope.input.text;
-        
+
         $scope.exportData = angular.toJson(exportDataObject);
 
         $timeout(function () {
@@ -237,6 +237,11 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
                 // add to Flow
                 $scope.flow.activities.push(activity);
             }
+        }
+
+        if (!!flowObject.inputText) {
+            // ovewrite input text only when it is given (not empty)
+            $scope.input.text = flowObject.inputText;
         }
     };
 
