@@ -87,6 +87,8 @@ RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyName
 RegexpActivity.prototype.extractPropertiesToObject = function (propertyNames) {
     var retval = {};
 
+    propertyNames.push('typeName'); // always added
+
     for (var p in propertyNames) {
         var propertyName = propertyNames[p];
         retval[propertyName] = this[propertyName];
