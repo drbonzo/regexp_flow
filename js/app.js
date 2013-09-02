@@ -212,36 +212,43 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
             return;
         }
 
-        var flowObject = angular.fromJson($scope.importData);
+        try {
+
+            var flowObject = angular.fromJson($scope.importData);
 
 
-        var activityData;
-        var activityType;
-        var activity;
-        var activityConstructors = {
-            'RegexpReplaceActivity': RegexpReplaceActivity,
-            'RegexpFindAllActivity': RegexpFindAllActivity,
-            'RegexpMatchLineActivity': RegexpMatchLineActivity,
-            'RegexpMatchInLineActivity': RegexpMatchInLineActivity
-        };
+            var activityData;
+            var activityType;
+            var activity;
+            var activityConstructors = {
+                'RegexpReplaceActivity': RegexpReplaceActivity,
+                'RegexpFindAllActivity': RegexpFindAllActivity,
+                'RegexpMatchLineActivity': RegexpMatchLineActivity,
+                'RegexpMatchInLineActivity': RegexpMatchInLineActivity
+            };
 
-        for (var a in flowObject.activities) {
-            activityData = flowObject.activities[a];
-            activityType = activityData.typeName;
+            for (var a in flowObject.activities) {
+                activityData = flowObject.activities[a];
+                activityType = activityData.typeName;
 
-            if (activityType in activityConstructors) {
-                // build Activity by activity type name
-                activity = new activityConstructors[activityType]('', ''); // pass empty strings
-                // fill it with data
-                activity.initializeFromObject(activityData);
-                // add to Flow
-                $scope.flow.activities.push(activity);
+                if (activityType in activityConstructors) {
+                    // build Activity by activity type name
+                    activity = new activityConstructors[activityType]('', ''); // pass empty strings
+                    // fill it with data
+                    activity.initializeFromObject(activityData);
+                    // add to Flow
+                    $scope.flow.activities.push(activity);
+                }
+            }
+
+            if (!!flowObject.inputText) {
+                // ovewrite input text only when it is given (not empty)
+                $scope.input.text = flowObject.inputText;
             }
         }
-
-        if (!!flowObject.inputText) {
-            // ovewrite input text only when it is given (not empty)
-            $scope.input.text = flowObject.inputText;
+        catch (e) {
+            // In case of JSON errors - highlight the form with read color
+            $('.importPanel textarea').effect('highlight', {color: 'red'});
         }
     };
 
