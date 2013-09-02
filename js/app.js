@@ -180,6 +180,8 @@ regexpFlow.controller('MainController', function ($scope, $timeout) {
             exportDataObject.activities.push(activity.getExportObject());
         }
 
+        exportDataObject.inputText = $scope.input.text;
+        
         $scope.exportData = angular.toJson(exportDataObject);
 
         $timeout(function () {
