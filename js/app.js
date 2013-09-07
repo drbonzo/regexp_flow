@@ -348,7 +348,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
                 $scope.flow.removeAllActivities();
                 $scope.doImportFlowFromObject(data);
             }).error(function (data, status, headers, config) {
-                $scope.statusMessages.push({cssClass: 'alert-danger', message: 'Flow ' + $routeParams.flowId + ' not found'});
+                $scope.statusMessages.push({cssClass: 'danger', message: 'Flow ' + $routeParams.flowId + ' not found. Showing empty Flow'});
             });
     }
 

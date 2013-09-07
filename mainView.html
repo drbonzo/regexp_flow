@@ -6,8 +6,8 @@
 
 
 <div class="container PageContent">
-<div class="row">
-    <div class="alert alert-dismissable" ng-repeat="statusMessage in statusMessages" ng-class="statusMessage.cssClass" ng-click="dismissStatusMessage(statusMessage)">
+<div class="row statusMessages" ng-show="statusMessages.length > 0">
+    <div class="alert alert-dismissable" ng-repeat="statusMessage in statusMessages" ng-class="'alert-' + statusMessage.cssClass" ng-click="dismissStatusMessage(statusMessage)">
         {{ statusMessage.message }}
         <button type="button" class="close" ng-click="dismissStatusMessage(statusMessage)">&times;</button>
     </div>

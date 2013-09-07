@@ -1,5 +1,6 @@
 h3 {
   font-size: 20px;
+  margin-top: 10px;
 }
 .form-group {
   margin-bottom: 5px;
@@ -150,5 +151,11 @@ body {
   height: 100px;
   font-size: 12px;
   font-family: monospace;
+  margin-bottom: 5px;
+}
+.statusMessages {
+  margin-top: 5px;
+}
+.statusMessages .alert {
   margin-bottom: 5px;
 }
