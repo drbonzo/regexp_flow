@@ -7,6 +7,13 @@
 
 <div class="container PageContent">
 <div class="row">
+    <div class="alert alert-dismissable" ng-repeat="statusMessage in statusMessages" ng-class="statusMessage.cssClass" ng-click="dismissStatusMessage(statusMessage)">
+        {{ statusMessage.message }}
+        <button type="button" class="close" ng-click="dismissStatusMessage(statusMessage)">&times;</button>
+    </div>
+</div>
+
+<div class="row">
 <div class="col-lg-7 inputOutputColumn">
     <div class="row inputPanel">
         <h3>Foobar: {{ foobar }}</h3>

@@ -55,6 +55,12 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      */
     $scope.flow = new RegexpFlow();
 
+    /**
+     * @type {Array|object[]}
+     * { cssClass : string, message: string }
+     */
+    $scope.statusMessages = [];
+
     var processInputTextHandler = function () {
 
         var inputText = $scope.input.text || '';
@@ -86,6 +92,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      */
     $scope.removeActivity = function (activityToRemove) {
 
+        // FIXME DRY - helper for removing items from array
         var activities = $scope.flow.activities;
         var indexToRemove = -1;
         for (var a in activities) {
@@ -316,6 +323,22 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         }
     };
 
+    // FIXME DRY - helper for removing items from array
+    $scope.dismissStatusMessage = function (statusMessageToRemove) {
+        var statusMessages = $scope.statusMessages;
+        var indexToRemove = -1;
+        for (var a in statusMessages) {
+            if (statusMessages[a] == statusMessageToRemove) {
+                indexToRemove = a;
+                break;
+            }
+        }
+
+        if (indexToRemove >= 0) {
+            statusMessages.splice(indexToRemove, 1); // remove item at that index
+        }
+    };
+
     var flowIdIsGiven = !!$routeParams.flowId;
 
     if (flowIdIsGiven) {
@@ -324,6 +347,8 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             .success(function (data, status, headers, config) {
                 $scope.flow.removeAllActivities();
                 $scope.doImportFlowFromObject(data);
+            }).error(function (data, status, headers, config) {
+                $scope.statusMessages.push({cssClass: 'alert-danger', message: 'Flow ' + $routeParams.flowId + ' not found'});
             });
     }
 
