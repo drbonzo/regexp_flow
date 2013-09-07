@@ -18,7 +18,23 @@ $(document).ready(function () {
 
 var regexpFlow = angular.module('RegexpFlowApplication', []);
 
-regexpFlow.controller('MainController', function ($scope, $timeout, $http) {
+regexpFlow.config(['$routeProvider', function ($routeProvider) {
+
+    // Small hack:
+    // We use just one view and we want the value of flowId param
+    $routeProvider.
+        // load flow by flow ID
+        when('/flow/:flowId', {controller: 'MainController', templateUrl: 'mainView.html'}).
+        // show empty flow
+        when('/', {controller: 'MainController', templateUrl: 'mainView.html'}).
+        // default
+        otherwise({redirectTo: '/'});
+}]);
+
+/**
+ * $routeParams has flowId which may be undefined
+ */
+regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', function ($scope, $timeout, $http, $routeParams) {
     $scope.input = {
         text: ''
     };
@@ -38,14 +54,6 @@ regexpFlow.controller('MainController', function ($scope, $timeout, $http) {
      * @type {RegexpFlow}
      */
     $scope.flow = new RegexpFlow();
-
-    // FIXME if URL is present with param - then load it and process
-    // relative to current URL
-    $http.get('php_app/app/public/flow/Cy4ks')
-        .success(function (data, status, headers, config) {
-            $scope.flow.removeAllActivities();
-            $scope.doImportFlowFromObject(data);
-        });
 
     var processInputTextHandler = function () {
 
@@ -307,7 +315,19 @@ regexpFlow.controller('MainController', function ($scope, $timeout, $http) {
             activities.push(t3);
         }
     };
-});
+
+    var flowIdIsGiven = !!$routeParams.flowId;
+
+    if (flowIdIsGiven) {
+        // Load saved flow from backend
+        $http.get('php_app/app/public/flow/' + $routeParams.flowId)
+            .success(function (data, status, headers, config) {
+                $scope.flow.removeAllActivities();
+                $scope.doImportFlowFromObject(data);
+            });
+    }
+
+}]);
 
 
 function RegexpFlow() {

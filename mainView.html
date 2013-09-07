@@ -1,0 +1,217 @@
+<div class="navbar navbar-default navbar-fixed-top PageHeader">
+    <span class="navbar-brand">RegexpFlow</span>
+    <span class="navbar-text"><span class="btn btn-xs btn-danger disabled">of course it's beta</span></span>
+    <span class="navbar-text pull-right"><button type="button" class="btn btn-info btn-xs" ng-click="createSampleFlow()">Create sample flow</button></span>
+</div>
+
+
+<div class="container PageContent">
+<div class="row">
+<div class="col-lg-7 inputOutputColumn">
+    <div class="row inputPanel">
+        <h3>Foobar: {{ foobar }}</h3>
+
+        <h3>Input text</h3>
+        <textarea ng-model="input.text" class="inputText"></textarea>
+    </div>
+    <div class="row outputPanel">
+        <h3>Output text</h3>
+
+        <div class="outputPanel"><textarea ng-model="output.text" class="outputText"></textarea></div>
+    </div>
+</div>
+<div class="col-lg-5 flowColumn">
+    <div class="row flowHeader">
+        <h3>Flow chain ({{ flow.activities.length }})
+            <button type="button" class="btn btn-xs btn-default" ng-click="toggleImportPanel()" title="Import Flow from JSON">Import</button>
+            <button type="button" class="btn btn-xs btn-default" ng-click="exportFlowToJSON()" title="Export Flow to JSON" ng-show="flow.activities.length > 0">Export</button>
+        </h3>
+    </div>
+    <div class="row flowColumnContents">
+        <div class="col-lg-12">
+            <div class="row exportPanel" ng-show="exportPanelVisible">
+                <textarea ng-model="exportData"></textarea>
+                <button type="button" class="btn btn-xs btn-default" ng-click="exportPanelVisible = false">Close</button>
+            </div>
+            <div class="row importPanel" ng-show="importPanelVisible">
+                <textarea ng-model="importData"></textarea>
+                <button type="button" class="btn btn-xs btn-info" ng-click="importFlowFromJSON()" ng-disabled="!importData">Import</button>
+                <button type="button" class="btn btn-xs btn-default" ng-click="importPanelVisible = false">Close</button>
+            </div>
+            <div class="row flowChain">
+                <div class="col-lg-12">
+                    <div class="row blankSlate" ng-show="chainHasNoActivities()">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="header">Add new Activity</div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-3 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewReplaceActivity(null)">&plus;R</button>
+                                    <p>Replace text with other text using regular expressions</p>
+                                </div>
+                                <div class="col-lg-3 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewFindAllActivity(null)">&plus;FA</button>
+                                    <p>Find all matches, and return them in lines</p>
+                                </div>
+                                <div class="col-lg-3 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchLineActivity(null)">&plus;ML</button>
+                                    <p>Leave only lines that match regular expression</p>
+                                </div>
+                                <div class="col-lg-3 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineActivity(null)">&plus;MIL</button>
+                                    <p>Leave only lines that match regular expression and leave only matched text</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row activity activity_{{ $index }}" ng-repeat="activity in flow.activities" ng-class="{ activityDisabled: !activity.isEnabled }">
+                        <div class="header">
+                            {{ $index+1 }}. {{ activity.displayName }}
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
+                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)" title="Disable/enable activity"><span class="glyphicon glyphicon-ban-circle"></span></button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)" title="Remove activity">&times;</button>
+                            </div>
+
+                            <div class="btn-group pull-right addActivityButtonGroup">
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(activity)" title="Add Replace Activity">&plus;R</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllActivity(activity)" title="Add FindAll Activity">&plus;FA</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)" title="Add MatchLine Activity">&plus;ML</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)" title="Add MatchInLine Activity">&plus;MIL</button>
+                            </div>
+                        </div>
+                        <div class="activityForm" ng-switch="activity.typeName">
+                            <div ng-switch-when="RegexpReplaceActivity">
+                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Search for</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagGlobal"> Global
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagMultiline"> Multiline
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>and replace with. ({{ activity.replacementsCount }} replacements)</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.replaceString" placeholder="replacement string"/>
+                                            <ul ng-show="showHelp" class="help-block">
+                                                <li>$1, $2, $3 - for groups.</li>
+                                                <li>$$ Inserts a "$".</li>
+                                                <li>$& Inserts the matched substring.</li>
+                                                <li>$` Inserts the portion of the string that precedes the matched substring.</li>
+                                                <li>$' Inserts the portion of the string that follows the matched substring.</li>
+                                                <li>$n or $nn</li>
+                                                <li>Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.</li>
+                                                <li>\t, \n - to insert tab/newline characters</li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpFindAllActivity">
+                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Find all matches (Found: {{ activity.matchesCount }})</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpMatchLineActivity">
+                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Get lines <span ng-show="activity.flagInvertMatch">not</span> matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.flagInvertMatch"> Invert match?
+                                                </label>
+                                            </div>
+                                            <ul ng-show="showHelp" class="help-block">
+                                                <li>returns whole lines that are matched by regular expression</li>
+                                                <li>if 'invert' flag is checked - then returns lines that DO NOT match regular expression</li>
+                                                <li>lines are returned, joined with \n character - not their original newline character!</li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpMatchInLineActivity">
+                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>From each line, extract text matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+
+                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <ul ng-show="showHelp" class="help-block">
+                                            <li>checks each line of input - if it matches regular expression</li>
+                                            <li>if line matches regular expression - then the match from regular expression is being returned
+                                                <ul>
+                                                    <li>if regular expression had no groups - then full match is being returned ($&/$0)</li>
+                                                    <li>if regular expression did had groups - then only first group is being returned ($1)</li>
+                                                </ul>
+                                            </li>
+                                            <li>if line does not match - then it is being ommited in result</li>
+                                        </ul>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
