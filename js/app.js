@@ -39,13 +39,13 @@ regexpFlow.controller('MainController', function ($scope, $timeout, $http) {
      */
     $scope.flow = new RegexpFlow();
 
-	// FIXME if URL is present with param - then load it and process
-	// relative to current URL
-	$http.get('php_app/app/public/flow/Cy4ks')
-	.success(function(data, status, headers, config) {
-		$scope.flow.removeAllActivities();
-		$scope.doImportFlowFromObject(data);
-	});
+    // FIXME if URL is present with param - then load it and process
+    // relative to current URL
+    $http.get('php_app/app/public/flow/Cy4ks')
+        .success(function (data, status, headers, config) {
+            $scope.flow.removeAllActivities();
+            $scope.doImportFlowFromObject(data);
+        });
 
     var processInputTextHandler = function () {
 
@@ -221,38 +221,8 @@ regexpFlow.controller('MainController', function ($scope, $timeout, $http) {
         }
 
         try {
-
             var flowObject = angular.fromJson($scope.importData);
-
-
-            var activityData;
-            var activityType;
-            var activity;
-            var activityConstructors = {
-                'RegexpReplaceActivity': RegexpReplaceActivity,
-                'RegexpFindAllActivity': RegexpFindAllActivity,
-                'RegexpMatchLineActivity': RegexpMatchLineActivity,
-                'RegexpMatchInLineActivity': RegexpMatchInLineActivity
-            };
-
-            for (var a in flowObject.activities) {
-                activityData = flowObject.activities[a];
-                activityType = activityData.typeName;
-
-                if (activityType in activityConstructors) {
-                    // build Activity by activity type name
-                    activity = new activityConstructors[activityType]('', ''); // pass empty strings
-                    // fill it with data
-                    activity.initializeFromObject(activityData);
-                    // add to Flow
-                    $scope.flow.activities.push(activity);
-                }
-            }
-
-            if (!!flowObject.inputText) {
-                // ovewrite input text only when it is given (not empty)
-                $scope.input.text = flowObject.inputText;
-            }
+            $scope.doImportFlowFromObject(flowObject);
         }
         catch (e) {
             // In case of JSON errors - highlight the form with read color
@@ -260,6 +230,37 @@ regexpFlow.controller('MainController', function ($scope, $timeout, $http) {
         }
     };
 
+    $scope.doImportFlowFromObject = function (flowObject) {
+
+        var activityData;
+        var activityType;
+        var activity;
+        var activityConstructors = {
+            'RegexpReplaceActivity': RegexpReplaceActivity,
+            'RegexpFindAllActivity': RegexpFindAllActivity,
+            'RegexpMatchLineActivity': RegexpMatchLineActivity,
+            'RegexpMatchInLineActivity': RegexpMatchInLineActivity
+        };
+
+        for (var a in flowObject.activities) {
+            activityData = flowObject.activities[a];
+            activityType = activityData.typeName;
+
+            if (activityType in activityConstructors) {
+                // build Activity by activity type name
+                activity = new activityConstructors[activityType]('', ''); // pass empty strings
+                // fill it with data
+                activity.initializeFromObject(activityData);
+                // add to Flow
+                $scope.flow.activities.push(activity);
+            }
+        }
+
+        if (!!flowObject.inputText) {
+            // ovewrite input text only when it is given (not empty)
+            $scope.input.text = flowObject.inputText;
+        }
+    };
 
     $scope.createSampleFlow = function () {
         $scope.input.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
