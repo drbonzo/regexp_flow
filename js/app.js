@@ -284,49 +284,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     $scope.createSampleFlow = function () {
-        $scope.input.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
-            "Cras ut pharetra ipsum, in interdum risus.\n" +
-            "Donec ante mauris, pellentesque condimentum felis sed, dictum pulvinar elit.\n" +
-            "Sed nulla metus, sagittis eu elit vel, adipdsdsdiscing interdum risus.\n" +
-            "Mauris vitae ligula massa.\n" +
-            "Integer in blandit arcu.\n" +
-            "\n" +
-            "Aliquam laoreet justo a lorem pellentesque scelerisque.\n" +
-            "Curabitur varius et odio ut condimentum.\n" +
-            "Etiam cursus nunc et porttitor cursus.\n" +
-            "Nulla blandit hendrerit metus, a auctor magna ullamcorper non.\n" +
-            "Cras vitae metus tortor.\n" +
-            "Proin venenatis eros et sem consectetur vehicula.\n" +
-            "Donec commodo sit amet metus a scelerisque.\n" +
-            "Sed vitae dapibus lorem.\n" +
-            "Vestibulum sed varius nisl.\n" +
-            "\n" +
-            "Curabitur id lobortis dui.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse egestas ultrices eros et cursus.\n" +
-            "In quam erat, fermentum in volutpat eu, ornare eget enim.\n" +
-            "Vivamus eu pharetra sem.\n" +
-            "Mauris id congue urna.\n" +
-            "Proin leo augue, pretium eu pulvinar sit amet, placerat eget sapien.\n" +
-            "Phasellus porta nunc euismod ultricies dignissim.\n" +
-            "Mauris luctus bibendum vehicula.\n" +
-            "In hac habitasse platea dictumst.\n" +
-            "Curabitur posuere ac felis non interdum.\n" +
-            "Phasellus laoreet id purus id semper." +
-            '';
-
-        $scope.flow.removeAllActivities();
-        var activities = $scope.flow.activities;
-        {
-            activities.push(new RegexpMatchLineActivity('or'));
-
-            var t2 = new RegexpMatchLineActivity('lorem');
-            t2.searchFlagCaseInsensitive = true;
-            activities.push(t2);
-
-            var t3 = new RegexpReplaceActivity('^(.+?)\\s(\\w+)', '$1 ***$2***');
-            t3.searchFlagCaseInsensitive = true;
-            t3.searchFlagMultiline = true;
-            activities.push(t3);
-        }
+        $location.path('/flow/_example');
     };
 
     $scope.dismissStatusMessage = function (statusMessageToRemove) {
