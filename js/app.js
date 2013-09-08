@@ -70,11 +70,13 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         var activity;
 
         for (var a in $scope.flow.activities) {
-            activity = $scope.flow.activities[a];
+            if ($scope.flow.activities.hasOwnProperty(a)) {
+                activity = $scope.flow.activities[a];
 
-            if (activity.isEnabled) {
-                outputText = activity.processText(inputText);
-                inputText = outputText;
+                if (activity.isEnabled) {
+                    outputText = activity.processText(inputText);
+                    inputText = outputText;
+                }
             }
         }
 
@@ -89,20 +91,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      * @param {RegexpActivity} activityToRemove
      */
     $scope.removeActivity = function (activityToRemove) {
-
-        // FIXME DRY - helper for removing items from array
-        var activities = $scope.flow.activities;
-        var indexToRemove = -1;
-        for (var a in activities) {
-            if (activities[a] == activityToRemove) {
-                indexToRemove = a;
-                break;
-            }
-        }
-
-        if (indexToRemove >= 0) {
-            activities.splice(indexToRemove, 1); // remove item at that index
-        }
+        $scope.flow.activities.removeItem(activityToRemove);
     };
 
     /**
@@ -156,9 +145,11 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         if (shouldAddAfterOtherActivity) {
             var index = -1;
             for (var a in activities) {
-                if (activities[a] == selectedActivity) {
-                    index = parseInt(a); // for () returns indices as strings - wtf
-                    break;
+                if (activities.hasOwnProperty(a)) {
+                    if (activities[a] == selectedActivity) {
+                        index = parseInt(a); // for () returns indices as strings - wtf
+                        break;
+                    }
                 }
             }
 
@@ -197,8 +188,10 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         exportDataObject.activities = [];
 
         for (var a in $scope.flow.activities) {
-            var activity = $scope.flow.activities[a];
-            exportDataObject.activities.push(activity.getExportObject());
+            if ($scope.flow.activities.hasOwnProperty(a)) {
+                var activity = $scope.flow.activities[a];
+                exportDataObject.activities.push(activity.getExportObject());
+            }
         }
 
         exportDataObject.inputText = $scope.input.text;
@@ -256,16 +249,18 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         };
 
         for (var a in flowObject.activities) {
-            activityData = flowObject.activities[a];
-            activityType = activityData.typeName;
+            if (flowObject.activities.hasOwnProperty(a)) {
+                activityData = flowObject.activities[a];
+                activityType = activityData.typeName;
 
-            if (activityType in activityConstructors) {
-                // build Activity by activity type name
-                activity = new activityConstructors[activityType]('', ''); // pass empty strings
-                // fill it with data
-                activity.initializeFromObject(activityData);
-                // add to Flow
-                $scope.flow.activities.push(activity);
+                if (activityType in activityConstructors) {
+                    // build Activity by activity type name
+                    activity = new activityConstructors[activityType]('', ''); // pass empty strings
+                    // fill it with data
+                    activity.initializeFromObject(activityData);
+                    // add to Flow
+                    $scope.flow.activities.push(activity);
+                }
             }
         }
 
@@ -321,32 +316,23 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         }
     };
 
-    // FIXME DRY - helper for removing items from array
     $scope.dismissStatusMessage = function (statusMessageToRemove) {
-        var statusMessages = $scope.statusMessages;
-        var indexToRemove = -1;
-        for (var a in statusMessages) {
-            if (statusMessages[a] == statusMessageToRemove) {
-                indexToRemove = a;
-                break;
-            }
-        }
-
-        if (indexToRemove >= 0) {
-            statusMessages.splice(indexToRemove, 1); // remove item at that index
-        }
+        $scope.statusMessages.removeItem(statusMessageToRemove);
     };
 
+    //noinspection JSUnresolvedVariable
     var flowIdIsGiven = !!$routeParams.flowId;
 
     if (flowIdIsGiven) {
         // Load saved flow from backend
-        $http.get('php_app/app/public/flow/' + $routeParams.flowId)
+        //noinspection JSUnresolvedVariable
+        var flowId = $routeParams.flowId;
+        $http.get('php_app/app/public/flow/' + flowId)
             .success(function (data, status, headers, config) {
                 $scope.flow.removeAllActivities();
                 $scope.doImportFlowFromObject(data);
             }).error(function (data, status, headers, config) {
-                $scope.statusMessages.push({cssClass: 'danger', message: 'Flow ' + $routeParams.flowId + ' not found. Showing empty Flow'});
+                $scope.statusMessages.push({cssClass: 'danger', message: 'Flow ' + flowId + ' not found. Showing empty Flow'});
             });
     }
 

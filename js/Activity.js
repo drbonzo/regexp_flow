@@ -73,8 +73,10 @@ RegexpActivity.prototype.getExportObject = function () { // FIXME rename to some
  */
 RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyNames) {
     for (var p in propertyNames) {
-        var propertyName = propertyNames[p];
-        this[propertyName] = dataObject[propertyName];
+        if (propertyNames.hasOwnProperty(p)) {
+            var propertyName = propertyNames[p];
+            this[propertyName] = dataObject[propertyName];
+        }
     }
 };
 
@@ -90,8 +92,10 @@ RegexpActivity.prototype.extractPropertiesToObject = function (propertyNames) {
     propertyNames.push('typeName'); // always added
 
     for (var p in propertyNames) {
-        var propertyName = propertyNames[p];
-        retval[propertyName] = this[propertyName];
+        if (propertyNames.hasOwnProperty(p)) {
+            var propertyName = propertyNames[p];
+            retval[propertyName] = this[propertyName];
+        }
     }
 
     return retval;
@@ -105,5 +109,6 @@ RegexpActivity.prototype.resetRegExpValidation = function () {
 RegexpActivity.prototype.setupValidationFromError = function (error) {
     this.regexpIsValid = false;
     this.regexpValidationMessage = error.toString();
+    throw error;
 };
 

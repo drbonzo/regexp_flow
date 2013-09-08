@@ -59,16 +59,18 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
         var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
 
         for (var l in lines) {
-            line = lines[l];
+            if (lines.hasOwnProperty(l)) {
+                line = lines[l];
 
-            if (this.flagInvertMatch) {
-                if (!line.match(searchRegexp)) {
-                    matchedLines.push(line);
+                if (this.flagInvertMatch) {
+                    if (!line.match(searchRegexp)) {
+                        matchedLines.push(line);
+                    }
                 }
-            }
-            else {
-                if (line.match(searchRegexp)) {
-                    matchedLines.push(line);
+                else {
+                    if (line.match(searchRegexp)) {
+                        matchedLines.push(line);
+                    }
                 }
             }
         }
@@ -95,6 +97,6 @@ RegexpMatchLineActivity.prototype.getExportObject = function () {
 /**
  * @returns {Array|string[]}
  */
-RegexpMatchLineActivity.prototype.getSerializablePropertyNames = function(){
+RegexpMatchLineActivity.prototype.getSerializablePropertyNames = function () {
     return ['searchString', 'searchFlagCaseInsensitive', 'flagInvertMatch'];
 };

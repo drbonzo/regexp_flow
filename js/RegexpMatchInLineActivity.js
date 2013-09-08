@@ -61,12 +61,14 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
         var match;
         var matchedText;
         for (var l in lines) {
-            line = lines[l];
-            match = line.match(searchRegexp);
+            if (lines.hasOwnProperty(l)) {
+                line = lines[l];
+                match = line.match(searchRegexp);
 
-            if (match) {
-                matchedText = match[1] ? match[1] : match[0]; // when no groups were used - then $0 is used, else first group is used
-                matchesInLines.push(matchedText);
+                if (match) {
+                    matchedText = match[1] ? match[1] : match[0]; // when no groups were used - then $0 is used, else first group is used
+                    matchesInLines.push(matchedText);
+                }
             }
         }
 
