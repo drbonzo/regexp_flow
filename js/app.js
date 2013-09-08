@@ -32,7 +32,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
 /**
  * $routeParams has flowId which may be undefined
  */
-regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', function ($scope, $timeout, $http, $routeParams) {
+regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
     $scope.input = {
         text: ''
     };
@@ -184,6 +184,16 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         $scope.exportPanelVisible = true;
         $scope.importPanelVisible = false;
 
+        var exportDataObject = getFlowExportObject();
+
+        $scope.exportData = angular.toJson(exportDataObject);
+
+        $timeout(function () {
+            $('.exportPanel textarea:first').focus().select();
+        }, 0);
+    };
+
+    var getFlowExportObject = function () {
         var exportDataObject = {};
         exportDataObject.activities = [];
 
@@ -195,12 +205,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         }
 
         exportDataObject.inputText = $scope.input.text;
-
-        $scope.exportData = angular.toJson(exportDataObject);
-
-        $timeout(function () {
-            $('.exportPanel textarea:first').focus().select();
-        }, 0);
+        return exportDataObject;
     };
 
     $scope.toggleImportPanel = function () {
@@ -318,6 +323,18 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     $scope.dismissStatusMessage = function (statusMessageToRemove) {
         $scope.statusMessages.removeItem(statusMessageToRemove);
+    };
+
+    $scope.saveFlow = function () {
+
+        var exportDataObject = getFlowExportObject();
+
+        $http.post('php_app/app/public/flows', exportDataObject)
+            .success(function (data, status, headers, config) {
+                $location.path('/flow/' + data.id);
+            }).error(function (data, status, headers, config) {
+                $scope.statusMessages.push({cssClass: 'danger', message: 'Could not save Flow'});
+            });
     };
 
     //noinspection JSUnresolvedVariable

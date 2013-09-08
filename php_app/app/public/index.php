@@ -20,9 +20,18 @@ $app->get('/', function () use ($app)
 	$app->response()->body('');
 });
 
-$app->get('/flow/:flowId', function ($flowId) use ($app)
+/**
+ * @return FlowManager
+ */
+function buildFlowManager()
 {
 	$flowManager = new FlowManager(__DIR__ . '/../../data/flow/');
+	return $flowManager;
+}
+
+$app->get('/flow/:flowId', function ($flowId) use ($app)
+{
+	$flowManager = buildFlowManager();
 	$flowData = $flowManager->loadFlow($flowId);
 
 	if ($flowData)
@@ -43,12 +52,16 @@ $app->get('/flow/:flowId', function ($flowId) use ($app)
 	}
 });
 
-$app->post('/flow', function () use ($app)
+$app->post('/flows', function () use ($app)
 {
-//	$data = file_get_contents("php://input");
-//	$flowManager = new FlowManager(__DIR__ . '/../../data/flow/');
-//	$flowManager->saveFlow($data);
-//	$app->response()->body('Saving flow...');
+	$data = file_get_contents("php://input");
+	$flowManager = buildFlowManager();
+	$flowId = $flowManager->saveFlow($data);
+
+	$response = $app->response();
+	$response->setStatus(200);
+	$response->headers->set('Content-Type', 'application/json; charset=utf-8');
+	$response->setBody(json_encode(['id' => $flowId]));
 });
 
 // Run app
