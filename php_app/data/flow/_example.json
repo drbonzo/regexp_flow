@@ -1,0 +1,21 @@
+{
+	"activities": [{
+		"searchString": "or",
+		"searchFlagCaseInsensitive": false,
+		"flagInvertMatch": false,
+		"typeName": "RegexpMatchLineActivity"
+	}, {
+		"searchString": "lorem",
+		"searchFlagCaseInsensitive": true,
+		"flagInvertMatch": false,
+		"typeName": "RegexpMatchLineActivity"
+	}, {
+		"searchString": "^(.+?)\\s(\\w+)",
+		"replaceString": "$1 ***$2***",
+		"searchFlagGlobal": true,
+		"searchFlagMultiline": true,
+		"searchFlagCaseInsensitive": true,
+		"typeName": "RegexpReplaceActivity"
+	}],
+	"inputText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nCras ut pharetra ipsum, in interdum risus.\nDonec ante mauris, pellentesque condimentum felis sed, dictum pulvinar elit.\nSed nulla metus, sagittis eu elit vel, adipdsdsdiscing interdum risus.\nMauris vitae ligula massa.\nInteger in blandit arcu.\n\nAliquam laoreet justo a lorem pellentesque scelerisque.\nCurabitur varius et odio ut condimentum.\nEtiam cursus nunc et porttitor cursus.\nNulla blandit hendrerit metus, a auctor magna ullamcorper non.\nCras vitae metus tortor.\nProin venenatis eros et sem consectetur vehicula.\nDonec commodo sit amet metus a scelerisque.\nSed vitae dapibus lorem.\nVestibulum sed varius nisl.\n\nCurabitur id lobortis dui.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse egestas ultrices eros et cursus.\nIn quam erat, fermentum in volutpat eu, ornare eget enim.\nVivamus eu pharetra sem.\nMauris id congue urna.\nProin leo augue, pretium eu pulvinar sit amet, placerat eget sapien.\nPhasellus porta nunc euismod ultricies dignissim.\nMauris luctus bibendum vehicula.\nIn hac habitasse platea dictumst.\nCurabitur posuere ac felis non interdum.\nPhasellus laoreet id purus id semper."
+}
