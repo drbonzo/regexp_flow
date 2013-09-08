@@ -30,7 +30,7 @@
 </div>
 
 <div class="row">
-<div class="col-lg-7 inputOutputColumn">
+<div class="col-md-7 inputOutputColumn">
     <div class="row inputPanel">
         <h3>Input text</h3>
         <textarea ng-model="input.text" class="inputText"></textarea>
@@ -41,7 +41,7 @@
         <div class="outputPanel"><textarea ng-model="output.text" class="outputText"></textarea></div>
     </div>
 </div>
-<div class="col-lg-5 flowColumn">
+<div class="col-md-5 flowColumn">
     <div class="row flowHeader">
         <h3>Flow chain ({{ flow.activities.length }})
             <button type="button" class="btn btn-xs btn-default" ng-click="toggleImportPanel()" title="Import Flow from JSON">Import</button>
@@ -50,7 +50,7 @@
         </h3>
     </div>
     <div class="row flowColumnContents">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="row exportPanel" ng-show="exportPanelVisible">
                 <textarea ng-model="exportData"></textarea>
                 <button type="button" class="btn btn-xs btn-default" ng-click="exportPanelVisible = false">Close</button>
@@ -61,28 +61,28 @@
                 <button type="button" class="btn btn-xs btn-default" ng-click="importPanelVisible = false">Close</button>
             </div>
             <div class="row flowChain">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="row blankSlate" ng-show="chainHasNoActivities()">
-                        <div class="col-lg-12">
+                        <div class="col-md-12">
                             <div class="row">
                                 <div class="header">Add new Activity</div>
                             </div>
 
                             <div class="row">
 
-                                <div class="col-lg-3 newActivityPanel">
+                                <div class="col-md-3 newActivityPanel">
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewReplaceActivity(null)">&plus;R</button>
                                     <p>Replace text with other text using regular expressions</p>
                                 </div>
-                                <div class="col-lg-3 newActivityPanel">
+                                <div class="col-md-3 newActivityPanel">
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewFindAllActivity(null)">&plus;FA</button>
                                     <p>Find all matches, and return them in lines</p>
                                 </div>
-                                <div class="col-lg-3 newActivityPanel">
+                                <div class="col-md-3 newActivityPanel">
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchLineActivity(null)">&plus;ML</button>
                                     <p>Leave only lines that match regular expression</p>
                                 </div>
-                                <div class="col-lg-3 newActivityPanel">
+                                <div class="col-md-3 newActivityPanel">
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineActivity(null)">&plus;MIL</button>
                                     <p>Leave only lines that match regular expression and leave only matched text</p>
                                 </div>
