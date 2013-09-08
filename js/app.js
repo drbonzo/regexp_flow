@@ -12,8 +12,6 @@ $(document).ready(function () {
 
         $('.flowColumnContents').height(parseInt(baseHeight - columnHeaderHeight) * 0.98);
     });
-
-    $(window).resize();
 });
 
 var regexpFlow = angular.module('RegexpFlowApplication', []);
@@ -352,6 +350,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             });
     }
 
+    $(window).resize();
 }]);
 
 
