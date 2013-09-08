@@ -1,3 +1,11 @@
+/**
+ * Docs
+ *
+ * .error() handlers receive object with 'message' property.
+ *
+ */
+
+
 $(document).ready(function () {
 
     $(window).resize(function () {
@@ -333,7 +341,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             .success(function (data, status, headers, config) {
                 $location.path('/flow/' + data.id);
             }).error(function (data, status, headers, config) {
-                $scope.statusMessages.push({cssClass: 'danger', message: 'Could not save Flow'});
+                $scope.statusMessages.push({cssClass: 'danger', message: data.message});
             });
     };
 
@@ -349,7 +357,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
                 $scope.flow.removeAllActivities();
                 $scope.doImportFlowFromObject(data);
             }).error(function (data, status, headers, config) {
-                $scope.statusMessages.push({cssClass: 'danger', message: 'Flow ' + flowId + ' not found. Showing empty Flow'});
+                $scope.statusMessages.push({cssClass: 'danger', message: data.message});
             });
     }
 

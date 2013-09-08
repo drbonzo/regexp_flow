@@ -35,16 +35,22 @@ class FlowManager
 	}
 
 	/**
-	 * @param string $data
-	 * @return string
+	 * @param stdClass|array $data (decoded JSON to object/array)
+	 * @return string|null
 	 */
 	public function saveFlow($data)
 	{
-		$flowId = $this->generateFlowId(6);
-		$flowFilename = $this->baseDir . $flowId . '.json';
-		file_put_contents($flowFilename, $data);
-
-		return $flowId;
+		if (isset($data->activities) && !empty($data->activities))
+		{
+			$flowId = $this->generateFlowId(6);
+			$flowFilename = $this->baseDir . $flowId . '.json';
+			file_put_contents($flowFilename, json_encode($data));
+			return $flowId;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/**

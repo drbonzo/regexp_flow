@@ -47,21 +47,32 @@ $app->get('/flow/:flowId', function ($flowId) use ($app)
 		$response = $app->response();
 		$response->setStatus(404);
 		$response->headers->set('Content-Type', 'application/json; charset=utf-8');
-		$response->setBody(json_encode([]));
+		$response->setBody(json_encode(['message' => 'Flow not found']));
 		$response->finalize();
 	}
 });
 
 $app->post('/flows', function () use ($app)
 {
-	$data = file_get_contents("php://input");
+	$data = json_decode(file_get_contents("php://input"), false);
 	$flowManager = buildFlowManager();
 	$flowId = $flowManager->saveFlow($data);
 
-	$response = $app->response();
-	$response->setStatus(200);
-	$response->headers->set('Content-Type', 'application/json; charset=utf-8');
-	$response->setBody(json_encode(['id' => $flowId]));
+	if ($flowId)
+	{
+		$response = $app->response();
+		$response->setStatus(200);
+		$response->headers->set('Content-Type', 'application/json; charset=utf-8');
+		$response->setBody(json_encode(['id' => $flowId]));
+	}
+	else
+	{
+		// bad request = the flow data is empty
+		$response = $app->response();
+		$response->setStatus(400);
+		$response->headers->set('Content-Type', 'application/json; charset=utf-8');
+		$response->setBody(json_encode(['message' => 'Cannot save Flow: add some Activities first']));
+	}
 });
 
 // Run app
