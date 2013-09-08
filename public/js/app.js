@@ -300,7 +300,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
         var exportDataObject = getFlowExportObject();
 
-        $http.post('backend/flows', exportDataObject)
+        $http.post('backend/index.php/flows', exportDataObject)
             .success(function (data, status, headers, config) {
                 $location.path('/flow/' + data.id);
             }).error(function (data, status, headers, config) {
@@ -315,7 +315,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         // Load saved flow from backend
         //noinspection JSUnresolvedVariable
         var flowId = $routeParams.flowId;
-        $http.get('backend/flow/' + flowId)
+        $http.get('backend/index.php/flow/' + flowId)
             .success(function (data, status, headers, config) {
                 $scope.flow.removeAllActivities();
                 $scope.doImportFlowFromObject(data);

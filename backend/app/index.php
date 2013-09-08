@@ -47,7 +47,7 @@ $app->get('/flow/:flowId', function ($flowId) use ($app)
 		$response = $app->response();
 		$response->setStatus(404);
 		$response->headers->set('Content-Type', 'application/json; charset=utf-8');
-		$response->setBody(json_encode(['message' => 'Flow not found']));
+		$response->setBody(json_encode(array('message' => 'Flow not found')));
 		$response->finalize();
 	}
 });
@@ -63,7 +63,7 @@ $app->post('/flows', function () use ($app)
 		$response = $app->response();
 		$response->setStatus(200);
 		$response->headers->set('Content-Type', 'application/json; charset=utf-8');
-		$response->setBody(json_encode(['id' => $flowId]));
+		$response->setBody(json_encode(array('id' => $flowId)));
 	}
 	else
 	{
@@ -71,7 +71,7 @@ $app->post('/flows', function () use ($app)
 		$response = $app->response();
 		$response->setStatus(400);
 		$response->headers->set('Content-Type', 'application/json; charset=utf-8');
-		$response->setBody(json_encode(['message' => 'Cannot save Flow: add some Activities first']));
+		$response->setBody(json_encode(array('message' => 'Cannot save Flow: add some Activities first')));
 	}
 });
 
