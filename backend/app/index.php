@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../lib/header.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/lib/header.php';
 
 // Prepare app
 $app = new \Slim\Slim(array(
@@ -25,7 +25,7 @@ $app->get('/', function () use ($app)
  */
 function buildFlowManager()
 {
-	$flowManager = new FlowManager(__DIR__ . '/../../data/flow/');
+	$flowManager = new FlowManager(__DIR__ . '/../data/flow/');
 	return $flowManager;
 }
 
