@@ -1,11 +1,27 @@
 <div class="navbar navbar-default navbar-fixed-top PageHeader">
     <span class="navbar-brand"><a href="#/">RegexpFlow</a></span>
     <span class="navbar-text"><span class="btn btn-xs btn-danger disabled">of course it's beta ({{ version.version }})</span></span>
+    <span class="navbar-text"><span class="btn btn-xs btn-info" ng-click="infoPanelVisible = !infoPanelVisible">tech info</span></span>
     <span class="navbar-text pull-right"><button type="button" class="btn btn-info btn-xs" ng-click="createSampleFlow()">Create sample flow</button></span>
 </div>
 
 
 <div class="container PageContent">
+<div class="row InfoSection" ng-show="infoPanelVisible">
+    <p><a href="https://github.com/drbonzo/regexp_flow">RegexpFlow</a> created by <a href="https://github.com/drbonzo">dr_bonzo</a></p>
+
+    <p>GitHub project page: <a href="https://github.com/drbonzo/regexp_flow">https://github.com/drbonzo/regexp_flow</a></p>
+
+    <p>Uses:</p>
+    <ul>
+        <li><a href="http://angularjs.org/">AngularJS</a></li>
+        <li><a href="http://getbootstrap.com/">Twitter Bootstrap</a></li>
+        <li><a href="http://jquery.com/">jQuery</a></li>
+    </ul>
+
+    <span class="btn btn-xs btn-default" ng-click="infoPanelVisible = !infoPanelVisible">close</span>
+</div>
+
 <div class="row statusMessages" ng-show="statusMessages.length > 0">
     <div class="alert alert-dismissable" ng-repeat="statusMessage in statusMessages" ng-class="'alert-' + statusMessage.cssClass" ng-click="dismissStatusMessage(statusMessage)">
         {{ statusMessage.message }}

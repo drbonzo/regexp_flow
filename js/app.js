@@ -44,6 +44,8 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     $scope.version = {name: RegexpFlow, version: '0.7.1'};
 
+    $scope.infoPanelVisible = false;
+
     $scope.input = {
         text: ''
     };

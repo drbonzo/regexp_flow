@@ -133,6 +133,17 @@ body {
   font-size: 12px;
   font-weight: bold;
 }
+.PageContent .InfoSection {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: solid 1px #ccc;
+  background-color: #f8f8f8;
+  font-size: 12px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
 .exportPanel .exportPanel {
   margin: 10px 0;
 }
