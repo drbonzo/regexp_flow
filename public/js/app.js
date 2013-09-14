@@ -1,3 +1,14 @@
+'use strict';
+
+/*jslint browser: true*/
+/*global $, angular,
+ RegexpFlow,
+ RegexpReplaceActivity,
+ RegexpFindAllActivity,
+ RegexpMatchLineActivity,
+ RegexpMatchInLineActivity
+ */
+
 /**
  * Docs
  *
@@ -5,20 +16,25 @@
  *
  */
 
-
 $(document).ready(function () {
 
     $(window).resize(function () {
-        var columnHeaderHeight = 52;
-        var navbarHeight = 35;
 
-        var baseHeight = $(window).height() - navbarHeight;
+        var columnHeaderHeight,
+            navbarHeight,
+            baseHeight,
+            panelHeight;
 
-        var panelHeight = parseInt(baseHeight * 0.49);
+        columnHeaderHeight = 52;
+        navbarHeight = 35;
+
+        baseHeight = $(window).height() - navbarHeight;
+
+        panelHeight = parseInt(baseHeight * 0.49, 10);
         $('.inputOutputColumn .row').height(panelHeight + 'px');
         $('.inputOutputColumn .row textarea').height((panelHeight - columnHeaderHeight) + 'px');
 
-        $('.flowColumnContents').height(parseInt(baseHeight - columnHeaderHeight) * 0.98);
+        $('.flowColumnContents').height(parseInt(baseHeight - columnHeaderHeight, 10) * 0.98);
     });
 });
 
@@ -42,7 +58,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
  */
 regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
 
-    $scope.version = {name: RegexpFlow, version: '0.8.0'};
+    $scope.version = {name: 'RegexpFlow', version: '0.8.0'};
 
     $scope.infoPanelVisible = false;
 
@@ -74,15 +90,20 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     var processInputTextHandler = function () {
 
-        var inputText = $scope.input.text || '';
-        var outputText = inputText;
+        var inputText,
+            outputText,
+            activity,
+            a;
 
         /**
-         * @type {RegexpActivity}
+         * @type {RegexpActivity} activity
          */
-        var activity;
 
-        for (var a in $scope.flow.activities) {
+        inputText = $scope.input.text || '';
+        outputText = inputText;
+
+
+        for (a in $scope.flow.activities) {
             if ($scope.flow.activities.hasOwnProperty(a)) {
                 activity = $scope.flow.activities[a];
 
@@ -152,15 +173,20 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      */
     $scope.addActivity = function (newActivity, selectedActivity) {
 
-        var activities = $scope.flow.activities;
-        var shouldAddAfterOtherActivity = !!selectedActivity;
-        var newActivityIndex;
+        var activities,
+            shouldAddAfterOtherActivity,
+            newActivityIndex,
+            index,
+            a;
+
+        activities = $scope.flow.activities;
+        shouldAddAfterOtherActivity = !!selectedActivity;
         if (shouldAddAfterOtherActivity) {
-            var index = -1;
-            for (var a in activities) {
+            index = -1;
+            for (a in activities) {
                 if (activities.hasOwnProperty(a)) {
                     if (activities[a] == selectedActivity) {
-                        index = parseInt(a); // for () returns indices as strings - wtf
+                        index = parseInt(a, 10); // for () returns indices as strings - wtf
                         break;
                     }
                 }
@@ -170,13 +196,11 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
                 // insert newActivity after selectedActivity
                 activities.splice(index, 1, selectedActivity, newActivity);
                 newActivityIndex = index + 1;
-            }
-            else {
+            } else {
                 activities.push(newActivity);
                 newActivityIndex = activities.length - 1;
             }
-        }
-        else {
+        } else {
             activities.push(newActivity);
             newActivityIndex = activities.length - 1;
         }
@@ -191,6 +215,25 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         return ($scope.flow.activities.length == 0);
     };
 
+    function getFlowExportObject() {
+        var exportDataObject,
+            a,
+            activity;
+
+        exportDataObject = {};
+        exportDataObject.activities = [];
+
+        for (a in $scope.flow.activities) {
+            if ($scope.flow.activities.hasOwnProperty(a)) {
+                activity = $scope.flow.activities[a];
+                exportDataObject.activities.push(activity.getExportObject());
+            }
+        }
+
+        exportDataObject.inputText = $scope.input.text;
+        return exportDataObject;
+    }
+
     $scope.exportFlowToJSON = function () {
         // show export panel
         // hide import panel
@@ -204,21 +247,6 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         $timeout(function () {
             $('.exportPanel textarea:first').focus().select();
         }, 0);
-    };
-
-    var getFlowExportObject = function () {
-        var exportDataObject = {};
-        exportDataObject.activities = [];
-
-        for (var a in $scope.flow.activities) {
-            if ($scope.flow.activities.hasOwnProperty(a)) {
-                var activity = $scope.flow.activities[a];
-                exportDataObject.activities.push(activity.getExportObject());
-            }
-        }
-
-        exportDataObject.inputText = $scope.input.text;
-        return exportDataObject;
     };
 
     $scope.toggleImportPanel = function () {
@@ -247,8 +275,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         try {
             var flowObject = angular.fromJson($scope.importData);
             $scope.doImportFlowFromObject(flowObject);
-        }
-        catch (e) {
+        } catch (e) {
             // In case of JSON errors - highlight the form with read color
             $('.importPanel textarea').effect('highlight', {color: 'red'});
         }
@@ -256,22 +283,25 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     $scope.doImportFlowFromObject = function (flowObject) {
 
-        var activityData;
-        var activityType;
-        var activity;
-        var activityConstructors = {
+        var activityData,
+            activityType,
+            activity,
+            activityConstructors,
+            a;
+
+        activityConstructors = {
             'RegexpReplaceActivity': RegexpReplaceActivity,
             'RegexpFindAllActivity': RegexpFindAllActivity,
             'RegexpMatchLineActivity': RegexpMatchLineActivity,
             'RegexpMatchInLineActivity': RegexpMatchInLineActivity
         };
 
-        for (var a in flowObject.activities) {
+        for (a in flowObject.activities) {
             if (flowObject.activities.hasOwnProperty(a)) {
                 activityData = flowObject.activities[a];
                 activityType = activityData.typeName;
 
-                if (activityType in activityConstructors) {
+                if (activityConstructors.hasOwnProperty(activityType)) {
                     // build Activity by activity type name
                     activity = new activityConstructors[activityType]('', ''); // pass empty strings
                     // fill it with data
@@ -308,33 +338,28 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             });
     };
 
-    //noinspection JSUnresolvedVariable
-    var flowIdIsGiven = !!$routeParams.flowId;
-
-    if (flowIdIsGiven) {
-        // Load saved flow from backend
+    function initializeFlow() {
+        var flowIdIsGiven,
+            flowId;
         //noinspection JSUnresolvedVariable
-        var flowId = $routeParams.flowId;
-        $http.get('backend/index.php/flow/' + flowId)
-            .success(function (data, status, headers, config) {
-                $scope.flow.removeAllActivities();
-                $scope.doImportFlowFromObject(data);
-            }).error(function (data, status, headers, config) {
-                $scope.statusMessages.push({cssClass: 'danger', message: data.message});
-            });
+        flowIdIsGiven = !!$routeParams.flowId;
+
+        if (flowIdIsGiven) {
+            // Load saved flow from backend
+            //noinspection JSUnresolvedVariable
+            flowId = $routeParams.flowId;
+            $http.get('backend/index.php/flow/' + flowId)
+                .success(function (data, status, headers, config) {
+                    $scope.flow.removeAllActivities();
+                    $scope.doImportFlowFromObject(data);
+                }).error(function (data, status, headers, config) {
+                    $scope.statusMessages.push({cssClass: 'danger', message: data.message});
+                });
+        }
+
+        $(window).resize();
+
     }
 
-    $(window).resize();
+    initializeFlow();
 }]);
-
-
-function RegexpFlow() {
-    /**
-     * @type {Array|RegexpActivity[]}
-     */
-    this.activities = [];
-}
-
-RegexpFlow.prototype.removeAllActivities = function () {
-    this.activities.length = 0;
-};

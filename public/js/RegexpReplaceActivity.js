@@ -1,3 +1,7 @@
+'use strict';
+
+/*global RegexpActivity */
+
 /**
  * @param {string} searchString
  * @param {string} replaceString
@@ -49,6 +53,9 @@ RegexpReplaceActivity.prototype = new RegexpActivity();
  */
 RegexpReplaceActivity.prototype.processText = function (inputText) {
 
+    var searchRegexp,
+        matches,
+        replacement;
     try {
 
         this.resetRegExpValidation();
@@ -58,11 +65,11 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
             return inputText; // dont change anything when there is no regular expression
         }
 
-        var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
-        var matches = inputText.match(searchRegexp);
-        this.replacementsCount = ( matches ? matches.length : 0 ); // matches is null when no match is found
+        searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, this.searchFlagGlobal, this.searchFlagMultiline);
+        matches = inputText.match(searchRegexp);
+        this.replacementsCount = (matches ? matches.length : 0); // matches is null when no match is found
 
-        var replacement = this.replaceString;
+        replacement = this.replaceString;
 
         // replace \n with newline character (same with \t - tab character)
         // but dont replace \\n (nor \\t)
@@ -74,20 +81,17 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
                 // return unchanged string, as it found \\n
                 return group1 + group2;
             }
-            else {
-                // replace just \n with newline character
-                if (group1 == '\\n') {
-                    return "\n";
-                }
-                else {
-                    return "\t";
-                }
+
+            // replace just \n with newline character
+            if (group1 == '\\n') {
+                return "\n";
             }
+
+            return "\t";
         });
 
         return inputText.replace(searchRegexp, replacement);
-    }
-    catch (e) {
+    } catch (e) {
         this.setupValidationFromError(e);
 
         return '';

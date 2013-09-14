@@ -1,3 +1,7 @@
+'use strict';
+
+/*global RegexpActivity */
+
 /**
  * @param {string} searchString
  * @constructor
@@ -42,10 +46,15 @@ RegexpMatchLineActivity.prototype = new RegexpActivity();
  */
 RegexpMatchLineActivity.prototype.processText = function (inputText) {
 
+    var line,
+        lines,
+        matchedLines,
+        searchRegexp,
+        l;
     try {
 
         this.resetRegExpValidation();
-        var lines = this.splitTextIntoLines(inputText);
+        lines = this.splitTextIntoLines(inputText);
         this.totalLinesCount = lines.length;
         this.linesMatchedCount = 0;
 
@@ -53,12 +62,12 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
             this.linesMatchedCount = this.totalLinesCount;
             return inputText; // dont change anything when there is no regular expression
         }
-        var line;
-        var matchedLines = [];
 
-        var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
+        matchedLines = [];
 
-        for (var l in lines) {
+        searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
+
+        for (l in lines) {
             if (lines.hasOwnProperty(l)) {
                 line = lines[l];
 
@@ -66,8 +75,7 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
                     if (!line.match(searchRegexp)) {
                         matchedLines.push(line);
                     }
-                }
-                else {
+                } else {
                     if (line.match(searchRegexp)) {
                         matchedLines.push(line);
                     }
@@ -78,8 +86,7 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
         this.linesMatchedCount = matchedLines.length;
 
         return matchedLines.join("\n");
-    }
-    catch (e) {
+    } catch (e) {
         this.setupValidationFromError(e);
 
         return '';

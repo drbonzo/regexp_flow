@@ -1,3 +1,7 @@
+'use strict';
+
+/*global RegexpActivity */
+
 /**
  * @param {string} searchString
  * @constructor
@@ -43,9 +47,16 @@ RegexpMatchInLineActivity.prototype = new RegexpActivity();
 RegexpMatchInLineActivity.prototype.processText = function (inputText) {
 
     try {
+        var line,
+            matchesInLines,
+            searchRegexp,
+            match,
+            matchedText,
+            lines,
+            l;
 
         this.resetRegExpValidation();
-        var lines = this.splitTextIntoLines(inputText);
+        lines = this.splitTextIntoLines(inputText);
         this.totalLinesCount = lines.length;
         this.linesMatchedCount = 0;
 
@@ -54,19 +65,18 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
             return inputText; // dont change anything when there is no regular expression
         }
 
-        var line;
-        var matchesInLines = [];
+        matchesInLines = [];
 
-        var searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
-        var match;
-        var matchedText;
-        for (var l in lines) {
+        searchRegexp = this.buildRegExp(this.searchString, this.searchFlagCaseInsensitive, null, null);
+
+        // wydziel do metody? zeby lista paramow byla krotsza
+        for (l in lines) {
             if (lines.hasOwnProperty(l)) {
                 line = lines[l];
                 match = line.match(searchRegexp);
 
                 if (match) {
-                    matchedText = match[1] ? match[1] : match[0]; // when no groups were used - then $0 is used, else first group is used
+                    matchedText = match[1] || match[0]; // when no groups were used - then $0 is used, else first group is used
                     matchesInLines.push(matchedText);
                 }
             }
@@ -75,8 +85,7 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
         this.linesMatchedCount = matchesInLines.length;
 
         return matchesInLines.join("\n");
-    }
-    catch (e) {
+    } catch (e) {
         this.setupValidationFromError(e);
         return '';
     }

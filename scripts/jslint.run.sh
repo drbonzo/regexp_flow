@@ -1,3 +1,12 @@
 #!/bin/bash
-cd public/js
-watch -n 0.5 jslint Activity.js RegexpFindAllActivity.js RegexpMatchInLineActivity.js RegexpMatchLineActivity.js RegexpReplaceActivity.js app.js monkey_patches.js
+FILENAME="$1"
+
+if [ -z $FILENAME ]; then
+	echo "./jslint.run.sh <filename.js>"
+	exit 1	
+fi
+
+watch -n 1 jslint --eqeq=true --browser=true $FILENAME
+
+# eqeq=true: tolerate  '==', '!=' comparision
+

@@ -1,3 +1,5 @@
+'use strict';
+
 function RegexpActivity() {
     this.typeName = '';
     this.displayName = '';
@@ -72,9 +74,10 @@ RegexpActivity.prototype.getExportObject = function () { // FIXME rename to some
  * @param {Array|string[]} propertyNames
  */
 RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyNames) {
-    for (var p in propertyNames) {
+    var p, propertyName;
+    for (p in propertyNames) {
         if (propertyNames.hasOwnProperty(p)) {
-            var propertyName = propertyNames[p];
+            propertyName = propertyNames[p];
             this[propertyName] = dataObject[propertyName];
         }
     }
@@ -87,13 +90,16 @@ RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyName
  * @return {Object}
  */
 RegexpActivity.prototype.extractPropertiesToObject = function (propertyNames) {
-    var retval = {};
+    var retval,
+        p,
+        propertyName;
 
+    retval = {};
     propertyNames.push('typeName'); // always added
 
-    for (var p in propertyNames) {
+    for (p in propertyNames) {
         if (propertyNames.hasOwnProperty(p)) {
-            var propertyName = propertyNames[p];
+            propertyName = propertyNames[p];
             retval[propertyName] = this[propertyName];
         }
     }
