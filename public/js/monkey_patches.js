@@ -2,11 +2,10 @@
 
 Array.prototype.removeItem = function (itemToRemove) {
 
-    var indexToRemove = -1,
-        index;
+    var index;
     for (index in this) {
         if (this.hasOwnProperty(index) && this[index] == itemToRemove) {
-            this.splice(indexToRemove, 1); // remove item at that index
+            this.splice(index, 1); // remove item at that index
             return;
         }
     }
