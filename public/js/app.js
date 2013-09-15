@@ -281,7 +281,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         }
     };
 
-    $scope.doImportFlowFromObject = function (flowObject) {
+    $scope.doImportFlowFromObject = function (flowObject) { // FIXME make local
 
         var activityData,
             activityType,
