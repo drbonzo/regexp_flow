@@ -90,5 +90,5 @@ RegexpFindAllActivity.prototype.getExportObject = function () {
  * @returns {Array|string[]}
  */
 RegexpFindAllActivity.prototype.getSerializablePropertyNames = function () {
-    return ['searchString', 'searchFlagCaseInsensitive'];
+    return ['searchString', 'searchFlagCaseInsensitive', 'isEnabled'];
 };
