@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         banner: "/**\n" +
             " * RegexpFlow\n" +
-            " * version: 0.8.3\n" +
+            " * version: <%= pkg.version %>\n" +
             " * www: https://github.com/drbonzo/regexp_flow\n" +
             " * author: dr_bonzo\n" +
             "*/\n",
@@ -195,6 +195,7 @@ module.exports = function (grunt) {
     // FIXME process
     grunt.registerTask('dist-prod', ['env:prod', 'jshint', 'clean:prod', 'recess:prod', 'concat:prod', 'uglify:prod', 'copy:prod', 'preprocess:prod']);
     grunt.registerTask('dist-dev', ['env:dev', 'jshint', 'clean:dev', 'recess:dev', 'concat:dev', /* 'uglify:dev', */ 'copy:dev', 'preprocess:dev']);
+    grunt.registerTask('clean-all', ['clean:prod', 'clean:dev']);
     grunt.registerTask('dist-all', ['dist-prod', 'dist-dev'/*, 'dist-staging'*/]);
     grunt.registerTask('auto-refresh', ['watch:recess']); // registered task must have name different than 'watch'
     grunt.registerTask('default', ['jshint']);
