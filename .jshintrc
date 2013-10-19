@@ -1,0 +1,16 @@
+{
+    // http://www.jshint.com/docs/options/
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "unused": true,
+    "es3": true,
+    "node":true
+//    "boss": true,
+//    "eqnull": true,
+}

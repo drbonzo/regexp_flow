@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="RegexpFlowApplication">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>RegexpFlow</title>
+
+    <script src="js/lib/jquery-1.10.2.js"></script>
+    <script src="js/lib/jquery-ui-1.10.3.custom.js"></script>
+    <script src="js/lib/bootstrap-3.0.0.js"></script>
+    <script src="js/lib/angular-1.0.8.js"></script>
+
+    <!-- @if development=true -->
+    <script src="js/monkey_patches.js"></script>
+    <script src="js/RegexpActivity.js"></script>
+    <script src="js/RegexpFlow.js"></script>
+    <script src="js/RegexpReplaceActivity.js"></script>
+    <script src="js/RegexpFindAllActivity.js"></script>
+    <script src="js/RegexpMatchLineActivity.js"></script>
+    <script src="js/RegexpMatchInLineActivity.js"></script>
+    <!-- @endif -->
+
+    <!-- @if development=true -->
+    <!--
+         With each version change reference to this file: regexp_flow-*.js.
+         This way we can develop without changing this file.
+         grunt will produce all builds that will also work.
+    -->
+    <!-- @endif -->
+    <script src="js/regexp_flow-0.8.3.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap-3.0.0.css">
+
+    <link rel="stylesheet" href="css/app-0.8.3.css">
+
+
+</head>
+<body ng-view>
+</body>
+</html>

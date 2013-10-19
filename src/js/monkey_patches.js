@@ -1,5 +1,7 @@
 'use strict';
 
+/*jslint eqeq: true*/
+
 Array.prototype.removeItem = function (itemToRemove) {
 
     var index;

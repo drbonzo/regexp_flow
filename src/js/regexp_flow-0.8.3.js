@@ -1,6 +1,6 @@
 'use strict';
 
-/*jslint browser: true*/
+/*jslint browser: true, eqeq: true*/
 /*global $, angular,
  RegexpFlow,
  RegexpReplaceActivity,
@@ -58,7 +58,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
  */
 regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
 
-    $scope.version = {name: 'RegexpFlow', version: '0.8.2'};
+    $scope.version = {name: 'RegexpFlow', version: '0.8.3'};
 
     $scope.infoPanelVisible = false;
 
@@ -212,7 +212,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     $scope.chainHasNoActivities = function () {
-        return ($scope.flow.activities.length == 0);
+        return ($scope.flow.activities.length === 0);
     };
 
     function getFlowExportObject() {
@@ -268,7 +268,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
         $scope.flow.removeAllActivities();
 
-        if ($scope.importData == '' || !$scope.importData) {
+        if ($scope.importData === '' || !$scope.importData) {
             return;
         }
 

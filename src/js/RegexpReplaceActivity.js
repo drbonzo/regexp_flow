@@ -1,5 +1,6 @@
 'use strict';
 
+/*jslint eqeq: true*/
 /*global RegexpActivity */
 
 /**
