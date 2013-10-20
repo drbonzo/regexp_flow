@@ -5,6 +5,7 @@ function RegexpFlow() {
      * @type {Array|RegexpActivity[]}
      */
     this.activities = [];
+    // FIXME metody do modyfikacji tego?
 }
 
 RegexpFlow.prototype.removeAllActivities = function () {
