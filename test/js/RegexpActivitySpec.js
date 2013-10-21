@@ -98,15 +98,9 @@ describe("RegexpActivity, regexp validation errors", function () {
             }
         };
 
-        try {
-            regexpActivity.setupValidationFromError(exception);
-
-            expect(true).toEqual(false); // we expect exception
-        }
-        catch (e) {
-            expect(regexpActivity.regexpIsValid).toEqual(false);
-            expect(regexpActivity.regexpValidationMessage).toEqual('I am the message');
-        }
+        expect(regexpActivity.setupValidationFromError(exception)).toEqual(exception);
+        expect(regexpActivity.regexpIsValid).toEqual(false);
+        expect(regexpActivity.regexpValidationMessage).toEqual('I am the message');
     });
 
     it("we can reset validation errors", function () {

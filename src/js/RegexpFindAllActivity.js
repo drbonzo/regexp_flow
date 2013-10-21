@@ -72,9 +72,7 @@ RegexpFindAllActivity.prototype.processText = function (inputText) {
         this.matchesCount = 0;
         return '';
     } catch (e) {
-        this.setupValidationFromError(e);
-
-        return '';
+        throw this.setupValidationFromError(e);
     }
 };
 

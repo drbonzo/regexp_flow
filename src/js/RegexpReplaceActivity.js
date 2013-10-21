@@ -93,9 +93,7 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
 
         return inputText.replace(searchRegexp, replacement);
     } catch (e) {
-        this.setupValidationFromError(e);
-
-        return '';
+        throw this.setupValidationFromError(e);
     }
 };
 

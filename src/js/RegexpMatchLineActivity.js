@@ -87,9 +87,7 @@ RegexpMatchLineActivity.prototype.processText = function (inputText) {
 
         return matchedLines.join("\n");
     } catch (e) {
-        this.setupValidationFromError(e);
-
-        return '';
+        throw this.setupValidationFromError(e);
     }
 };
 

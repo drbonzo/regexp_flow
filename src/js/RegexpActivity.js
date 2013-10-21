@@ -114,9 +114,14 @@ RegexpActivity.prototype.resetRegExpValidation = function () {
     this.regexpValidationMessage = '';
 };
 
+/**
+ *
+ * @param error exception thrown
+ * @returns {*} the same exception
+ */
 RegexpActivity.prototype.setupValidationFromError = function (error) {
     this.regexpIsValid = false;
     this.regexpValidationMessage = error.toString();
-    throw error;
+    return error;
 };
 
