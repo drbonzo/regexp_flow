@@ -42,7 +42,9 @@ RegexpActivity.prototype.buildRegExp = function (regularExpressionString, flagCa
  */
 RegexpActivity.prototype.splitTextIntoLines = function (inputText) {
     // regexp without ?: will mess this split
-    return inputText.split(/(?:\r\n|\n|\r)/);
+    inputText = inputText.replace(/\r\n/, "\n");
+    inputText = inputText.replace(/\r/, "\n");
+    return inputText.split(/\n+/);
 };
 
 /**
