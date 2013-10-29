@@ -74,7 +74,7 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
 
         // replace \n with newline character (same with \t - tab character)
         // but dont replace \\n (nor \\t)
-        replacement = replacement.replace(/(\\)?(\\[nt])/, function (group1, group2) {
+        replacement = replacement.replace(/(\\)?(\\[nt])/g, function (group1, group2) {
             // if (\\)? group has been found then we have two values: group1 and group2 - then dont change anything, as we got \\n
             // if this group has NOT been found - then group2 is undefined - we can replace \n with newline character
 
@@ -88,6 +88,7 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
                 return "\n";
             }
 
+            // if not \\n then it must be \\t
             return "\t";
         });
 
