@@ -34,10 +34,9 @@ describe("RegexpActivity", function () {
             expect(regexpActivity.splitTextIntoLines("foo\n\rbar")).toEqual(['foo', 'bar']);
         });
 
-        it("should plit text into lines by \\n and \\n\\r character", function () {
-            expect(regexpActivity.splitTextIntoLines("Lorem\n\ripsum\ndolor sid amet")).toEqual(['Lorem', 'ipsum', 'dolor sid amet']);
+        it("should plit text into lines by \\n and \\r\\n character", function () {
+            expect(regexpActivity.splitTextIntoLines("Lorem\r\nipsum\ndolor sid amet")).toEqual(['Lorem', 'ipsum', 'dolor sid amet']);
         });
-
     });
 
     describe("abstract methods", function () {
