@@ -176,6 +176,59 @@ describe("RegexpReplaceActivity", function () {
 
     });
 
-    // FIXME initializeFromObject
-    // FIXME getExportObject
+
+    describe("import/export object", function () {
+
+        describe("initializeFromObject()", function () {
+
+            var sourceObject;
+
+            beforeEach(function () {
+                sourceObject = {
+                    searchString: '[a-z]',
+                    replaceString: '--$1--',
+                    searchFlagGlobal: true,
+                    searchFlagMultiline: true,
+                    searchFlagCaseInsensitive: true,
+                    isEnabled: true
+                };
+            });
+
+            it("copyPropertiesFrom copies specified properties", function () {
+                regexpReplaceActivity.initializeFromObject(sourceObject);
+
+                expect(regexpReplaceActivity.searchString).toEqual('[a-z]');
+                expect(regexpReplaceActivity.replaceString).toEqual('--$1--');
+                expect(regexpReplaceActivity.searchFlagGlobal).toEqual(true);
+                expect(regexpReplaceActivity.searchFlagMultiline).toEqual(true);
+                expect(regexpReplaceActivity.searchFlagCaseInsensitive).toEqual(true);
+                expect(regexpReplaceActivity.isEnabled).toEqual(true);
+            });
+        });
+
+        describe("getExportObject()", function () {
+
+            beforeEach(function () {
+                regexpReplaceActivity.searchString = 'foo';
+                regexpReplaceActivity.replaceString = '--$1--';
+                regexpReplaceActivity.searchFlagGlobal = true;
+                regexpReplaceActivity.searchFlagMultiline = true;
+                regexpReplaceActivity.searchFlagCaseInsensitive = true;
+                regexpReplaceActivity.isEnabled = true;
+            });
+
+            it("extractPropertiesToObject exports empty object if no properties are specified", function () {
+                var exportedObject = regexpReplaceActivity.getExportObject();
+                expect(exportedObject).toEqual({
+                    typeName: 'RegexpReplaceActivity',
+                    searchString: 'foo',
+                    replaceString: '--$1--',
+                    searchFlagGlobal: true,
+                    searchFlagMultiline: true,
+                    searchFlagCaseInsensitive: true,
+                    isEnabled: true
+                });
+            });
+        });
+    });
 });

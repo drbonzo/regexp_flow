@@ -104,6 +104,48 @@ describe("RegexpFindAllActivity", function () {
         });
     });
 
-    // FIXME initializeFromObject
-    // FIXME getExportObject
+    describe("import/export object", function () {
+
+        describe("initializeFromObject()", function () {
+
+            var sourceObject;
+
+            beforeEach(function () {
+                sourceObject = {
+                    searchString: '[a-z]',
+                    searchFlagCaseInsensitive: true,
+                    isEnabled: true
+                };
+            });
+
+            it("copyPropertiesFrom copies specified properties", function () {
+                regexpFindAllActivity.initializeFromObject(sourceObject);
+
+                expect(regexpFindAllActivity.searchString).toEqual('[a-z]');
+                expect(regexpFindAllActivity.searchFlagCaseInsensitive).toEqual(true);
+                expect(regexpFindAllActivity.isEnabled).toEqual(true);
+            });
+
+        });
+
+        describe("getExportObject()", function () {
+
+            beforeEach(function () {
+                regexpFindAllActivity.searchString = 'foo';
+                regexpFindAllActivity.searchFlagCaseInsensitive = true;
+                regexpFindAllActivity.isEnabled = true;
+            });
+
+            it("extractPropertiesToObject exports empty object if no properties are specified", function () {
+                var exportedObject = regexpFindAllActivity.getExportObject();
+                expect(exportedObject).toEqual({
+                    typeName: 'RegexpFindAllActivity',
+                    searchString: 'foo',
+                    searchFlagCaseInsensitive: true,
+                    isEnabled: true
+                });
+            });
+        });
+    });
+
 });

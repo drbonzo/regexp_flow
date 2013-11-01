@@ -128,6 +128,52 @@ describe("RegexpMatchLineActivity", function () {
         });
     });
 
-    // FIXME initializeFromObject
-    // FIXME getExportObject
+    describe("import/export object", function () {
+
+        describe("initializeFromObject()", function () {
+
+            var sourceObject;
+
+            beforeEach(function () {
+                sourceObject = {
+                    searchString: '[a-z]',
+                    searchFlagCaseInsensitive: true,
+                    flagInvertMatch : true,
+                    isEnabled: true
+                };
+            });
+
+            it("copyPropertiesFrom copies specified properties", function () {
+                regexpMatchLineActivity.initializeFromObject(sourceObject);
+
+                expect(regexpMatchLineActivity.searchString).toEqual('[a-z]');
+                expect(regexpMatchLineActivity.searchFlagCaseInsensitive).toEqual(true);
+                expect(regexpMatchLineActivity.flagInvertMatch).toEqual(true);
+                expect(regexpMatchLineActivity.isEnabled).toEqual(true);
+            });
+
+        });
+
+        describe("getExportObject()", function () {
+
+            beforeEach(function () {
+                regexpMatchLineActivity.searchString = 'foo';
+                regexpMatchLineActivity.searchFlagCaseInsensitive = true;
+                regexpMatchLineActivity.flagInvertMatch = true;
+                regexpMatchLineActivity.isEnabled = true;
+            });
+
+            it("extractPropertiesToObject exports empty object if no properties are specified", function () {
+                var exportedObject = regexpMatchLineActivity.getExportObject();
+                expect(exportedObject).toEqual({
+                    searchString: 'foo',
+                    searchFlagCaseInsensitive: true,
+                    flagInvertMatch: true,
+                    isEnabled: true,
+                    typeName: 'RegexpMatchLineActivity'
+                });
+            });
+        });
+    });
+
 });
