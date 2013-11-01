@@ -15,3 +15,4 @@ You can grep text, grep only matches in a line, replace text using regular expre
 
 2. make `backend/data/flow` writable by PHP/Webserver
 
+![Main screen](docs/main_screen.png)
