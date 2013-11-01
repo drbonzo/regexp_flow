@@ -1,4 +1,5 @@
-/* global RegexpMatchLineActivity */
+/*global RegexpMatchLineActivity: false, describe:false, it:false, beforeEach:false, expect:false  */
+'use strict';
 describe("RegexpMatchLineActivity", function () {
 
     /**
@@ -25,23 +26,23 @@ describe("RegexpMatchLineActivity", function () {
 
     describe("processText", function () {
 
-        it("should return empty string if input is empty", function () {
-            regexpMatchLineActivity = new RegexpMatchLineActivity('\\d+');
-            expect(regexpMatchLineActivity.processText('')).toEqual('');
-            expect(regexpMatchLineActivity.totalLinesCount).toEqual(1);
-            expect(regexpMatchLineActivity.linesMatchedCount).toEqual(0);
+        describe("empty values", function () {
+            it("should return empty string if input is empty", function () {
+                regexpMatchLineActivity = new RegexpMatchLineActivity('\\d+');
+                expect(regexpMatchLineActivity.processText('')).toEqual('');
+                expect(regexpMatchLineActivity.totalLinesCount).toEqual(1);
+                expect(regexpMatchLineActivity.linesMatchedCount).toEqual(0);
+            });
+
+            it("should return input text when regexp is empty", function () {
+                regexpMatchLineActivity = new RegexpMatchLineActivity('');
+                expect(regexpMatchLineActivity.processText('Lorem\nipsum\ndolor')).toEqual('Lorem\nipsum\ndolor');
+                expect(regexpMatchLineActivity.totalLinesCount).toEqual(3);
+                expect(regexpMatchLineActivity.linesMatchedCount).toEqual(3);
+            });
         });
 
-        it("should return input text when regexp is empty", function () {
-            regexpMatchLineActivity = new RegexpMatchLineActivity('');
-            expect(regexpMatchLineActivity.processText('Lorem\nipsum\ndolor')).toEqual('Lorem\nipsum\ndolor');
-            expect(regexpMatchLineActivity.totalLinesCount).toEqual(3);
-            expect(regexpMatchLineActivity.linesMatchedCount).toEqual(3);
-        });
-
-        // FLAGS
-
-        describe('flags', function () {
+        describe('matching and flags', function () {
 
             it("should return just lines that match regexp when flagInvertMatch is off", function () {
                 regexpMatchLineActivity = new RegexpMatchLineActivity('o');
@@ -111,18 +112,19 @@ describe("RegexpMatchLineActivity", function () {
             });
         });
 
-        it("invalid regexp sets up validation errors and throws exception", function () {
-            try {
-                regexpMatchLineActivity = new RegexpMatchLineActivity('foo[');
-                regexpMatchLineActivity.processText('Lorem ipsum\ndolor sit amet foo[');
-                expect(true).toEqual(false);
-            }
-            catch (e) {
-                expect(regexpMatchLineActivity.regexpIsValid).toEqual(false);
-                expect(regexpMatchLineActivity.regexpValidationMessage.length).toBeGreaterThan(0);
-                expect(regexpMatchLineActivity.totalLinesCount).toEqual(2);
-                expect(regexpMatchLineActivity.linesMatchedCount).toEqual(0);
-            }
+        describe("errors", function () {
+            it("invalid regexp sets up validation errors and throws exception", function () {
+                try {
+                    regexpMatchLineActivity = new RegexpMatchLineActivity('foo[');
+                    regexpMatchLineActivity.processText('Lorem ipsum\ndolor sit amet foo[');
+                    expect(true).toEqual(false);
+                } catch (e) {
+                    expect(regexpMatchLineActivity.regexpIsValid).toEqual(false);
+                    expect(regexpMatchLineActivity.regexpValidationMessage.length).toBeGreaterThan(0);
+                    expect(regexpMatchLineActivity.totalLinesCount).toEqual(2);
+                    expect(regexpMatchLineActivity.linesMatchedCount).toEqual(0);
+                }
+            });
         });
     });
 

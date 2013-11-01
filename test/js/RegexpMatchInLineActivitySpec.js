@@ -1,4 +1,5 @@
-/* global RegexpMatchInLineActivity */
+/*global RegexpMatchInLineActivity: false, describe:false, it:false, beforeEach:false, expect:false  */
+'use strict';
 describe("RegexpMatchInLineActivity", function () {
 
     /**
@@ -25,6 +26,7 @@ describe("RegexpMatchInLineActivity", function () {
     describe("processText", function () {
 
         describe("empty values", function () {
+
             it("should return every single line if regexp is empty", function () {
                 regexpMatchLineActivity = new RegexpMatchInLineActivity('');
                 expect(regexpMatchLineActivity.processText('Lorem\nIpsum\nDolor')).toEqual('Lorem\nIpsum\nDolor');
@@ -101,8 +103,7 @@ describe("RegexpMatchInLineActivity", function () {
                     regexpMatchLineActivity = new RegexpMatchInLineActivity('foo[');
                     regexpMatchLineActivity.processText('Lorem ipsum\ndolor sit amet foo[');
                     expect(true).toEqual(false);
-                }
-                catch (e) {
+                } catch (e) {
                     expect(regexpMatchLineActivity.regexpIsValid).toEqual(false);
                     expect(regexpMatchLineActivity.regexpValidationMessage.length).toBeGreaterThan(0);
                     expect(regexpMatchLineActivity.totalLinesCount).toEqual(2);

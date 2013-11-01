@@ -1,4 +1,5 @@
-/* global RegexpFlow */
+/*global RegexpFlow: false, describe:false, it:false, beforeEach:false, expect:false  */
+'use strict';
 describe("RegexpFlow", function () {
 
     /**

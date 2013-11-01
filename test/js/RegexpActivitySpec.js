@@ -1,4 +1,5 @@
-/* global RegexpActivity  */
+/*global RegexpActivity: false, describe:false, it:false, beforeEach:false, expect:false  */
+'use strict';
 describe("RegexpActivity", function () {
 
     /**
