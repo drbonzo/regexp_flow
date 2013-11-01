@@ -1,0 +1,22 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "unused": false, // allow for unused function params
+    "boss": true,
+    "eqnull": true,
+    "browser": true,
+    "es3": true,
+    "node": true,
+    "globals": {
+        "describe": false, // jasmine stuff below:
+        "it": false,
+        "beforeEach": false,
+        "expect": false
+    }
+}
