@@ -1,5 +1,9 @@
+/* global RegexpFlow */
 describe("RegexpFlow", function () {
 
+    /**
+     * {RegexpFlow}
+     */
     var regexpFlow;
 
     beforeEach(function () {

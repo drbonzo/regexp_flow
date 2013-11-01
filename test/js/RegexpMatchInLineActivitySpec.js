@@ -1,3 +1,4 @@
+/* global RegexpMatchInLineActivity */
 describe("RegexpMatchInLineActivity", function () {
 
     /**

@@ -1,3 +1,4 @@
+/* global RegexpFindAllActivity  */
 describe("RegexpFindAllActivity", function () {
 
     /**

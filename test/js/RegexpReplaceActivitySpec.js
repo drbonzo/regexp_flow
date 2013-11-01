@@ -1,3 +1,4 @@
+/* global RegexpReplaceActivity */
 describe("RegexpReplaceActivity", function () {
 
     /**

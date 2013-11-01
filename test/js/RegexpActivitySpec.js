@@ -1,3 +1,4 @@
+/* global RegexpActivity  */
 describe("RegexpActivity", function () {
 
     /**
@@ -22,7 +23,6 @@ describe("RegexpActivity", function () {
         });
 
     });
-
 
     describe("splitTextIntoLines", function () {
 
@@ -59,7 +59,6 @@ describe("RegexpActivity", function () {
             }).toThrow();
         });
     });
-
 
     describe("regexp validation errors", function () {
 
