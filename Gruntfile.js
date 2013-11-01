@@ -198,7 +198,6 @@ module.exports = function (grunt) {
 
 
     // CSS distribution task.
-    // FIXME process
     grunt.registerTask('dist-prod', ['env:prod', 'jshint', 'clean:prod', 'recess:prod', 'concat:prod', 'uglify:prod', 'copy:prod', 'preprocess:prod']);
     grunt.registerTask('dist-dev', ['env:dev', 'jshint', 'clean:dev', 'recess:dev', 'concat:dev', /* 'uglify:dev', */ 'copy:dev', 'preprocess:dev']);
     grunt.registerTask('clean-all', ['clean:prod', 'clean:dev']);
