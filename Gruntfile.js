@@ -175,6 +175,22 @@ module.exports = function (grunt) {
             }
         },
 
+        karma: {
+            options: {
+                configFile: 'karma.conf.js'
+            },
+            auto: {
+                runnerPort: 9999,
+                browsers: ['PhantomJS'],
+                autoWatch: true // watches for changes and reruns karma. Do not mix with singleRun
+            },
+            full: {
+                runnerPort: 9998, // so we can run autorefreshing karma on development
+                singleRun: true, // run just one
+                browsers: ['Chrome', 'Firefox', 'PhantomJS']
+            }
+        },
+
         watch: {
             recess: {
                 files: 'src/css/*.less',
@@ -192,14 +208,15 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-linter');
     grunt.loadNpmTasks('grunt-preprocess');
     grunt.loadNpmTasks('grunt-recess');
 
 
     // CSS distribution task.
-    grunt.registerTask('dist-prod', ['env:prod', 'jshint', 'clean:prod', 'recess:prod', 'concat:prod', 'uglify:prod', 'copy:prod', 'preprocess:prod']);
-    grunt.registerTask('dist-dev', ['env:dev', 'jshint', 'clean:dev', 'recess:dev', 'concat:dev', /* 'uglify:dev', */ 'copy:dev', 'preprocess:dev']);
+    grunt.registerTask('dist-prod', ['env:prod', 'karma:full', 'jshint', 'clean:prod', 'recess:prod', 'concat:prod', 'uglify:prod', 'copy:prod', 'preprocess:prod']);
+    grunt.registerTask('dist-dev', ['env:dev', 'karma:full', 'jshint', 'clean:dev', 'recess:dev', 'concat:dev', /* 'uglify:dev', */ 'copy:dev', 'preprocess:dev']);
     grunt.registerTask('clean-all', ['clean:prod', 'clean:dev']);
     grunt.registerTask('dist-all', ['dist-prod', 'dist-dev'/*, 'dist-staging'*/]);
     grunt.registerTask('auto-refresh', ['watch:recess']); // registered task must have name different than 'watch'
