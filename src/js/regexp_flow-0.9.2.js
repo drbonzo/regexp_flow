@@ -168,6 +168,14 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
+     * @param {RegexpActivity|null} selectedActivity
+     */
+    $scope.addNewUniqueActivity = function (selectedActivity) {
+        var newActivity = new RegexpUniqueActivity(''); // will match whole line
+        $scope.addActivity(newActivity, selectedActivity);
+    };
+
+    /**
      * @param {RegexpActivity} newActivity
      * @param {RegexpActivity|null} selectedActivity if null - new RegexpActivity will be added at the end, else it will be added after selectedActivity
      */
@@ -293,7 +301,8 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             'RegexpReplaceActivity': RegexpReplaceActivity,
             'RegexpFindAllActivity': RegexpFindAllActivity,
             'RegexpMatchLineActivity': RegexpMatchLineActivity,
-            'RegexpMatchInLineActivity': RegexpMatchInLineActivity
+            'RegexpMatchInLineActivity': RegexpMatchInLineActivity,
+            'RegexpUniqueActivity': RegexpUniqueActivity
         };
 
         for (a in flowObject.activities) {

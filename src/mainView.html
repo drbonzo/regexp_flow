@@ -88,6 +88,10 @@
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineActivity(null)">&plus;MIL</button>
                                     <p>Leave only lines that match regular expression and leave only matched text</p>
                                 </div>
+                                <div class="col-md-3 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewUniqueActivity(null)">&plus;UNIQ</button>
+                                    <p>Leave only lines that match regular expression and leave only matched text</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -105,6 +109,7 @@
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllActivity(activity)" title="Add FindAll Activity">&plus;FA</button>
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)" title="Add MatchLine Activity">&plus;ML</button>
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)" title="Add MatchInLine Activity">&plus;MIL</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewUniqueActivity(activity)" title="Add Unique Activity">&plus;UNIQ</button>
                             </div>
                         </div>
                         <div class="activityForm" ng-switch="activity.typeName">
@@ -226,6 +231,19 @@
                                                 </ul>
                                             </li>
                                             <li>if line does not match - then it is being ommited in result</li>
+                                        </ul>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpUniqueActivity">
+                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Show just unique lines (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                        </div>
+                                        <ul ng-show="showHelp" class="help-block">
                                         </ul>
                                     </fieldset>
                                 </form>
