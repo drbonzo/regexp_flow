@@ -181,7 +181,7 @@ module.exports = function (grunt) {
             },
             auto: {
                 runnerPort: 9999,
-                browsers: ['PhantomJS'],
+                browsers: ['Chrome'],
                 autoWatch: true // watches for changes and reruns karma. Do not mix with singleRun
             },
             full: {
