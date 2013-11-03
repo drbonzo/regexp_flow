@@ -38,7 +38,7 @@ RegexpUniqueActivity.prototype.processText = function (inputText) {
     this.totalLinesCount = 0;
     this.linesMatchedCount = 0;
 
-    if (inputText.length == 0) {
+    if (inputText.length === 0) {
         return inputText;
     }
 

@@ -6,7 +6,8 @@
  RegexpReplaceActivity,
  RegexpFindAllActivity,
  RegexpMatchLineActivity,
- RegexpMatchInLineActivity
+ RegexpMatchInLineActivity,
+ RegexpUniqueActivity
  */
 
 /**
