@@ -27,15 +27,23 @@ describe("RegexpActivity", function () {
 
     describe("splitTextIntoLines", function () {
 
-        it("should plit text into lines by \\n character", function () {
+        it("should split text into lines by \\n character", function () {
             expect(regexpActivity.splitTextIntoLines("foo\nbar")).toEqual(['foo', 'bar']);
         });
 
-        it("should plit text into lines by \\n\\r character", function () {
-            expect(regexpActivity.splitTextIntoLines("foo\n\rbar")).toEqual(['foo', 'bar']);
+        it("should split text into lines by \\r\\n character", function () {
+            expect(regexpActivity.splitTextIntoLines("foo\r\nbar")).toEqual(['foo', 'bar']);
         });
 
-        it("should plit text into lines by \\n and \\r\\n character", function () {
+        it("should treat \\n\\n as single separator", function () { // FIXME wtf? why split treats \n\n as single separator?
+            expect(regexpActivity.splitTextIntoLines("foo\n\nbar")).toEqual(['foo', '', 'bar']);
+        });
+
+        it("should treat \\n\\r as single separator", function () { // FIXME wtf? why split treats \n\n as single separator?
+            expect(regexpActivity.splitTextIntoLines("foo\n\rbar")).toEqual(['foo', '', 'bar']);
+        });
+
+        it("should split text into lines by \\n and \\r\\n character", function () {
             expect(regexpActivity.splitTextIntoLines("Lorem\r\nipsum\ndolor sid amet")).toEqual(['Lorem', 'ipsum', 'dolor sid amet']);
         });
     });
