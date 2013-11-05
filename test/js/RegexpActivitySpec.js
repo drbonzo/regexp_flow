@@ -16,8 +16,8 @@ describe("RegexpActivity", function () {
             expect(regexpActivity.showDescription).toBeNull();
         });
 
-        it("description is empty string", function () {
-            expect(regexpActivity.description).toEqual('');
+        it("description is null", function () {
+            expect(regexpActivity.description).toBeNull();
         });
     });
 
@@ -177,7 +177,21 @@ describe("RegexpActivity", function () {
 
         it("should return false when showDescription is null and does not have description", function () {
             expect(regexpActivity.showDescription).toBeNull();
+            expect(regexpActivity.description).toBeNull();
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is null and has empty description", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+            regexpActivity.description = '';
             expect(regexpActivity.description).toEqual('');
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is null and has undefined description", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+            regexpActivity.description = undefined;
+            expect(regexpActivity.description).toEqual(undefined);
             expect(regexpActivity.shouldShowDescription()).toEqual(false);
         });
 
@@ -200,9 +214,8 @@ describe("RegexpActivity", function () {
 
         it("should return false when showDescription is false and does not have description", function () {
             regexpActivity.showDescription = false;
-            regexpActivity.description = '';
             expect(regexpActivity.showDescription).toEqual(false);
-            expect(regexpActivity.description.length).toEqual(0);
+            expect(regexpActivity.description).toBeNull();
             expect(regexpActivity.shouldShowDescription()).toEqual(false);
         });
 
@@ -218,9 +231,8 @@ describe("RegexpActivity", function () {
 
         it("should return true when showDescription is true and does not havedescription", function () {
             regexpActivity.showDescription = true;
-            regexpActivity.description = '';
             expect(regexpActivity.showDescription).toEqual(true);
-            expect(regexpActivity.description.length).toEqual(0);
+            expect(regexpActivity.description).toBeNull();
             expect(regexpActivity.shouldShowDescription()).toEqual(true);
         });
     });

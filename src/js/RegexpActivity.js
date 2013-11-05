@@ -9,7 +9,7 @@ function RegexpActivity() {
     this.regexpValidationMessage = '';
 
     this.showDescription = null;
-    this.description = '';
+    this.description = null;
 }
 
 /**
@@ -130,7 +130,7 @@ RegexpActivity.prototype.setupValidationFromError = function (error) {
 };
 
 RegexpActivity.prototype.shouldShowDescription = function () {
-    var hasDescription = (this.description.length > 0);
+    var hasDescription = (this.description !== null && this.description !== undefined && this.description.length > 0);
 
     if (this.showDescription === null) {
         return hasDescription;
