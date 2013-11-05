@@ -7,6 +7,9 @@ function RegexpActivity() {
 
     this.regexpIsValid = true;
     this.regexpValidationMessage = '';
+
+    this.showDescription = null;
+    this.description = '';
 }
 
 /**
@@ -126,3 +129,13 @@ RegexpActivity.prototype.setupValidationFromError = function (error) {
     return error;
 };
 
+RegexpActivity.prototype.shouldShowDescription = function () {
+    var hasDescription = (this.description.length > 0);
+
+    if (this.showDescription === null) {
+        return hasDescription;
+    }
+
+    return this.showDescription;
+
+};

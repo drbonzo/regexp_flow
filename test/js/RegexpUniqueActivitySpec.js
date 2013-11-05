@@ -74,7 +74,8 @@ describe("RegexpUniqueActivity", function () {
 
             beforeEach(function () {
                 sourceObject = {
-                    isEnabled: true
+                    isEnabled: true,
+                    description: 'foobar'
                 };
             });
 
@@ -82,6 +83,7 @@ describe("RegexpUniqueActivity", function () {
                 regexpUniqueActivity.initializeFromObject(sourceObject);
 
                 expect(regexpUniqueActivity.isEnabled).toEqual(true);
+                expect(regexpUniqueActivity.description).toEqual('foobar');
             });
 
         });
@@ -90,13 +92,15 @@ describe("RegexpUniqueActivity", function () {
 
             beforeEach(function () {
                 regexpUniqueActivity.isEnabled = true;
+                regexpUniqueActivity.description = 'foobar';
             });
 
             it("extractPropertiesToObject exports empty object if no properties are specified", function () {
                 var exportedObject = regexpUniqueActivity.getExportObject();
                 expect(exportedObject).toEqual({
                     typeName: 'RegexpUniqueActivity',
-                    isEnabled: true
+                    isEnabled: true,
+                    description: 'foobar'
                 });
             });
         });

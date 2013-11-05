@@ -99,7 +99,8 @@
                         <div class="header">
                             {{ $index+1 }}. {{ activity.displayName }}
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
+                                <button type="button" class="btn btn-xs btn-default regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
+                                <button type="button" class="btn btn-xs btn-info" ng-click="activity.showDescription = !activity.showDescription" title="Toggle description"><span class="glyphicon glyphicon-pencil"></span></button>
                                 <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)" title="Disable/enable activity"><span class="glyphicon glyphicon-pause"></span></button>
                                 <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)" title="Remove activity"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
@@ -156,6 +157,12 @@
                                             </ul>
                                         </div>
                                     </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
+                                    </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpFindAllActivity">
@@ -173,6 +180,12 @@
                                                     <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
                                                 </label>
                                             </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -204,6 +217,12 @@
                                             </ul>
                                         </div>
                                     </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
+                                    </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpMatchInLineActivity">
@@ -233,6 +252,12 @@
                                             <li>if line does not match - then it is being ommited in result</li>
                                         </ul>
                                     </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
+                                    </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpUniqueActivity">
@@ -245,6 +270,12 @@
                                         </div>
                                         <ul ng-show="showHelp" class="help-block">
                                         </ul>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
                                     </fieldset>
                                 </form>
                             </div>

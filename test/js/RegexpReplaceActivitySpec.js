@@ -190,7 +190,8 @@ describe("RegexpReplaceActivity", function () {
                     searchFlagGlobal: true,
                     searchFlagMultiline: true,
                     searchFlagCaseInsensitive: true,
-                    isEnabled: true
+                    isEnabled: true,
+                    description: 'foobar'
                 };
             });
 
@@ -203,6 +204,7 @@ describe("RegexpReplaceActivity", function () {
                 expect(regexpReplaceActivity.searchFlagMultiline).toEqual(true);
                 expect(regexpReplaceActivity.searchFlagCaseInsensitive).toEqual(true);
                 expect(regexpReplaceActivity.isEnabled).toEqual(true);
+                expect(regexpReplaceActivity.description).toEqual('foobar');
             });
         });
 
@@ -215,6 +217,7 @@ describe("RegexpReplaceActivity", function () {
                 regexpReplaceActivity.searchFlagMultiline = true;
                 regexpReplaceActivity.searchFlagCaseInsensitive = true;
                 regexpReplaceActivity.isEnabled = true;
+                regexpReplaceActivity.description = 'foobar';
             });
 
             it("extractPropertiesToObject exports empty object if no properties are specified", function () {
@@ -226,7 +229,8 @@ describe("RegexpReplaceActivity", function () {
                     searchFlagGlobal: true,
                     searchFlagMultiline: true,
                     searchFlagCaseInsensitive: true,
-                    isEnabled: true
+                    isEnabled: true,
+                    description: 'foobar'
                 });
             });
         });

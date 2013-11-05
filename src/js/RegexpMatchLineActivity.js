@@ -103,5 +103,5 @@ RegexpMatchLineActivity.prototype.getExportObject = function () {
  * @returns {Array|string[]}
  */
 RegexpMatchLineActivity.prototype.getSerializablePropertyNames = function () {
-    return ['searchString', 'searchFlagCaseInsensitive', 'flagInvertMatch', 'isEnabled'];
+    return ['searchString', 'searchFlagCaseInsensitive', 'flagInvertMatch', 'isEnabled', 'description'];
 };

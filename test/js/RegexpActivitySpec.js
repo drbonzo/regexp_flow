@@ -11,6 +11,16 @@ describe("RegexpActivity", function () {
         regexpActivity = new RegexpActivity();
     });
 
+    describe("defaults", function () {
+        it("showDescription is null", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+        });
+
+        it("description is empty string", function () {
+            expect(regexpActivity.description).toEqual('');
+        });
+    });
+
     describe("buildingRegExp", function () {
 
         it("should build RegExp object with no flags when given all flags arguments to false", function () {
@@ -145,17 +155,73 @@ describe("RegexpActivity", function () {
 
         it("extractPropertiesToObject exports empty object if no properties are specified", function () {
             var exportedObject = regexpActivity.extractPropertiesToObject([]);
-            expect(exportedObject).toEqual({'typeName': ''});
+            expect(exportedObject).toEqual({typeName: ''});
         });
 
         it("extractPropertiesToObject exports only specified properties", function () {
             var exportedObject = regexpActivity.extractPropertiesToObject(['foo']);
-            expect(exportedObject).toEqual({'typeName': '', foo: 'bar'});
+            expect(exportedObject).toEqual({typeName: '', foo: 'bar'});
         });
 
         it("extractPropertiesToObject exports only existing properties", function () {
             var exportedObject = regexpActivity.extractPropertiesToObject(['foo', 'foobar']);
-            expect(exportedObject).toEqual({'typeName': '', foo: 'bar'});
+            expect(exportedObject).toEqual({typeName: '', foo: 'bar'});
+        });
+    });
+
+    describe("shouldShowDescription()", function () {
+
+        it("by default returns false", function () {
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is null and does not have description", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+            expect(regexpActivity.description).toEqual('');
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return true when showDescription is null and has description", function () {
+            regexpActivity.description = "some description";
+            expect(regexpActivity.showDescription).toBeNull();
+            expect(regexpActivity.description.length).toBeGreaterThan(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(true);
+        });
+
+        //
+
+        it("should return false when showDescription is false and has description", function () {
+            regexpActivity.showDescription = false;
+            regexpActivity.description = "some description";
+            expect(regexpActivity.showDescription).toEqual(false);
+            expect(regexpActivity.description.length).toBeGreaterThan(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is false and does not have description", function () {
+            regexpActivity.showDescription = false;
+            regexpActivity.description = '';
+            expect(regexpActivity.showDescription).toEqual(false);
+            expect(regexpActivity.description.length).toEqual(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        //
+
+        it("should return true when showDescription is true and has description", function () {
+            regexpActivity.showDescription = true;
+            regexpActivity.description = 'some description';
+            expect(regexpActivity.showDescription).toEqual(true);
+            expect(regexpActivity.description.length).toBeGreaterThan(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(true);
+        });
+
+        it("should return true when showDescription is true and does not havedescription", function () {
+            regexpActivity.showDescription = true;
+            regexpActivity.description = '';
+            expect(regexpActivity.showDescription).toEqual(true);
+            expect(regexpActivity.description.length).toEqual(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(true);
         });
     });
 

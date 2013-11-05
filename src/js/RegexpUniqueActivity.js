@@ -33,7 +33,8 @@ RegexpUniqueActivity.prototype.processText = function (inputText) {
         line,
         l,
         uniqueLinesHash,
-        uniqueLines;
+        uniqueLines,
+        weSeeThisLineForTheFirstTimeAndLineIsNotEmpty;
 
     this.totalLinesCount = 0;
     this.linesMatchedCount = 0;
@@ -51,7 +52,7 @@ RegexpUniqueActivity.prototype.processText = function (inputText) {
         if (lines.hasOwnProperty(l)) {
             line = lines[l];
 
-            var weSeeThisLineForTheFirstTimeAndLineIsNotEmpty = (!uniqueLinesHash.hasOwnProperty(line) && line.length > 0);
+            weSeeThisLineForTheFirstTimeAndLineIsNotEmpty = (!uniqueLinesHash.hasOwnProperty(line) && line.length > 0);
             if (weSeeThisLineForTheFirstTimeAndLineIsNotEmpty) {
                 uniqueLinesHash[line] = line;
             }
@@ -83,5 +84,5 @@ RegexpUniqueActivity.prototype.getExportObject = function () {
  * @returns {Array|string[]}
  */
 RegexpUniqueActivity.prototype.getSerializablePropertyNames = function () {
-    return ['isEnabled'];
+    return ['isEnabled', 'description'];
 };

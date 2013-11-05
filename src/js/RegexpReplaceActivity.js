@@ -110,5 +110,5 @@ RegexpReplaceActivity.prototype.getExportObject = function () {
  * @returns {Array|string[]}
  */
 RegexpReplaceActivity.prototype.getSerializablePropertyNames = function () {
-    return ['searchString', 'replaceString', 'searchFlagGlobal', 'searchFlagMultiline', 'searchFlagCaseInsensitive', 'isEnabled'];
+    return ['searchString', 'replaceString', 'searchFlagGlobal', 'searchFlagMultiline', 'searchFlagCaseInsensitive', 'isEnabled', 'description'];
 };
