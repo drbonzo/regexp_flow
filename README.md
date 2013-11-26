@@ -10,8 +10,10 @@ You can grep text, grep only matches in a line, replace text using regular expre
 ## Installation
 
 1. install Slim with Composer
-	cd backend/app/
-	php composer.phar install
+    ```
+    cd backend/app/
+    php composer.phar install
+    ```
 
 2. make `backend/data/flow` writable by PHP/Webserver
 
