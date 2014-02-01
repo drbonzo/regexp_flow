@@ -11,6 +11,16 @@ describe("RegexpActivity", function () {
         regexpActivity = new RegexpActivity();
     });
 
+    describe("defaults", function () {
+        it("showDescription is null", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+        });
+
+        it("description is null", function () {
+            expect(regexpActivity.description).toBeNull();
+        });
+    });
+
     describe("buildingRegExp", function () {
 
         it("should build RegExp object with no flags when given all flags arguments to false", function () {
@@ -27,15 +37,23 @@ describe("RegexpActivity", function () {
 
     describe("splitTextIntoLines", function () {
 
-        it("should plit text into lines by \\n character", function () {
+        it("should split text into lines by \\n character", function () {
             expect(regexpActivity.splitTextIntoLines("foo\nbar")).toEqual(['foo', 'bar']);
         });
 
-        it("should plit text into lines by \\n\\r character", function () {
-            expect(regexpActivity.splitTextIntoLines("foo\n\rbar")).toEqual(['foo', 'bar']);
+        it("should split text into lines by \\r\\n character", function () {
+            expect(regexpActivity.splitTextIntoLines("foo\r\nbar")).toEqual(['foo', 'bar']);
         });
 
-        it("should plit text into lines by \\n and \\r\\n character", function () {
+        it("should treat \\n\\n as single separator", function () { // FIXME wtf? why split treats \n\n as single separator?
+            expect(regexpActivity.splitTextIntoLines("foo\n\nbar")).toEqual(['foo', '', 'bar']);
+        });
+
+        it("should treat \\n\\r as single separator", function () { // FIXME wtf? why split treats \n\n as single separator?
+            expect(regexpActivity.splitTextIntoLines("foo\n\rbar")).toEqual(['foo', '', 'bar']);
+        });
+
+        it("should split text into lines by \\n and \\r\\n character", function () {
             expect(regexpActivity.splitTextIntoLines("Lorem\r\nipsum\ndolor sid amet")).toEqual(['Lorem', 'ipsum', 'dolor sid amet']);
         });
     });
@@ -137,17 +155,85 @@ describe("RegexpActivity", function () {
 
         it("extractPropertiesToObject exports empty object if no properties are specified", function () {
             var exportedObject = regexpActivity.extractPropertiesToObject([]);
-            expect(exportedObject).toEqual({'typeName': ''});
+            expect(exportedObject).toEqual({typeName: ''});
         });
 
         it("extractPropertiesToObject exports only specified properties", function () {
             var exportedObject = regexpActivity.extractPropertiesToObject(['foo']);
-            expect(exportedObject).toEqual({'typeName': '', foo: 'bar'});
+            expect(exportedObject).toEqual({typeName: '', foo: 'bar'});
         });
 
         it("extractPropertiesToObject exports only existing properties", function () {
             var exportedObject = regexpActivity.extractPropertiesToObject(['foo', 'foobar']);
-            expect(exportedObject).toEqual({'typeName': '', foo: 'bar'});
+            expect(exportedObject).toEqual({typeName: '', foo: 'bar'});
+        });
+    });
+
+    describe("shouldShowDescription()", function () {
+
+        it("by default returns false", function () {
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is null and does not have description", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+            expect(regexpActivity.description).toBeNull();
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is null and has empty description", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+            regexpActivity.description = '';
+            expect(regexpActivity.description).toEqual('');
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is null and has undefined description", function () {
+            expect(regexpActivity.showDescription).toBeNull();
+            regexpActivity.description = undefined;
+            expect(regexpActivity.description).toEqual(undefined);
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return true when showDescription is null and has description", function () {
+            regexpActivity.description = "some description";
+            expect(regexpActivity.showDescription).toBeNull();
+            expect(regexpActivity.description.length).toBeGreaterThan(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(true);
+        });
+
+        //
+
+        it("should return false when showDescription is false and has description", function () {
+            regexpActivity.showDescription = false;
+            regexpActivity.description = "some description";
+            expect(regexpActivity.showDescription).toEqual(false);
+            expect(regexpActivity.description.length).toBeGreaterThan(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        it("should return false when showDescription is false and does not have description", function () {
+            regexpActivity.showDescription = false;
+            expect(regexpActivity.showDescription).toEqual(false);
+            expect(regexpActivity.description).toBeNull();
+            expect(regexpActivity.shouldShowDescription()).toEqual(false);
+        });
+
+        //
+
+        it("should return true when showDescription is true and has description", function () {
+            regexpActivity.showDescription = true;
+            regexpActivity.description = 'some description';
+            expect(regexpActivity.showDescription).toEqual(true);
+            expect(regexpActivity.description.length).toBeGreaterThan(0);
+            expect(regexpActivity.shouldShowDescription()).toEqual(true);
+        });
+
+        it("should return true when showDescription is true and does not havedescription", function () {
+            regexpActivity.showDescription = true;
+            expect(regexpActivity.showDescription).toEqual(true);
+            expect(regexpActivity.description).toBeNull();
+            expect(regexpActivity.shouldShowDescription()).toEqual(true);
         });
     });
 

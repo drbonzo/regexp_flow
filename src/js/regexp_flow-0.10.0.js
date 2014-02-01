@@ -6,7 +6,8 @@
  RegexpReplaceActivity,
  RegexpFindAllActivity,
  RegexpMatchLineActivity,
- RegexpMatchInLineActivity
+ RegexpMatchInLineActivity,
+ RegexpUniqueActivity
  */
 
 /**
@@ -38,7 +39,7 @@ $(document).ready(function () {
     });
 });
 
-var regexpFlow = angular.module('RegexpFlowApplication', []);
+var regexpFlow = angular.module('RegexpFlowApplication', ['ngRoute']);
 
 regexpFlow.config(['$routeProvider', function ($routeProvider) {
 
@@ -58,7 +59,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
  */
 regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
 
-    $scope.version = {name: 'RegexpFlow', version: '0.9.2'};
+    $scope.version = {name: 'RegexpFlow', version: '0.10.0'};
 
     $scope.infoPanelVisible = false;
 
@@ -164,6 +165,14 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      */
     $scope.addNewMatchInLineActivity = function (selectedActivity) {
         var newActivity = new RegexpMatchInLineActivity('^.*$'); // will match whole line
+        $scope.addActivity(newActivity, selectedActivity);
+    };
+
+    /**
+     * @param {RegexpActivity|null} selectedActivity
+     */
+    $scope.addNewUniqueActivity = function (selectedActivity) {
+        var newActivity = new RegexpUniqueActivity(''); // will match whole line
         $scope.addActivity(newActivity, selectedActivity);
     };
 
@@ -293,7 +302,8 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             'RegexpReplaceActivity': RegexpReplaceActivity,
             'RegexpFindAllActivity': RegexpFindAllActivity,
             'RegexpMatchLineActivity': RegexpMatchLineActivity,
-            'RegexpMatchInLineActivity': RegexpMatchInLineActivity
+            'RegexpMatchInLineActivity': RegexpMatchInLineActivity,
+            'RegexpUniqueActivity': RegexpUniqueActivity
         };
 
         for (a in flowObject.activities) {

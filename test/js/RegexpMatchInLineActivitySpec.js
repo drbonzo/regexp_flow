@@ -123,7 +123,8 @@ describe("RegexpMatchInLineActivity", function () {
                 sourceObject = {
                     searchString: '[a-z]',
                     searchFlagCaseInsensitive: true,
-                    isEnabled: true
+                    isEnabled: true,
+                    description: 'foobar'
                 };
             });
 
@@ -133,6 +134,7 @@ describe("RegexpMatchInLineActivity", function () {
                 expect(regexpMatchInLineActivity.searchString).toEqual('[a-z]');
                 expect(regexpMatchInLineActivity.searchFlagCaseInsensitive).toEqual(true);
                 expect(regexpMatchInLineActivity.isEnabled).toEqual(true);
+                expect(regexpMatchInLineActivity.description).toEqual('foobar');
             });
 
         });
@@ -143,6 +145,7 @@ describe("RegexpMatchInLineActivity", function () {
                 regexpMatchInLineActivity.searchString = 'foo';
                 regexpMatchInLineActivity.searchFlagCaseInsensitive = true;
                 regexpMatchInLineActivity.isEnabled = true;
+                regexpMatchInLineActivity.description = 'foobar';
             });
 
             it("extractPropertiesToObject exports empty object if no properties are specified", function () {
@@ -151,7 +154,8 @@ describe("RegexpMatchInLineActivity", function () {
                     typeName: 'RegexpMatchInLineActivity',
                     searchString: 'foo',
                     searchFlagCaseInsensitive: true,
-                    isEnabled: true
+                    isEnabled: true,
+                    description: 'foobar'
                 });
             });
         });

@@ -7,6 +7,9 @@ function RegexpActivity() {
 
     this.regexpIsValid = true;
     this.regexpValidationMessage = '';
+
+    this.showDescription = null;
+    this.description = null;
 }
 
 /**
@@ -42,9 +45,10 @@ RegexpActivity.prototype.buildRegExp = function (regularExpressionString, flagCa
  */
 RegexpActivity.prototype.splitTextIntoLines = function (inputText) {
     // regexp without ?: will mess this split
-    inputText = inputText.replace(/\r\n/, "\n");
-    inputText = inputText.replace(/\r/, "\n");
-    return inputText.split(/\n+/);
+    inputText = inputText.replace(/\r\n/, "\n"); // CRNL => NL
+    inputText = inputText.replace(/\r/, "\n"); // CR => NL
+
+    return inputText.split(/\n/);
 };
 
 /**
@@ -125,3 +129,13 @@ RegexpActivity.prototype.setupValidationFromError = function (error) {
     return error;
 };
 
+RegexpActivity.prototype.shouldShowDescription = function () {
+    var hasDescription = (this.description !== null && this.description !== undefined && this.description.length > 0);
+
+    if (this.showDescription === null) {
+        return hasDescription;
+    }
+
+    return this.showDescription;
+
+};

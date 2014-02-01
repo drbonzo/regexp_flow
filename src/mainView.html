@@ -88,6 +88,10 @@
                                     <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineActivity(null)">&plus;MIL</button>
                                     <p>Leave only lines that match regular expression and leave only matched text</p>
                                 </div>
+                                <div class="col-md-3 newActivityPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewUniqueActivity(null)">&plus;UQ</button>
+                                    <p>Leave only lines that match regular expression and leave only matched text</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -95,9 +99,10 @@
                         <div class="header">
                             {{ $index+1 }}. {{ activity.displayName }}
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-xs btn-info regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
-                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)" title="Disable/enable activity"><span class="glyphicon glyphicon-ban-circle"></span></button>
-                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)" title="Remove activity">&times;</button>
+                                <button type="button" class="btn btn-xs btn-default regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
+                                <button type="button" class="btn btn-xs btn-info" ng-click="activity.showDescription = !activity.showDescription" title="Toggle description"><span class="glyphicon glyphicon-pencil"></span></button>
+                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)" title="Disable/enable activity"><span class="glyphicon glyphicon-pause"></span></button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)" title="Remove activity"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
 
                             <div class="btn-group pull-right addActivityButtonGroup">
@@ -105,6 +110,7 @@
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllActivity(activity)" title="Add FindAll Activity">&plus;FA</button>
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)" title="Add MatchLine Activity">&plus;ML</button>
                                 <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)" title="Add MatchInLine Activity">&plus;MIL</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewUniqueActivity(activity)" title="Add Unique Activity">&plus;UQ</button>
                             </div>
                         </div>
                         <div class="activityForm" ng-switch="activity.typeName">
@@ -151,6 +157,12 @@
                                             </ul>
                                         </div>
                                     </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
+                                    </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpFindAllActivity">
@@ -168,6 +180,12 @@
                                                     <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
                                                 </label>
                                             </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -199,6 +217,12 @@
                                             </ul>
                                         </div>
                                     </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
+                                    </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpMatchInLineActivity">
@@ -227,6 +251,31 @@
                                             </li>
                                             <li>if line does not match - then it is being ommited in result</li>
                                         </ul>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div ng-switch-when="RegexpUniqueActivity">
+                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label>Show just unique lines (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                        </div>
+                                        <ul ng-show="showHelp" class="help-block">
+                                        </ul>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                        </div>
                                     </fieldset>
                                 </form>
                             </div>
