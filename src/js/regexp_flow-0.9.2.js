@@ -39,7 +39,7 @@ $(document).ready(function () {
     });
 });
 
-var regexpFlow = angular.module('RegexpFlowApplication', []);
+var regexpFlow = angular.module('RegexpFlowApplication', ['ngRoute']);
 
 regexpFlow.config(['$routeProvider', function ($routeProvider) {
 
