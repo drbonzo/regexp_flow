@@ -240,6 +240,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         }
 
         exportDataObject.inputText = $scope.input.text;
+        exportDataObject.description = $scope.flow.description;
         return exportDataObject;
     }
 
@@ -326,6 +327,8 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             // ovewrite input text only when it is given (not empty)
             $scope.input.text = flowObject.inputText;
         }
+
+        $scope.flow.description = flowObject.description;
     };
 
     $scope.createSampleFlow = function () {
