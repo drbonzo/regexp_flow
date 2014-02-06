@@ -140,7 +140,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      * @param {RegexpActivity|null} selectedActivity
      */
     $scope.addNewReplaceActivity = function (selectedActivity) {
-        var newActivity = new RegexpReplaceActivity('^', '');
+        var newActivity = new RegexpReplaceActivity('^(.+?)$', '$1');
         $scope.addActivity(newActivity, selectedActivity);
     };
 
