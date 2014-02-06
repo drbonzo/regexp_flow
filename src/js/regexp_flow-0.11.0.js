@@ -137,6 +137,13 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
+     * @param {RegexpActivity} activity
+     */
+    $scope.toggleShowDescription = function (activity) {
+        activity.showDescription = !activity.showDescription;
+    };
+
+    /**
      * @param {RegexpActivity|null} selectedActivity
      */
     $scope.addNewReplaceActivity = function (selectedActivity) {

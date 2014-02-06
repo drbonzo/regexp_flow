@@ -110,7 +110,7 @@
                             {{ $index+1 }}. {{ activity.displayName }}
                             <div class="btn-group pull-right">
                                 <button type="button" class="btn btn-xs btn-default regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
-                                <button type="button" class="btn btn-xs btn-info" ng-click="activity.showDescription = !activity.showDescription" title="Toggle description"><span class="glyphicon glyphicon-pencil"></span></button>
+                                <button type="button" class="btn btn-xs btn-info" ng-click="toggleShowDescription(activity)" title="Toggle description"><span class="glyphicon glyphicon-pencil"></span></button>
                                 <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)" title="Disable/enable activity"><span class="glyphicon glyphicon-pause"></span></button>
                                 <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)" title="Remove activity"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
