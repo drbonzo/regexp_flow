@@ -175,50 +175,6 @@ describe("RegexpActivity", function () {
             expect(regexpActivity.shouldShowDescription()).toEqual(false);
         });
 
-        it("should return false when showDescription is null and does not have description", function () {
-            expect(regexpActivity.showDescription).toBeNull();
-            expect(regexpActivity.description).toBeNull();
-            expect(regexpActivity.shouldShowDescription()).toEqual(false);
-        });
-
-        it("should return false when showDescription is null and has empty description", function () {
-            expect(regexpActivity.showDescription).toBeNull();
-            regexpActivity.description = '';
-            expect(regexpActivity.description).toEqual('');
-            expect(regexpActivity.shouldShowDescription()).toEqual(false);
-        });
-
-        it("should return false when showDescription is null and has undefined description", function () {
-            expect(regexpActivity.showDescription).toBeNull();
-            regexpActivity.description = undefined;
-            expect(regexpActivity.description).toEqual(undefined);
-            expect(regexpActivity.shouldShowDescription()).toEqual(false);
-        });
-
-        it("should return true when showDescription is null and has description", function () {
-            regexpActivity.description = "some description";
-            expect(regexpActivity.showDescription).toBeNull();
-            expect(regexpActivity.description.length).toBeGreaterThan(0);
-            expect(regexpActivity.shouldShowDescription()).toEqual(true);
-        });
-
-        //
-
-        it("should return false when showDescription is false and has description", function () {
-            regexpActivity.showDescription = false;
-            regexpActivity.description = "some description";
-            expect(regexpActivity.showDescription).toEqual(false);
-            expect(regexpActivity.description.length).toBeGreaterThan(0);
-            expect(regexpActivity.shouldShowDescription()).toEqual(false);
-        });
-
-        it("should return false when showDescription is false and does not have description", function () {
-            regexpActivity.showDescription = false;
-            expect(regexpActivity.showDescription).toEqual(false);
-            expect(regexpActivity.description).toBeNull();
-            expect(regexpActivity.shouldShowDescription()).toEqual(false);
-        });
-
         //
 
         it("should return true when showDescription is true and has description", function () {

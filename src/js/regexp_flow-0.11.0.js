@@ -317,6 +317,11 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
                     activity = new activityConstructors[activityType]('', ''); // pass empty strings
                     // fill it with data
                     activity.initializeFromObject(activityData);
+
+                    // if activity has description then show it initialy
+                    if (!!activity.description && activity.description.length > 0) {
+                        activity.showDescription = true;
+                    }
                     // add to Flow
                     $scope.flow.activities.push(activity);
                 }

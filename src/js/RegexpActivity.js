@@ -130,12 +130,5 @@ RegexpActivity.prototype.setupValidationFromError = function (error) {
 };
 
 RegexpActivity.prototype.shouldShowDescription = function () {
-    var hasDescription = (this.description !== null && this.description !== undefined && this.description.length > 0);
-
-    if (this.showDescription === null) {
-        return hasDescription;
-    }
-
-    return this.showDescription;
-
+    return !!this.showDescription;
 };
