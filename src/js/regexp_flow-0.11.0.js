@@ -99,7 +99,6 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         /**
          * @type {RegexpActivity} activity
          */
-
         inputText = $scope.input.text || '';
         outputText = inputText;
 
@@ -138,9 +137,16 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     /**
      * @param {RegexpActivity} activity
+     * @param {Number} activityIndex
      */
-    $scope.toggleShowDescription = function (activity) {
+    $scope.toggleShowDescription = function (activity, activityIndex) {
         activity.showDescription = !activity.showDescription;
+
+        $timeout(function () {
+            // focus on first input of new Activity form
+            $('.activity_' + activityIndex + ' .activityDescription input:first').focus().select();
+        }, 0);
+
     };
 
     /**
