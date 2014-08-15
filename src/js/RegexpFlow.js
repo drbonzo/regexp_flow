@@ -6,6 +6,11 @@ function RegexpFlow() {
      */
     this.activities = [];
     // FIXME metody do modyfikacji tego?
+
+    /**
+     * @type {string}
+     */
+    this.description = '';
 }
 
 RegexpFlow.prototype.removeAllActivities = function () {

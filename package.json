@@ -1,7 +1,7 @@
 {
   "name": "regexp_flow",
   "description": "Tool for processing small texts with regular expressions: match lines, grep, replace, etc...",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "keywords": [
     "regexp",
     "flow"

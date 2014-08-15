@@ -22,4 +22,8 @@ describe("RegexpFlow", function () {
         regexpFlow.removeAllActivities();
         expect(regexpFlow.activities.length).toEqual(0);
     });
+
+    it ("has empty description", function() {
+        expect(regexpFlow.description).toEqual("");
+    });
 });

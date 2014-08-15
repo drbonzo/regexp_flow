@@ -59,7 +59,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
  */
 regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
 
-    $scope.version = {name: 'RegexpFlow', version: '0.10.0'};
+    $scope.version = {name: 'RegexpFlow', version: '0.11.0'};
 
     $scope.infoPanelVisible = false;
 
@@ -99,7 +99,6 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         /**
          * @type {RegexpActivity} activity
          */
-
         inputText = $scope.input.text || '';
         outputText = inputText;
 
@@ -137,10 +136,24 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
+     * @param {RegexpActivity} activity
+     * @param {Number} activityIndex
+     */
+    $scope.toggleShowDescription = function (activity, activityIndex) {
+        activity.showDescription = !activity.showDescription;
+
+        $timeout(function () {
+            // focus on first input of new Activity form
+            $('.activity_' + activityIndex + ' .activityDescription input:first').focus().select();
+        }, 0);
+
+    };
+
+    /**
      * @param {RegexpActivity|null} selectedActivity
      */
     $scope.addNewReplaceActivity = function (selectedActivity) {
-        var newActivity = new RegexpReplaceActivity('^', '');
+        var newActivity = new RegexpReplaceActivity('^(.+?)$', '$1');
         $scope.addActivity(newActivity, selectedActivity);
     };
 
@@ -240,6 +253,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
         }
 
         exportDataObject.inputText = $scope.input.text;
+        exportDataObject.description = $scope.flow.description;
         return exportDataObject;
     }
 
@@ -316,6 +330,11 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
                     activity = new activityConstructors[activityType]('', ''); // pass empty strings
                     // fill it with data
                     activity.initializeFromObject(activityData);
+
+                    // if activity has description then show it initialy
+                    if (!!activity.description && activity.description.length > 0) {
+                        activity.showDescription = true;
+                    }
                     // add to Flow
                     $scope.flow.activities.push(activity);
                 }
@@ -326,6 +345,8 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             // ovewrite input text only when it is given (not empty)
             $scope.input.text = flowObject.inputText;
         }
+
+        $scope.flow.description = flowObject.description;
     };
 
     $scope.createSampleFlow = function () {
