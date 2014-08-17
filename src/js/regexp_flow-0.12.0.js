@@ -83,41 +83,23 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      */
     $scope.flow = new RegexpFlow();
 
+	/**
+	 * @type {TextProcessorRunner}
+	 */
+	$scope.textProcessorRunner = new TextProcessorRunner();
+
     /**
      * @type {Array|object[]}
      * { cssClass : string, message: string }
      */
     $scope.statusMessages = [];
 
-    var processInputTextHandler = function () {
+	var processInputTextHandler = function () {
+		var inputText = $scope.input.text || '';
+		$scope.output.text = $scope.textProcessorRunner.processString($scope.flow, inputText);
+	};
 
-        var inputText,
-            outputText,
-            activity,
-            a;
-
-        /**
-         * @type {RegexpActivity} activity
-         */
-        inputText = $scope.input.text || '';
-        outputText = inputText;
-
-
-        for (a in $scope.flow.activities) {
-            if ($scope.flow.activities.hasOwnProperty(a)) {
-                activity = $scope.flow.activities[a];
-
-                if (activity.isEnabled) {
-                    outputText = activity.processText(inputText);
-                    inputText = outputText;
-                }
-            }
-        }
-
-        $scope.output.text = outputText;
-    };
-
-    $scope.$watch('flow.activities', processInputTextHandler, true);
+	$scope.$watch('flow.activities', processInputTextHandler, true);
 
     $scope.$watch('input', processInputTextHandler, true);
 
