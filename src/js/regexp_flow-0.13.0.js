@@ -60,7 +60,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
  */
 regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
 
-    $scope.version = {name: 'RegexpFlow', version: '0.12.0'};
+    $scope.version = {name: 'RegexpFlow', version: '0.13.0'};
 
     $scope.infoPanelVisible = false;
 
