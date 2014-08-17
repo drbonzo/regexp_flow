@@ -90,48 +90,48 @@ body {
   text-align: center;
   color: white;
 }
-.PageContent .flowColumn .activity {
+.PageContent .flowColumn .textProcessor {
   border: solid 1px #666;
   background-color: #f0f0f0;
 }
-.PageContent .flowColumn .activity + .activity {
+.PageContent .flowColumn .textProcessor + .textProcessor {
   margin-top: 10px;
 }
-.PageContent .flowColumn .activity.activityDisabled .activityForm {
+.PageContent .flowColumn .textProcessor.textProcessorDisabled .textProcessorForm {
   display: none;
 }
-.PageContent .flowColumn .activity.activityDisabled .header {
+.PageContent .flowColumn .textProcessor.textProcessorDisabled .header {
   color: #999;
 }
-.PageContent .flowColumn .activity .header {
+.PageContent .flowColumn .textProcessor .header {
   font-size: 16px;
   background-color: #ccc;
   padding: 3px 5px;
 }
-.PageContent .flowColumn .activity .header .addActivityButtonGroup {
+.PageContent .flowColumn .textProcessor .header .addActivityButtonGroup {
   margin-right: 10px;
 }
-.PageContent .flowColumn .activity .header .addActivityButtonGroup button {
+.PageContent .flowColumn .textProcessor .header .addActivityButtonGroup button {
   padding-right: 10px;
   padding-left: 10px;
 }
-.PageContent .flowColumn .activity .header .regexpHelpButton {
+.PageContent .flowColumn .textProcessor .header .regexpHelpButton {
   padding-right: 10px;
   padding-left: 10px;
 }
-.PageContent .flowColumn .activity form {
+.PageContent .flowColumn .textProcessor form {
   padding: 5px;
 }
-.PageContent .flowColumn .activity .help-block {
+.PageContent .flowColumn .textProcessor .help-block {
   font-size: 0.8em;
 }
-.PageContent .flowColumn .activity .activityForm label {
+.PageContent .flowColumn .textProcessor .textProcessorForm label {
   font-weight: normal;
 }
-.PageContent .flowColumn .activity .activityForm form.regExpErrors {
+.PageContent .flowColumn .textProcessor .textProcessorForm form.regExpErrors {
   background-color: #ffcccc;
 }
-.PageContent .flowColumn .activity .activityForm form p.regExpErrorMessages {
+.PageContent .flowColumn .textProcessor .textProcessorForm form p.regExpErrorMessages {
   padding: 5px 0;
   font-style: italic;
   font-size: 12px;

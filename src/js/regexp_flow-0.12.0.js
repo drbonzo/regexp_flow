@@ -104,29 +104,29 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     $scope.$watch('input', processInputTextHandler, true);
 
     /**
-     * @param {TextProcessor} activityToRemove
+     * @param {TextProcessor} textProcessorToRemove
      */
-    $scope.removeActivity = function (activityToRemove) {
-        $scope.flow.activities.removeItem(activityToRemove);
+    $scope.removeActivity = function (textProcessorToRemove) {
+        $scope.flow.activities.removeItem(textProcessorToRemove);
     };
 
     /**
-     * @param {TextProcessor} activity
+     * @param {TextProcessor} textProcessor
      */
-    $scope.toggleEnabledFlag = function (activity) {
-        activity.isEnabled = !activity.isEnabled;
+    $scope.toggleEnabledFlag = function (textProcessor) {
+        textProcessor.isEnabled = !textProcessor.isEnabled;
     };
 
     /**
-     * @param {TextProcessor} activity
-     * @param {Number} activityIndex
+     * @param {TextProcessor} textProcessor
+     * @param {Number} textProcessorIndex
      */
-    $scope.toggleShowDescription = function (activity, activityIndex) {
-        activity.showDescription = !activity.showDescription;
+    $scope.toggleShowDescription = function (textProcessor, textProcessorIndex) {
+        textProcessor.showDescription = !textProcessor.showDescription;
 
         $timeout(function () {
             // focus on first input of new Activity form
-            $('.activity_' + activityIndex + ' .activityDescription input:first').focus().select();
+            $('.textProcessor_' + textProcessorIndex + ' .textProcessorDescription input:first').focus().select();
         }, 0);
 
     };
@@ -211,7 +211,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
         $timeout(function () {
             // focus on first input of new Activity form
-            $('.activity_' + newActivityIndex + ' input:first').focus().select();
+            $('.textProcessor_' + newActivityIndex + ' input:first').focus().select();
         }, 0);
     };
 
@@ -222,15 +222,15 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     function getFlowExportObject() {
         var exportDataObject,
             a,
-            activity;
+            textProcessor;
 
         exportDataObject = {};
         exportDataObject.activities = [];
 
         for (a in $scope.flow.activities) {
             if ($scope.flow.activities.hasOwnProperty(a)) {
-                activity = $scope.flow.activities[a];
-                exportDataObject.activities.push(activity.getExportObject());
+                textProcessor = $scope.flow.activities[a];
+                exportDataObject.activities.push(textProcessor.getExportObject());
             }
         }
 
@@ -288,13 +288,13 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     $scope.doImportFlowFromObject = function (flowObject) { // FIXME make local
 
-        var activityData,
-            activityType,
-            activity,
-            activityConstructors,
+        var textProcessorData,
+            textProcessorType,
+            textProcessor,
+            textProcessorConstructors,
             a;
 
-        activityConstructors = {
+        textProcessorConstructors = {
             'RegexpReplaceActivity': RegexpReplaceActivity,
             'RegexpFindAllActivity': RegexpFindAllActivity,
             'RegexpMatchLineActivity': RegexpMatchLineActivity,
@@ -304,21 +304,21 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
         for (a in flowObject.activities) {
             if (flowObject.activities.hasOwnProperty(a)) {
-                activityData = flowObject.activities[a];
-                activityType = activityData.typeName;
+                textProcessorData = flowObject.activities[a];
+                textProcessorType = textProcessorData.typeName;
 
-                if (activityConstructors.hasOwnProperty(activityType)) {
-                    // build Activity by activity type name
-                    activity = new activityConstructors[activityType]('', ''); // pass empty strings
+                if (textProcessorConstructors.hasOwnProperty(textProcessorType)) {
+                    // build Activity by textProcessor type name
+                    textProcessor = new textProcessorConstructors[textProcessorType]('', ''); // pass empty strings
                     // fill it with data
-                    activity.initializeFromObject(activityData);
+                    textProcessor.initializeFromObject(textProcessorData);
 
-                    // if activity has description then show it initialy
-                    if (!!activity.description && activity.description.length > 0) {
-                        activity.showDescription = true;
+                    // if textProcessor has description then show it initialy
+                    if (!!textProcessor.description && textProcessor.description.length > 0) {
+                        textProcessor.showDescription = true;
                     }
                     // add to Flow
-                    $scope.flow.activities.push(activity);
+                    $scope.flow.activities.push(textProcessor);
                 }
             }
         }

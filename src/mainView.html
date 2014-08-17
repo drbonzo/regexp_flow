@@ -105,56 +105,56 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row activity activity_{{ $index }}" ng-repeat="activity in flow.activities" ng-class="{ activityDisabled: !activity.isEnabled }">
+                    <div class="row textProcessor textProcessor_{{ $index }}" ng-repeat="textProcessor in flow.activities" ng-class="{ textProcessorDisabled: !textProcessor.isEnabled }">
                         <div class="header">
-                            {{ $index+1 }}. {{ activity.displayName }}
+                            {{ $index+1 }}. {{ textProcessor.displayName }}
                             <div class="btn-group pull-right">
                                 <button type="button" class="btn btn-xs btn-default regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
-                                <button type="button" class="btn btn-xs btn-info" ng-click="toggleShowDescription(activity, $index)" title="Toggle description"><span class="glyphicon glyphicon-pencil"></span></button>
-                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(activity)" title="Disable/enable activity"><span class="glyphicon glyphicon-pause"></span></button>
-                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(activity)" title="Remove activity"><span class="glyphicon glyphicon-trash"></span></button>
+                                <button type="button" class="btn btn-xs btn-info" ng-click="toggleShowDescription(textProcessor, $index)" title="Toggle description"><span class="glyphicon glyphicon-pencil"></span></button>
+                                <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(textProcessor)" title="Disable/enable textProcessor"><span class="glyphicon glyphicon-pause"></span></button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(textProcessor)" title="Remove textProcessor"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
 
                             <div class="btn-group pull-right addActivityButtonGroup">
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(activity)" title="Add Replace Activity">&plus;R</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllActivity(activity)" title="Add FindAll Activity">&plus;FA</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(activity)" title="Add MatchLine Activity">&plus;ML</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(activity)" title="Add MatchInLine Activity">&plus;MIL</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewUniqueActivity(activity)" title="Add Unique Activity">&plus;UQ</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(textProcessor)" title="Add Replace Activity">&plus;R</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllActivity(textProcessor)" title="Add FindAll Activity">&plus;FA</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(textProcessor)" title="Add MatchLine Activity">&plus;ML</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(textProcessor)" title="Add MatchInLine Activity">&plus;MIL</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewUniqueActivity(textProcessor)" title="Add Unique Activity">&plus;UQ</button>
                             </div>
                         </div>
-                        <div class="activityForm" ng-switch="activity.typeName">
+                        <div class="textProcessorForm" ng-switch="textProcessor.typeName">
                             <div ng-switch-when="RegexpReplaceActivity">
-                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
                                             <label>Search for</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="activity.searchFlagGlobal"> Global
+                                                    <input type="checkbox" ng-model="textProcessor.searchFlagGlobal"> Global
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="activity.searchFlagMultiline"> Multiline
+                                                    <input type="checkbox" ng-model="textProcessor.searchFlagMultiline"> Multiline
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
                                                 </label>
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group">
-                                            <label>and replace with. ({{ activity.replacementsCount }} replacements)</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.replaceString" placeholder="replacement string"/>
+                                            <label>and replace with. ({{ textProcessor.replacementsCount }} replacements)</label>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.replaceString" placeholder="replacement string"/>
                                             <ul ng-show="showHelp" class="help-block">
                                                 <li>$1, $2, $3 - for groups.</li>
                                                 <li>$$ Inserts a "$".</li>
@@ -167,57 +167,57 @@
                                             </ul>
                                         </div>
                                     </fieldset>
-                                    <fieldset class="activityDescription">
-                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+                                    <fieldset class="textProcessorDescription">
+                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
                                             <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
                                         </div>
                                     </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpFindAllActivity">
-                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
-                                            <label>Find all matches (Found: {{ activity.matchesCount }})</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                            <label>Find all matches (Found: {{ textProcessor.matchesCount }})</label>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
                                                 </label>
                                             </div>
                                         </div>
                                     </fieldset>
-									<fieldset class="activityDescription">
-                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+									<fieldset class="textProcessorDescription">
+                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
                                             <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
                                         </div>
                                     </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpMatchLineActivity">
-                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
-                                            <label>Get lines <span ng-show="activity.flagInvertMatch">not</span> matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                            <label>Get lines <span ng-show="textProcessor.flagInvertMatch">not</span> matching (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="activity.flagInvertMatch"> Invert match?
+                                                    <input type="checkbox" ng-model="textProcessor.flagInvertMatch"> Invert match?
                                                 </label>
                                             </div>
                                             <ul ng-show="showHelp" class="help-block">
@@ -227,27 +227,27 @@
                                             </ul>
                                         </div>
                                     </fieldset>
-									<fieldset class="activityDescription">
-                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+									<fieldset class="textProcessorDescription">
+                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
                                             <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
                                         </div>
                                     </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpMatchInLineActivity">
-                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
-                                            <label>From each line, extract text matching (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.searchString" placeholder="regular expression"/>
+                                            <label>From each line, extract text matching (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
 
-                                            <p class="regExpErrorMessages" ng-hide="activity.regexpIsValid">{{ activity.regexpValidationMessage }}</p>
+                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
                                         </div>
                                         <div class="form-group form-inline">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="activity.searchFlagCaseInsensitive"> Case Insensitive
+                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
                                                 </label>
                                             </div>
                                         </div>
@@ -262,29 +262,29 @@
                                             <li>if line does not match - then it is being ommited in result</li>
                                         </ul>
                                     </fieldset>
-									<fieldset class="activityDescription">
-                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+									<fieldset class="textProcessorDescription">
+                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
                                             <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
                                         </div>
                                     </fieldset>
                                 </form>
                             </div>
                             <div ng-switch-when="RegexpUniqueActivity">
-                                <form ng-class="{ regExpErrors: !activity.regexpIsValid } ">
+                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
-                                            <label>Show just unique lines (showing {{ activity.linesMatchedCount }} of {{ activity.totalLinesCount }} lines)</label>
+                                            <label>Show just unique lines (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
                                         </div>
                                         <div class="form-group form-inline">
                                         </div>
                                         <ul ng-show="showHelp" class="help-block">
                                         </ul>
                                     </fieldset>
-									<fieldset class="activityDescription">
-                                        <div class="form-group" ng-show="activity.shouldShowDescription()">
+									<fieldset class="textProcessorDescription">
+                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
                                             <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="activity.description"/>
+                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
                                         </div>
                                     </fieldset>
                                 </form>

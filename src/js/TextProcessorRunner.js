@@ -11,7 +11,7 @@ function TextProcessorRunner() {
 TextProcessorRunner.prototype.processString = function (regexpFlow, inputText) {
 
 	var outputText,
-		activity,
+		textProcessor,
 		a;
 
 	outputText = inputText;
@@ -20,12 +20,12 @@ TextProcessorRunner.prototype.processString = function (regexpFlow, inputText) {
 		if (regexpFlow.activities.hasOwnProperty(a)) {
 
 			/**
-			 * @type {TextProcessor} activity
+			 * @type {TextProcessor} textProcessor
 			 */
-			activity = regexpFlow.activities[a];
+			textProcessor = regexpFlow.activities[a];
 
-			if (activity.isEnabled) {
-				outputText = activity.processText(inputText);
+			if (textProcessor.isEnabled) {
+				outputText = textProcessor.processText(inputText);
 				inputText = outputText;
 			}
 		}
