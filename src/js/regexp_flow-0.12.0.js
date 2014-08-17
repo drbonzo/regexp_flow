@@ -7,7 +7,8 @@
  RegexpFindAllTextProcessor,
  RegexpMatchLineTextProcessor,
  RegexpMatchInLineTextProcessor,
- RegexpUniqueTextProcessor
+ RegexpUniqueTextProcessor,
+ TextProcessorRunner
  */
 
 /**

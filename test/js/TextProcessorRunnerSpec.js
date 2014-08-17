@@ -1,4 +1,4 @@
-/*global RegexpFlow: false, describe:false, it:false, beforeEach:false, expect:false  */
+/*global RegexpFlow: false, TextProcessorRunner: false, describe:false, it:false, beforeEach:false, expect:false  */
 'use strict';
 describe("TextProcessorRunner", function () {
 
