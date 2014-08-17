@@ -16,13 +16,13 @@ TextProcessorRunner.prototype.processString = function (regexpFlow, inputText) {
 
 	outputText = inputText;
 
-	for (a in regexpFlow.activities) {
-		if (regexpFlow.activities.hasOwnProperty(a)) {
+	for (a in regexpFlow.textProcessors) {
+		if (regexpFlow.textProcessors.hasOwnProperty(a)) {
 
 			/**
 			 * @type {TextProcessor} textProcessor
 			 */
-			textProcessor = regexpFlow.activities[a];
+			textProcessor = regexpFlow.textProcessors[a];
 
 			if (textProcessor.isEnabled) {
 				outputText = textProcessor.processText(inputText);

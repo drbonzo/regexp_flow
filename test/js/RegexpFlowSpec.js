@@ -11,16 +11,16 @@ describe("RegexpFlow", function () {
         regexpFlow = new RegexpFlow();
     });
 
-    it("by default has no activities", function () {
-        expect(regexpFlow.activities.length).toEqual(0);
+    it("by default has no textProcessors", function () {
+        expect(regexpFlow.textProcessors.length).toEqual(0);
     });
 
-    it("we can add and remove all activities", function () {
-        regexpFlow.activities.push({});
-        regexpFlow.activities.push({});
-        expect(regexpFlow.activities.length).toEqual(2);
+    it("we can add and remove all textProcessors", function () {
+        regexpFlow.textProcessors.push({});
+        regexpFlow.textProcessors.push({});
+        expect(regexpFlow.textProcessors.length).toEqual(2);
         regexpFlow.removeAllActivities();
-        expect(regexpFlow.activities.length).toEqual(0);
+        expect(regexpFlow.textProcessors.length).toEqual(0);
     });
 
     it ("has empty description", function() {

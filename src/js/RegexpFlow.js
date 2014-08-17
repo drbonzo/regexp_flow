@@ -4,7 +4,7 @@ function RegexpFlow() {
     /**
      * @type {Array|TextProcessor[]}
      */
-    this.activities = [];
+    this.textProcessors = [];
     // FIXME metody do modyfikacji tego?
 
     /**
@@ -14,5 +14,5 @@ function RegexpFlow() {
 }
 
 RegexpFlow.prototype.removeAllActivities = function () {
-    this.activities.length = 0;
+    this.textProcessors.length = 0;
 };

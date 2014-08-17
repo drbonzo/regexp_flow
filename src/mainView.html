@@ -43,10 +43,10 @@
 </div>
 <div class="col-md-5 flowColumn">
     <div class="row flowHeader">
-        <h3>Flow chain ({{ flow.activities.length }})
+        <h3>Flow chain ({{ flow.textProcessors.length }})
             <!--
             <button type="button" class="btn btn-xs btn-default" ng-click="toggleImportPanel()" title="Import Flow from JSON">Import</button>
-            <button type="button" class="btn btn-xs btn-default" ng-click="exportFlowToJSON()" title="Export Flow to JSON" ng-show="flow.activities.length > 0">Export</button>
+            <button type="button" class="btn btn-xs btn-default" ng-click="exportFlowToJSON()" title="Export Flow to JSON" ng-show="flow.textProcessors.length > 0">Export</button>
             -->
             <button type="button" class="btn btn-xs btn-success" ng-click="saveFlow()">Save</button>
         </h3>
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row textProcessor textProcessor_{{ $index }}" ng-repeat="textProcessor in flow.activities" ng-class="{ textProcessorDisabled: !textProcessor.isEnabled }">
+                    <div class="row textProcessor textProcessor_{{ $index }}" ng-repeat="textProcessor in flow.textProcessors" ng-class="{ textProcessorDisabled: !textProcessor.isEnabled }">
                         <div class="header">
                             {{ $index+1 }}. {{ textProcessor.displayName }}
                             <div class="btn-group pull-right">

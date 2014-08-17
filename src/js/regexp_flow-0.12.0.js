@@ -99,7 +99,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 		$scope.output.text = $scope.textProcessorRunner.processString($scope.flow, inputText);
 	};
 
-	$scope.$watch('flow.activities', processInputTextHandler, true);
+	$scope.$watch('flow.textProcessors', processInputTextHandler, true);
 
     $scope.$watch('input', processInputTextHandler, true);
 
@@ -107,7 +107,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      * @param {TextProcessor} textProcessorToRemove
      */
     $scope.removeActivity = function (textProcessorToRemove) {
-        $scope.flow.activities.removeItem(textProcessorToRemove);
+        $scope.flow.textProcessors.removeItem(textProcessorToRemove);
     };
 
     /**
@@ -177,19 +177,19 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      */
     $scope.addActivity = function (newActivity, selectedActivity) {
 
-        var activities,
+        var textProcessors,
             shouldAddAfterOtherActivity,
             newActivityIndex,
             index,
             a;
 
-        activities = $scope.flow.activities;
+        textProcessors = $scope.flow.textProcessors;
         shouldAddAfterOtherActivity = !!selectedActivity;
         if (shouldAddAfterOtherActivity) {
             index = -1;
-            for (a in activities) {
-                if (activities.hasOwnProperty(a)) {
-                    if (activities[a] == selectedActivity) {
+            for (a in textProcessors) {
+                if (textProcessors.hasOwnProperty(a)) {
+                    if (textProcessors[a] == selectedActivity) {
                         index = parseInt(a, 10); // for () returns indices as strings - wtf
                         break;
                     }
@@ -198,15 +198,15 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
             if (index >= 0) {
                 // insert newActivity after selectedActivity
-                activities.splice(index, 1, selectedActivity, newActivity);
+                textProcessors.splice(index, 1, selectedActivity, newActivity);
                 newActivityIndex = index + 1;
             } else {
-                activities.push(newActivity);
-                newActivityIndex = activities.length - 1;
+                textProcessors.push(newActivity);
+                newActivityIndex = textProcessors.length - 1;
             }
         } else {
-            activities.push(newActivity);
-            newActivityIndex = activities.length - 1;
+            textProcessors.push(newActivity);
+            newActivityIndex = textProcessors.length - 1;
         }
 
         $timeout(function () {
@@ -216,7 +216,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     $scope.chainHasNoActivities = function () {
-        return ($scope.flow.activities.length === 0);
+        return ($scope.flow.textProcessors.length === 0);
     };
 
     function getFlowExportObject() {
@@ -225,12 +225,12 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             textProcessor;
 
         exportDataObject = {};
-        exportDataObject.activities = [];
+        exportDataObject.textProcessors = [];
 
-        for (a in $scope.flow.activities) {
-            if ($scope.flow.activities.hasOwnProperty(a)) {
-                textProcessor = $scope.flow.activities[a];
-                exportDataObject.activities.push(textProcessor.getExportObject());
+        for (a in $scope.flow.textProcessors) {
+            if ($scope.flow.textProcessors.hasOwnProperty(a)) {
+                textProcessor = $scope.flow.textProcessors[a];
+                exportDataObject.textProcessors.push(textProcessor.getExportObject());
             }
         }
 
@@ -302,9 +302,9 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             'RegexpUniqueActivity': RegexpUniqueActivity
         };
 
-        for (a in flowObject.activities) {
-            if (flowObject.activities.hasOwnProperty(a)) {
-                textProcessorData = flowObject.activities[a];
+        for (a in flowObject.textProcessors) {
+            if (flowObject.textProcessors.hasOwnProperty(a)) {
+                textProcessorData = flowObject.textProcessors[a];
                 textProcessorType = textProcessorData.typeName;
 
                 if (textProcessorConstructors.hasOwnProperty(textProcessorType)) {
@@ -318,7 +318,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
                         textProcessor.showDescription = true;
                     }
                     // add to Flow
-                    $scope.flow.activities.push(textProcessor);
+                    $scope.flow.textProcessors.push(textProcessor);
                 }
             }
         }
