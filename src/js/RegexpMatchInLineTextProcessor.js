@@ -6,10 +6,10 @@
  * @param {string} searchString
  * @constructor
  */
-function RegexpMatchInLineActivity(searchString) {
+function RegexpMatchInLineTextProcessor(searchString) {
 
     this.displayName = 'Match in line';
-    this.typeName = 'RegexpMatchInLineActivity';
+    this.typeName = 'RegexpMatchInLineTextProcessor';
 
     /**
      * @type {string}
@@ -33,7 +33,7 @@ function RegexpMatchInLineActivity(searchString) {
 
 }
 
-RegexpMatchInLineActivity.prototype = new TextProcessor();
+RegexpMatchInLineTextProcessor.prototype = new TextProcessor();
 
 /**
  * Splits text into lines.
@@ -44,7 +44,7 @@ RegexpMatchInLineActivity.prototype = new TextProcessor();
  * @param {string} inputText
  * @returns {string}
  */
-RegexpMatchInLineActivity.prototype.processText = function (inputText) {
+RegexpMatchInLineTextProcessor.prototype.processText = function (inputText) {
 
     try {
         var line,
@@ -90,17 +90,17 @@ RegexpMatchInLineActivity.prototype.processText = function (inputText) {
     }
 };
 
-RegexpMatchInLineActivity.prototype.initializeFromObject = function (dataObject) {
+RegexpMatchInLineTextProcessor.prototype.initializeFromObject = function (dataObject) {
     this.copyPropertiesFrom(dataObject, this.getSerializablePropertyNames());
 };
 
-RegexpMatchInLineActivity.prototype.getExportObject = function () {
+RegexpMatchInLineTextProcessor.prototype.getExportObject = function () {
     return this.extractPropertiesToObject(this.getSerializablePropertyNames());
 };
 
 /**
  * @returns {Array|string[]}
  */
-RegexpMatchInLineActivity.prototype.getSerializablePropertyNames = function () {
+RegexpMatchInLineTextProcessor.prototype.getSerializablePropertyNames = function () {
     return ['searchString', 'searchFlagCaseInsensitive', 'isEnabled', 'description'];
 };

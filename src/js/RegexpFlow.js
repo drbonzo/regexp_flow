@@ -13,6 +13,6 @@ function RegexpFlow() {
     this.description = '';
 }
 
-RegexpFlow.prototype.removeAllActivities = function () {
+RegexpFlow.prototype.removeAllTextProcessors = function () {
     this.textProcessors.length = 0;
 };

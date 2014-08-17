@@ -5,10 +5,10 @@
 /**
  * @constructor
  */
-function RegexpUniqueActivity() {
+function RegexpUniqueTextProcessor() {
 
     this.displayName = 'Unique';
-    this.typeName = 'RegexpUniqueActivity';
+    this.typeName = 'RegexpUniqueTextProcessor';
 
     /**
      * @type {number}
@@ -21,13 +21,13 @@ function RegexpUniqueActivity() {
     this.linesMatchedCount = 0;
 }
 
-RegexpUniqueActivity.prototype = new TextProcessor();
+RegexpUniqueTextProcessor.prototype = new TextProcessor();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
-RegexpUniqueActivity.prototype.processText = function (inputText) {
+RegexpUniqueTextProcessor.prototype.processText = function (inputText) {
 
     var lines,
         line,
@@ -72,17 +72,17 @@ RegexpUniqueActivity.prototype.processText = function (inputText) {
 };
 
 
-RegexpUniqueActivity.prototype.initializeFromObject = function (dataObject) {
+RegexpUniqueTextProcessor.prototype.initializeFromObject = function (dataObject) {
     this.copyPropertiesFrom(dataObject, this.getSerializablePropertyNames());
 };
 
-RegexpUniqueActivity.prototype.getExportObject = function () {
+RegexpUniqueTextProcessor.prototype.getExportObject = function () {
     return this.extractPropertiesToObject(this.getSerializablePropertyNames());
 };
 
 /**
  * @returns {Array|string[]}
  */
-RegexpUniqueActivity.prototype.getSerializablePropertyNames = function () {
+RegexpUniqueTextProcessor.prototype.getSerializablePropertyNames = function () {
     return ['isEnabled', 'description'];
 };

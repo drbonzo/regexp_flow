@@ -75,10 +75,10 @@ body {
 .PageContent .flowColumn .blankSlate {
   border: dashed 1px #69c370;
 }
-.PageContent .flowColumn .blankSlate .newActivityPanel {
+.PageContent .flowColumn .blankSlate .newTextProcessorPanel {
   text-align: center;
 }
-.PageContent .flowColumn .blankSlate .newActivityPanel p {
+.PageContent .flowColumn .blankSlate .newTextProcessorPanel p {
   margin-top: 20px;
 }
 .PageContent .flowColumn .blankSlate .header {
@@ -108,10 +108,10 @@ body {
   background-color: #ccc;
   padding: 3px 5px;
 }
-.PageContent .flowColumn .textProcessor .header .addActivityButtonGroup {
+.PageContent .flowColumn .textProcessor .header .addTextProcessorButtonGroup {
   margin-right: 10px;
 }
-.PageContent .flowColumn .textProcessor .header .addActivityButtonGroup button {
+.PageContent .flowColumn .textProcessor .header .addTextProcessorButtonGroup button {
   padding-right: 10px;
   padding-left: 10px;
 }

@@ -74,32 +74,32 @@
             </div>
             <div class="row flowChain">
                 <div class="col-md-12">
-                    <div class="row blankSlate" ng-show="chainHasNoActivities()">
+                    <div class="row blankSlate" ng-show="chainHasNoTextProcessors()">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="header">Add new Activity</div>
+                                <div class="header">Add new TextProcessor</div>
                             </div>
 
                             <div class="row">
 
-                                <div class="col-md-3 newActivityPanel">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewReplaceActivity(null)">&plus;R</button>
+                                <div class="col-md-3 newTextProcessorPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewReplaceTextProcessor(null)">&plus;R</button>
                                     <p>Replace text with other text using regular expressions</p>
                                 </div>
-                                <div class="col-md-3 newActivityPanel">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewFindAllActivity(null)">&plus;FA</button>
+                                <div class="col-md-3 newTextProcessorPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewFindAllTextProcessor(null)">&plus;FA</button>
                                     <p>Find all matches, and return them in lines</p>
                                 </div>
-                                <div class="col-md-3 newActivityPanel">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchLineActivity(null)">&plus;ML</button>
+                                <div class="col-md-3 newTextProcessorPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchLineTextProcessor(null)">&plus;ML</button>
                                     <p>Leave only lines that match regular expression</p>
                                 </div>
-                                <div class="col-md-3 newActivityPanel">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineActivity(null)">&plus;MIL</button>
+                                <div class="col-md-3 newTextProcessorPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewMatchInLineTextProcessor(null)">&plus;MIL</button>
                                     <p>Leave only lines that match regular expression and leave only matched text</p>
                                 </div>
-                                <div class="col-md-3 newActivityPanel">
-                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewUniqueActivity(null)">&plus;UQ</button>
+                                <div class="col-md-3 newTextProcessorPanel">
+                                    <button type="button" class="btn btn-lg btn-success" ng-click="addNewUniqueTextProcessor(null)">&plus;UQ</button>
                                     <p>Leave only lines that match regular expression and leave only matched text</p>
                                 </div>
                             </div>
@@ -112,19 +112,19 @@
                                 <button type="button" class="btn btn-xs btn-default regexpHelpButton" ng-click="showHelp = !showHelp" title="Toggle help">?</button>
                                 <button type="button" class="btn btn-xs btn-info" ng-click="toggleShowDescription(textProcessor, $index)" title="Toggle description"><span class="glyphicon glyphicon-pencil"></span></button>
                                 <button type="button" class="btn btn-xs btn-warning" ng-click="toggleEnabledFlag(textProcessor)" title="Disable/enable textProcessor"><span class="glyphicon glyphicon-pause"></span></button>
-                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeActivity(textProcessor)" title="Remove textProcessor"><span class="glyphicon glyphicon-trash"></span></button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeTextProcessor(textProcessor)" title="Remove textProcessor"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
 
-                            <div class="btn-group pull-right addActivityButtonGroup">
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceActivity(textProcessor)" title="Add Replace Activity">&plus;R</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllActivity(textProcessor)" title="Add FindAll Activity">&plus;FA</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineActivity(textProcessor)" title="Add MatchLine Activity">&plus;ML</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineActivity(textProcessor)" title="Add MatchInLine Activity">&plus;MIL</button>
-                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewUniqueActivity(textProcessor)" title="Add Unique Activity">&plus;UQ</button>
+                            <div class="btn-group pull-right addTextProcessorButtonGroup">
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewReplaceTextProcessor(textProcessor)" title="Add Replace TextProcessor">&plus;R</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewFindAllTextProcessor(textProcessor)" title="Add FindAll TextProcessor">&plus;FA</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchLineTextProcessor(textProcessor)" title="Add MatchLine TextProcessor">&plus;ML</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewMatchInLineTextProcessor(textProcessor)" title="Add MatchInLine TextProcessor">&plus;MIL</button>
+                                <button type="button" class="btn btn-xs btn-success" ng-click="addNewUniqueTextProcessor(textProcessor)" title="Add Unique TextProcessor">&plus;UQ</button>
                             </div>
                         </div>
                         <div class="textProcessorForm" ng-switch="textProcessor.typeName">
-                            <div ng-switch-when="RegexpReplaceActivity">
+                            <div ng-switch-when="RegexpReplaceTextProcessor">
                                 <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
@@ -175,7 +175,7 @@
                                     </fieldset>
                                 </form>
                             </div>
-                            <div ng-switch-when="RegexpFindAllActivity">
+                            <div ng-switch-when="RegexpFindAllTextProcessor">
                                 <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
@@ -200,7 +200,7 @@
                                     </fieldset>
                                 </form>
                             </div>
-                            <div ng-switch-when="RegexpMatchLineActivity">
+                            <div ng-switch-when="RegexpMatchLineTextProcessor">
                                 <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
@@ -235,7 +235,7 @@
                                     </fieldset>
                                 </form>
                             </div>
-                            <div ng-switch-when="RegexpMatchInLineActivity">
+                            <div ng-switch-when="RegexpMatchInLineTextProcessor">
                                 <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">
@@ -270,7 +270,7 @@
                                     </fieldset>
                                 </form>
                             </div>
-                            <div ng-switch-when="RegexpUniqueActivity">
+                            <div ng-switch-when="RegexpUniqueTextProcessor">
                                 <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
                                     <fieldset>
                                         <div class="form-group">

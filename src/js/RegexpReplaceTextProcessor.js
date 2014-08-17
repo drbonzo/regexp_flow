@@ -8,10 +8,10 @@
  * @param {string} replaceString
  * @constructor
  */
-function RegexpReplaceActivity(searchString, replaceString) {
+function RegexpReplaceTextProcessor(searchString, replaceString) {
 
     this.displayName = 'Replace in text';
-    this.typeName = 'RegexpReplaceActivity';
+    this.typeName = 'RegexpReplaceTextProcessor';
 
     /**
      * @type {string}
@@ -46,13 +46,13 @@ function RegexpReplaceActivity(searchString, replaceString) {
     this.replacementsCount = 0;
 }
 
-RegexpReplaceActivity.prototype = new TextProcessor();
+RegexpReplaceTextProcessor.prototype = new TextProcessor();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
-RegexpReplaceActivity.prototype.processText = function (inputText) {
+RegexpReplaceTextProcessor.prototype.processText = function (inputText) {
 
     var searchRegexp,
         matches,
@@ -98,17 +98,17 @@ RegexpReplaceActivity.prototype.processText = function (inputText) {
     }
 };
 
-RegexpReplaceActivity.prototype.initializeFromObject = function (dataObject) {
+RegexpReplaceTextProcessor.prototype.initializeFromObject = function (dataObject) {
     this.copyPropertiesFrom(dataObject, this.getSerializablePropertyNames());
 };
 
-RegexpReplaceActivity.prototype.getExportObject = function () {
+RegexpReplaceTextProcessor.prototype.getExportObject = function () {
     return this.extractPropertiesToObject(this.getSerializablePropertyNames());
 };
 
 /**
  * @returns {Array|string[]}
  */
-RegexpReplaceActivity.prototype.getSerializablePropertyNames = function () {
+RegexpReplaceTextProcessor.prototype.getSerializablePropertyNames = function () {
     return ['searchString', 'replaceString', 'searchFlagGlobal', 'searchFlagMultiline', 'searchFlagCaseInsensitive', 'isEnabled', 'description'];
 };

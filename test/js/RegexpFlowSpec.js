@@ -19,7 +19,7 @@ describe("RegexpFlow", function () {
         regexpFlow.textProcessors.push({});
         regexpFlow.textProcessors.push({});
         expect(regexpFlow.textProcessors.length).toEqual(2);
-        regexpFlow.removeAllActivities();
+        regexpFlow.removeAllTextProcessors();
         expect(regexpFlow.textProcessors.length).toEqual(0);
     });
 
