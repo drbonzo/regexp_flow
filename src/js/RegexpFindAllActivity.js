@@ -1,6 +1,6 @@
 'use strict';
 
-/*global RegexpActivity*/
+/*global TextProcessor*/
 
 /**
  * @param {string} searchString
@@ -40,7 +40,7 @@ function RegexpFindAllActivity(searchString) {
     this.matchesCount = 0;
 }
 
-RegexpFindAllActivity.prototype = new RegexpActivity();
+RegexpFindAllActivity.prototype = new TextProcessor();
 
 /**
  * @param {string} inputText

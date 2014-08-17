@@ -1,6 +1,6 @@
 'use strict';
 
-/*global RegexpActivity */
+/*global TextProcessor */
 
 /**
  * @param {string} searchString
@@ -38,7 +38,7 @@ function RegexpMatchLineActivity(searchString) {
     this.flagInvertMatch = false;
 }
 
-RegexpMatchLineActivity.prototype = new RegexpActivity();
+RegexpMatchLineActivity.prototype = new TextProcessor();
 
 /**
  * @param {string} inputText

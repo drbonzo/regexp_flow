@@ -1,6 +1,6 @@
 'use strict';
 
-/*global RegexpActivity */
+/*global TextProcessor */
 
 /**
  * @param {string} searchString
@@ -33,7 +33,7 @@ function RegexpMatchInLineActivity(searchString) {
 
 }
 
-RegexpMatchInLineActivity.prototype = new RegexpActivity();
+RegexpMatchInLineActivity.prototype = new TextProcessor();
 
 /**
  * Splits text into lines.

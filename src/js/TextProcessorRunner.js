@@ -20,7 +20,7 @@ TextProcessorRunner.prototype.processString = function (regexpFlow, inputText) {
 		if (regexpFlow.activities.hasOwnProperty(a)) {
 
 			/**
-			 * @type {RegexpActivity} activity
+			 * @type {TextProcessor} activity
 			 */
 			activity = regexpFlow.activities[a];
 

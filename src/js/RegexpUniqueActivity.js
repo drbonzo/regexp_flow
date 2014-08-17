@@ -1,6 +1,6 @@
 'use strict';
 
-/*global RegexpActivity */
+/*global TextProcessor */
 
 /**
  * @constructor
@@ -21,7 +21,7 @@ function RegexpUniqueActivity() {
     this.linesMatchedCount = 0;
 }
 
-RegexpUniqueActivity.prototype = new RegexpActivity();
+RegexpUniqueActivity.prototype = new TextProcessor();
 
 /**
  * @param {string} inputText

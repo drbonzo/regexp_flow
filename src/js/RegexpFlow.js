@@ -2,7 +2,7 @@
 
 function RegexpFlow() {
     /**
-     * @type {Array|RegexpActivity[]}
+     * @type {Array|TextProcessor[]}
      */
     this.activities = [];
     // FIXME metody do modyfikacji tego?

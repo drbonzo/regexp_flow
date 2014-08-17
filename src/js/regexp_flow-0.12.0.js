@@ -104,21 +104,21 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     $scope.$watch('input', processInputTextHandler, true);
 
     /**
-     * @param {RegexpActivity} activityToRemove
+     * @param {TextProcessor} activityToRemove
      */
     $scope.removeActivity = function (activityToRemove) {
         $scope.flow.activities.removeItem(activityToRemove);
     };
 
     /**
-     * @param {RegexpActivity} activity
+     * @param {TextProcessor} activity
      */
     $scope.toggleEnabledFlag = function (activity) {
         activity.isEnabled = !activity.isEnabled;
     };
 
     /**
-     * @param {RegexpActivity} activity
+     * @param {TextProcessor} activity
      * @param {Number} activityIndex
      */
     $scope.toggleShowDescription = function (activity, activityIndex) {
@@ -132,7 +132,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedActivity
      */
     $scope.addNewReplaceActivity = function (selectedActivity) {
         var newActivity = new RegexpReplaceActivity('^(.+?)$', '$1');
@@ -140,7 +140,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedActivity
      */
     $scope.addNewFindAllActivity = function (selectedActivity) {
         var newActivity = new RegexpFindAllActivity('\\b.+?\\b');
@@ -148,7 +148,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedActivity
      */
     $scope.addNewMatchLineActivity = function (selectedActivity) {
         var newActivity = new RegexpMatchLineActivity(''); // will match all lines
@@ -156,7 +156,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedActivity
      */
     $scope.addNewMatchInLineActivity = function (selectedActivity) {
         var newActivity = new RegexpMatchInLineActivity('^.*$'); // will match whole line
@@ -164,7 +164,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedActivity
      */
     $scope.addNewUniqueActivity = function (selectedActivity) {
         var newActivity = new RegexpUniqueActivity(''); // will match whole line
@@ -172,8 +172,8 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
     };
 
     /**
-     * @param {RegexpActivity} newActivity
-     * @param {RegexpActivity|null} selectedActivity if null - new RegexpActivity will be added at the end, else it will be added after selectedActivity
+     * @param {TextProcessor} newActivity
+     * @param {TextProcessor|null} selectedActivity if null - new TextProcessor will be added at the end, else it will be added after selectedActivity
      */
     $scope.addActivity = function (newActivity, selectedActivity) {
 

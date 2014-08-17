@@ -1,7 +1,7 @@
 'use strict';
 
 /*jslint eqeq: true*/
-/*global RegexpActivity */
+/*global TextProcessor */
 
 /**
  * @param {string} searchString
@@ -46,7 +46,7 @@ function RegexpReplaceActivity(searchString, replaceString) {
     this.replacementsCount = 0;
 }
 
-RegexpReplaceActivity.prototype = new RegexpActivity();
+RegexpReplaceActivity.prototype = new TextProcessor();
 
 /**
  * @param {string} inputText
