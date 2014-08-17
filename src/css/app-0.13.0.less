@@ -1,6 +1,6 @@
 @import "fixes";
 
-@activityHeaderFontSize: 16px;
+@textProcessorHeaderFontSize: 16px;
 
 html, body
 {
@@ -83,7 +83,7 @@ html, body
         @blankSlateColor: #69C370;
         border: dashed 1px @blankSlateColor;
 
-        .newActivityPanel
+        .newTextProcessorPanel
         {
             text-align: center;
             p
@@ -94,7 +94,7 @@ html, body
 
         .header
         {
-            font-size: @activityHeaderFontSize;
+            font-size: @textProcessorHeaderFontSize;
             padding-top: 5px;
             padding-bottom: 5px;
             margin-bottom: 20px;
@@ -104,25 +104,25 @@ html, body
         }
     }
 
-    .activity
+    .textProcessor
     {
-        .activity;
+        .textProcessor();
     }
 }
 
-.activity() {
+.textProcessor() {
 
     border: solid 1px #666;
     background-color: #f0f0f0;
 
-    & + .activity
+    & + .textProcessor
     {
         margin-top: 10px;
     }
 
-    &.activityDisabled
+    &.textProcessorDisabled
     {
-        .activityForm
+        .textProcessorForm
         {
             display: none;
         }
@@ -135,11 +135,11 @@ html, body
 
     .header
     {
-        font-size: @activityHeaderFontSize;
+        font-size: @textProcessorHeaderFontSize;
         background-color: #ccc;
         padding: 3px 5px;
 
-        .addActivityButtonGroup
+        .addTextProcessorButtonGroup
         {
             margin-right: 10px;
 
@@ -167,7 +167,7 @@ html, body
         font-size: 0.8em;
     }
 
-    .activityForm
+    .textProcessorForm
     {
         label
         {

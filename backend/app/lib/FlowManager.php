@@ -40,7 +40,7 @@ class FlowManager
 	 */
 	public function saveFlow($data)
 	{
-		if (isset($data->activities) && !empty($data->activities))
+		if (isset($data->textProcessors) && !empty($data->textProcessors))
 		{
 			$flowId = $this->generateFlowId(6);
 			$flowFilename = $this->baseDir . $flowId . '.json';

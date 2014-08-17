@@ -3,11 +3,12 @@
 /*jslint browser: true, eqeq: true*/
 /*global $, angular,
  RegexpFlow,
- RegexpReplaceActivity,
- RegexpFindAllActivity,
- RegexpMatchLineActivity,
- RegexpMatchInLineActivity,
- RegexpUniqueActivity
+ RegexpReplaceTextProcessor,
+ RegexpFindAllTextProcessor,
+ RegexpMatchLineTextProcessor,
+ RegexpMatchInLineTextProcessor,
+ RegexpUniqueTextProcessor,
+ TextProcessorRunner
  */
 
 /**
@@ -59,7 +60,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
  */
 regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
 
-    $scope.version = {name: 'RegexpFlow', version: '0.12.0'};
+    $scope.version = {name: 'RegexpFlow', version: '0.13.0'};
 
     $scope.infoPanelVisible = false;
 
@@ -83,131 +84,113 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
      */
     $scope.flow = new RegexpFlow();
 
+	/**
+	 * @type {TextProcessorRunner}
+	 */
+	$scope.textProcessorRunner = new TextProcessorRunner();
+
     /**
      * @type {Array|object[]}
      * { cssClass : string, message: string }
      */
     $scope.statusMessages = [];
 
-    var processInputTextHandler = function () {
+	var processInputTextHandler = function () {
+		var inputText = $scope.input.text || '';
+		$scope.output.text = $scope.textProcessorRunner.processString($scope.flow, inputText);
+	};
 
-        var inputText,
-            outputText,
-            activity,
-            a;
-
-        /**
-         * @type {RegexpActivity} activity
-         */
-        inputText = $scope.input.text || '';
-        outputText = inputText;
-
-
-        for (a in $scope.flow.activities) {
-            if ($scope.flow.activities.hasOwnProperty(a)) {
-                activity = $scope.flow.activities[a];
-
-                if (activity.isEnabled) {
-                    outputText = activity.processText(inputText);
-                    inputText = outputText;
-                }
-            }
-        }
-
-        $scope.output.text = outputText;
-    };
-
-    $scope.$watch('flow.activities', processInputTextHandler, true);
+	$scope.$watch('flow.textProcessors', processInputTextHandler, true);
 
     $scope.$watch('input', processInputTextHandler, true);
 
     /**
-     * @param {RegexpActivity} activityToRemove
+     * @param {TextProcessor} textProcessorToRemove
      */
-    $scope.removeActivity = function (activityToRemove) {
-        $scope.flow.activities.removeItem(activityToRemove);
+    $scope.removeTextProcessor = function (textProcessorToRemove) {
+        $scope.flow.textProcessors.removeItem(textProcessorToRemove);
     };
 
     /**
-     * @param {RegexpActivity} activity
+     * @param {TextProcessor} textProcessor
      */
-    $scope.toggleEnabledFlag = function (activity) {
-        activity.isEnabled = !activity.isEnabled;
+    $scope.toggleEnabledFlag = function (textProcessor) {
+        textProcessor.isEnabled = !textProcessor.isEnabled;
     };
 
     /**
-     * @param {RegexpActivity} activity
-     * @param {Number} activityIndex
+     * @param {TextProcessor} textProcessor
+     * @param {Number} textProcessorIndex
      */
-    $scope.toggleShowDescription = function (activity, activityIndex) {
-        activity.showDescription = !activity.showDescription;
+    $scope.toggleShowDescription = function (textProcessor, textProcessorIndex) {
+        textProcessor.showDescription = !textProcessor.showDescription;
 
         $timeout(function () {
-            // focus on first input of new Activity form
-            $('.activity_' + activityIndex + ' .activityDescription input:first').focus().select();
+            // focus on first input of new TextProcessor form
+            $('.textProcessor_' + textProcessorIndex + ' .textProcessorDescription input:first').focus().select();
         }, 0);
 
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedTextProcessor
      */
-    $scope.addNewReplaceActivity = function (selectedActivity) {
-        var newActivity = new RegexpReplaceActivity('^(.+?)$', '$1');
-        $scope.addActivity(newActivity, selectedActivity);
+    $scope.addNewReplaceTextProcessor = function (selectedTextProcessor) {
+        var newTextProcessor = new RegexpReplaceTextProcessor('^(.+?)$', '$1');
+        $scope.addTextProcessor(newTextProcessor, selectedTextProcessor);
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedTextProcessor
      */
-    $scope.addNewFindAllActivity = function (selectedActivity) {
-        var newActivity = new RegexpFindAllActivity('\\b.+?\\b');
-        $scope.addActivity(newActivity, selectedActivity);
+    $scope.addNewFindAllTextProcessor = function (selectedTextProcessor) {
+        var newTextProcessor = new RegexpFindAllTextProcessor('\\b.+?\\b');
+        $scope.addTextProcessor(newTextProcessor, selectedTextProcessor);
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedTextProcessor
      */
-    $scope.addNewMatchLineActivity = function (selectedActivity) {
-        var newActivity = new RegexpMatchLineActivity(''); // will match all lines
-        $scope.addActivity(newActivity, selectedActivity);
+    $scope.addNewMatchLineTextProcessor = function (selectedTextProcessor) {
+        var newTextProcessor = new RegexpMatchLineTextProcessor(''); // will match all lines
+        $scope.addTextProcessor(newTextProcessor, selectedTextProcessor);
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedTextProcessor
      */
-    $scope.addNewMatchInLineActivity = function (selectedActivity) {
-        var newActivity = new RegexpMatchInLineActivity('^.*$'); // will match whole line
-        $scope.addActivity(newActivity, selectedActivity);
+    $scope.addNewMatchInLineTextProcessor = function (selectedTextProcessor) {
+        var newTextProcessor = new RegexpMatchInLineTextProcessor('^.*$'); // will match whole line
+        $scope.addTextProcessor(newTextProcessor, selectedTextProcessor);
     };
 
     /**
-     * @param {RegexpActivity|null} selectedActivity
+     * @param {TextProcessor|null} selectedTextProcessor
      */
-    $scope.addNewUniqueActivity = function (selectedActivity) {
-        var newActivity = new RegexpUniqueActivity(''); // will match whole line
-        $scope.addActivity(newActivity, selectedActivity);
+    $scope.addNewUniqueTextProcessor = function (selectedTextProcessor) {
+        var newTextProcessor = new RegexpUniqueTextProcessor(''); // will match whole line
+        $scope.addTextProcessor(newTextProcessor, selectedTextProcessor);
     };
 
     /**
-     * @param {RegexpActivity} newActivity
-     * @param {RegexpActivity|null} selectedActivity if null - new RegexpActivity will be added at the end, else it will be added after selectedActivity
+     * @param {TextProcessor} newTextProcessor
+     * @param {TextProcessor|null} selectedTextProcessor if null - new TextProcessor will be added at the end, else it will be added after selectedTextProcessor
      */
-    $scope.addActivity = function (newActivity, selectedActivity) {
+    $scope.addTextProcessor = function (newTextProcessor, selectedTextProcessor) {
 
-        var activities,
-            shouldAddAfterOtherActivity,
-            newActivityIndex,
+        var textProcessors,
+            shouldAddAfterOtherTextProcessor,
+            newTextProcessorIndex,
             index,
             a;
 
-        activities = $scope.flow.activities;
-        shouldAddAfterOtherActivity = !!selectedActivity;
-        if (shouldAddAfterOtherActivity) {
+        textProcessors = $scope.flow.textProcessors;
+        shouldAddAfterOtherTextProcessor = !!selectedTextProcessor;
+        if (shouldAddAfterOtherTextProcessor) {
             index = -1;
-            for (a in activities) {
-                if (activities.hasOwnProperty(a)) {
-                    if (activities[a] == selectedActivity) {
+            for (a in textProcessors) {
+                if (textProcessors.hasOwnProperty(a)) {
+                    if (textProcessors[a] == selectedTextProcessor) {
                         index = parseInt(a, 10); // for () returns indices as strings - wtf
                         break;
                     }
@@ -215,40 +198,40 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             }
 
             if (index >= 0) {
-                // insert newActivity after selectedActivity
-                activities.splice(index, 1, selectedActivity, newActivity);
-                newActivityIndex = index + 1;
+                // insert newTextProcessor after selectedTextProcessor
+                textProcessors.splice(index, 1, selectedTextProcessor, newTextProcessor);
+                newTextProcessorIndex = index + 1;
             } else {
-                activities.push(newActivity);
-                newActivityIndex = activities.length - 1;
+                textProcessors.push(newTextProcessor);
+                newTextProcessorIndex = textProcessors.length - 1;
             }
         } else {
-            activities.push(newActivity);
-            newActivityIndex = activities.length - 1;
+            textProcessors.push(newTextProcessor);
+            newTextProcessorIndex = textProcessors.length - 1;
         }
 
         $timeout(function () {
-            // focus on first input of new Activity form
-            $('.activity_' + newActivityIndex + ' input:first').focus().select();
+            // focus on first input of new TextProcessor form
+            $('.textProcessor_' + newTextProcessorIndex + ' input:first').focus().select();
         }, 0);
     };
 
-    $scope.chainHasNoActivities = function () {
-        return ($scope.flow.activities.length === 0);
+    $scope.chainHasNoTextProcessors = function () {
+        return ($scope.flow.textProcessors.length === 0);
     };
 
     function getFlowExportObject() {
         var exportDataObject,
             a,
-            activity;
+            textProcessor;
 
         exportDataObject = {};
-        exportDataObject.activities = [];
+        exportDataObject.textProcessors = [];
 
-        for (a in $scope.flow.activities) {
-            if ($scope.flow.activities.hasOwnProperty(a)) {
-                activity = $scope.flow.activities[a];
-                exportDataObject.activities.push(activity.getExportObject());
+        for (a in $scope.flow.textProcessors) {
+            if ($scope.flow.textProcessors.hasOwnProperty(a)) {
+                textProcessor = $scope.flow.textProcessors[a];
+                exportDataObject.textProcessors.push(textProcessor.getExportObject());
             }
         }
 
@@ -289,7 +272,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     $scope.importFlowFromJSON = function () {
 
-        $scope.flow.removeAllActivities();
+        $scope.flow.removeAllTextProcessors();
 
         if ($scope.importData === '' || !$scope.importData) {
             return;
@@ -306,37 +289,37 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     $scope.doImportFlowFromObject = function (flowObject) { // FIXME make local
 
-        var activityData,
-            activityType,
-            activity,
-            activityConstructors,
+        var textProcessorData,
+            textProcessorType,
+            textProcessor,
+            textProcessorConstructors,
             a;
 
-        activityConstructors = {
-            'RegexpReplaceActivity': RegexpReplaceActivity,
-            'RegexpFindAllActivity': RegexpFindAllActivity,
-            'RegexpMatchLineActivity': RegexpMatchLineActivity,
-            'RegexpMatchInLineActivity': RegexpMatchInLineActivity,
-            'RegexpUniqueActivity': RegexpUniqueActivity
+        textProcessorConstructors = {
+            'RegexpReplaceTextProcessor': RegexpReplaceTextProcessor,
+            'RegexpFindAllTextProcessor': RegexpFindAllTextProcessor,
+            'RegexpMatchLineTextProcessor': RegexpMatchLineTextProcessor,
+            'RegexpMatchInLineTextProcessor': RegexpMatchInLineTextProcessor,
+            'RegexpUniqueTextProcessor': RegexpUniqueTextProcessor
         };
 
-        for (a in flowObject.activities) {
-            if (flowObject.activities.hasOwnProperty(a)) {
-                activityData = flowObject.activities[a];
-                activityType = activityData.typeName;
+        for (a in flowObject.textProcessors) {
+            if (flowObject.textProcessors.hasOwnProperty(a)) {
+                textProcessorData = flowObject.textProcessors[a];
+                textProcessorType = textProcessorData.typeName;
 
-                if (activityConstructors.hasOwnProperty(activityType)) {
-                    // build Activity by activity type name
-                    activity = new activityConstructors[activityType]('', ''); // pass empty strings
+                if (textProcessorConstructors.hasOwnProperty(textProcessorType)) {
+                    // build TextProcessor by textProcessor type name
+                    textProcessor = new textProcessorConstructors[textProcessorType]('', ''); // pass empty strings
                     // fill it with data
-                    activity.initializeFromObject(activityData);
+                    textProcessor.initializeFromObject(textProcessorData);
 
-                    // if activity has description then show it initialy
-                    if (!!activity.description && activity.description.length > 0) {
-                        activity.showDescription = true;
+                    // if textProcessor has description then show it initialy
+                    if (!!textProcessor.description && textProcessor.description.length > 0) {
+                        textProcessor.showDescription = true;
                     }
                     // add to Flow
-                    $scope.flow.activities.push(activity);
+                    $scope.flow.textProcessors.push(textProcessor);
                 }
             }
         }
@@ -381,7 +364,7 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
             flowId = $routeParams.flowId;
             $http.get('backend/index.php/flow/' + flowId)
                 .success(function (data, status, headers, config) {
-                    $scope.flow.removeAllActivities();
+                    $scope.flow.removeAllTextProcessors();
                     $scope.doImportFlowFromObject(data);
                 }).error(function (data, status, headers, config) {
                     $scope.statusMessages.push({cssClass: 'danger', message: data.message});

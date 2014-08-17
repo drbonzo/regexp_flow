@@ -1,15 +1,15 @@
 'use strict';
 
-/*global RegexpActivity*/
+/*global TextProcessor*/
 
 /**
  * @param {string} searchString
  * @constructor
  */
-function RegexpFindAllActivity(searchString) {
+function RegexpFindAllTextProcessor(searchString) {
 
     this.displayName = 'Find all matches';
-    this.typeName = 'RegexpFindAllActivity';
+    this.typeName = 'RegexpFindAllTextProcessor';
 
     /**
      * @type {string}
@@ -40,13 +40,13 @@ function RegexpFindAllActivity(searchString) {
     this.matchesCount = 0;
 }
 
-RegexpFindAllActivity.prototype = new RegexpActivity();
+RegexpFindAllTextProcessor.prototype = new TextProcessor();
 
 /**
  * @param {string} inputText
  * @returns {string}
  */
-RegexpFindAllActivity.prototype.processText = function (inputText) {
+RegexpFindAllTextProcessor.prototype.processText = function (inputText) {
 
     try {
 
@@ -76,17 +76,17 @@ RegexpFindAllActivity.prototype.processText = function (inputText) {
     }
 };
 
-RegexpFindAllActivity.prototype.initializeFromObject = function (dataObject) {
+RegexpFindAllTextProcessor.prototype.initializeFromObject = function (dataObject) {
     this.copyPropertiesFrom(dataObject, this.getSerializablePropertyNames());
 };
 
-RegexpFindAllActivity.prototype.getExportObject = function () {
+RegexpFindAllTextProcessor.prototype.getExportObject = function () {
     return this.extractPropertiesToObject(this.getSerializablePropertyNames());
 };
 
 /**
  * @returns {Array|string[]}
  */
-RegexpFindAllActivity.prototype.getSerializablePropertyNames = function () {
+RegexpFindAllTextProcessor.prototype.getSerializablePropertyNames = function () {
     return ['searchString', 'searchFlagCaseInsensitive', 'isEnabled', 'description'];
 };

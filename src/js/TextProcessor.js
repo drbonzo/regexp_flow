@@ -1,6 +1,6 @@
 'use strict';
 
-function RegexpActivity() {
+function TextProcessor() {
     this.typeName = '';
     this.displayName = '';
     this.isEnabled = true;
@@ -21,7 +21,7 @@ function RegexpActivity() {
  * @param {bool|null} flagMultiline
  * @returns {RegExp}
  */
-RegexpActivity.prototype.buildRegExp = function (regularExpressionString, flagCaseInsensitive, flagGlobal, flagMultiline) {
+TextProcessor.prototype.buildRegExp = function (regularExpressionString, flagCaseInsensitive, flagGlobal, flagMultiline) {
 
     var flags = [];
     if (flagGlobal) {
@@ -43,7 +43,7 @@ RegexpActivity.prototype.buildRegExp = function (regularExpressionString, flagCa
  * @param {string} inputText
  * @return {Array|string[]}
  */
-RegexpActivity.prototype.splitTextIntoLines = function (inputText) {
+TextProcessor.prototype.splitTextIntoLines = function (inputText) {
     // regexp without ?: will mess this split
     inputText = inputText.replace(/\r\n/, "\n"); // CRNL => NL
     inputText = inputText.replace(/\r/, "\n"); // CR => NL
@@ -55,7 +55,7 @@ RegexpActivity.prototype.splitTextIntoLines = function (inputText) {
  * @param {string} inputText
  * @return {string}
  */
-RegexpActivity.prototype.processText = function (inputText) {
+TextProcessor.prototype.processText = function (inputText) {
     throw new Error("Please implement me!");
 };
 
@@ -63,7 +63,7 @@ RegexpActivity.prototype.processText = function (inputText) {
  * Initializes object from generic data object - copies specific fields between objects
  * @param {Object} dataObject
  */
-RegexpActivity.prototype.initializeFromObject = function (dataObject) {
+TextProcessor.prototype.initializeFromObject = function (dataObject) {
     throw new Error("Please implement me!");
 };
 
@@ -71,7 +71,7 @@ RegexpActivity.prototype.initializeFromObject = function (dataObject) {
  * Returns object to be serialized during export operation
  * @return {Object}
  */
-RegexpActivity.prototype.getExportObject = function () { // FIXME rename to something like serializableObject
+TextProcessor.prototype.getExportObject = function () { // FIXME rename to something like serializableObject
     throw new Error("Please implement me!");
 };
 
@@ -79,7 +79,7 @@ RegexpActivity.prototype.getExportObject = function () { // FIXME rename to some
  * @param {Object} dataObject
  * @param {Array|string[]} propertyNames
  */
-RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyNames) {
+TextProcessor.prototype.copyPropertiesFrom = function (dataObject, propertyNames) {
     var p, propertyName;
     for (p in propertyNames) {
         if (propertyNames.hasOwnProperty(p)) {
@@ -95,7 +95,7 @@ RegexpActivity.prototype.copyPropertiesFrom = function (dataObject, propertyName
  * @param {Array|string[]} propertyNames
  * @return {Object}
  */
-RegexpActivity.prototype.extractPropertiesToObject = function (propertyNames) {
+TextProcessor.prototype.extractPropertiesToObject = function (propertyNames) {
     var retval,
         p,
         propertyName;
@@ -113,7 +113,7 @@ RegexpActivity.prototype.extractPropertiesToObject = function (propertyNames) {
     return retval;
 };
 
-RegexpActivity.prototype.resetRegExpValidation = function () {
+TextProcessor.prototype.resetRegExpValidation = function () {
     this.regexpIsValid = true;
     this.regexpValidationMessage = '';
 };
@@ -123,12 +123,12 @@ RegexpActivity.prototype.resetRegExpValidation = function () {
  * @param error exception thrown
  * @returns {*} the same exception
  */
-RegexpActivity.prototype.setupValidationFromError = function (error) {
+TextProcessor.prototype.setupValidationFromError = function (error) {
     this.regexpIsValid = false;
     this.regexpValidationMessage = error.toString();
     return error;
 };
 
-RegexpActivity.prototype.shouldShowDescription = function () {
+TextProcessor.prototype.shouldShowDescription = function () {
     return !!this.showDescription;
 };

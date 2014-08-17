@@ -2,9 +2,9 @@
 
 function RegexpFlow() {
     /**
-     * @type {Array|RegexpActivity[]}
+     * @type {Array|TextProcessor[]}
      */
-    this.activities = [];
+    this.textProcessors = [];
     // FIXME metody do modyfikacji tego?
 
     /**
@@ -13,6 +13,6 @@ function RegexpFlow() {
     this.description = '';
 }
 
-RegexpFlow.prototype.removeAllActivities = function () {
-    this.activities.length = 0;
+RegexpFlow.prototype.removeAllTextProcessors = function () {
+    this.textProcessors.length = 0;
 };

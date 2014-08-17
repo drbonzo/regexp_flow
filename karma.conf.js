@@ -15,6 +15,7 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             'src/js/monkey_patches.js',
+	        'src/js/TextProcessor*.js',
             'src/js/Regexp*.js',
             'test/js/*.js'
         ],
