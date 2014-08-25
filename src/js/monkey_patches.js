@@ -4,11 +4,9 @@
 
 Array.prototype.removeItem = function (itemToRemove) {
 
-    var index;
-    for (index in this) {
-        if (this.hasOwnProperty(index) && this[index] == itemToRemove) {
-            this.splice(index, 1); // remove item at that index
-            return;
-        }
-    }
+	var index = this.indexOf(itemToRemove);
+	var itemFoundInArray = (index != -1);
+	if (itemFoundInArray) {
+		this.splice(index, 1); // remove item at that index
+	}
 };
