@@ -8,9 +8,9 @@ $app = new \Slim\Slim(array(
 	'log.level' => \Slim\Log::ERROR,
 	'log.enabled' => true,
 	'log.writer' => new \Slim\Extras\Log\DateTimeFileWriter(array(
-		'path' => '../logs',
-		'name_format' => 'y-m-d'
-	))
+			'path' => __DIR__ . '/logs',
+			'name_format' => 'y-m-d'
+		))
 ));
 
 $app->config('debug', true);
