@@ -1,0 +1,33 @@
+<form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
+	<fieldset>
+		<div class="form-group">
+			<label>From each line, extract text matching (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
+			<input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
+
+			<p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
+		</div>
+		<div class="form-group form-inline">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
+				</label>
+			</div>
+		</div>
+		<ul ng-show="showHelp" class="help-block">
+			<li>checks each line of input - if it matches regular expression</li>
+			<li>if line matches regular expression - then the match from regular expression is being returned
+				<ul>
+					<li>if regular expression had no groups - then full match is being returned ($&/$0)</li>
+					<li>if regular expression did had groups - then only first group is being returned ($1)</li>
+				</ul>
+			</li>
+			<li>if line does not match - then it is being ommited in result</li>
+		</ul>
+	</fieldset>
+	<fieldset class="textProcessorDescription">
+		<div class="form-group" ng-show="textProcessor.shouldShowDescription()">
+			<label>Description</label>
+			<input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
+		</div>
+	</fieldset>
+</form>

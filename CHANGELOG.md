@@ -1,6 +1,6 @@
 # 0.13.2 (2014-11-08)
 
-* 
+* Refactored HTML for text processors. Now each text processor is in separate partial + is loaded with directive.
 
 # 0.13.1 (2014-08-25)
 

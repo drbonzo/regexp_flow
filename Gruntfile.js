@@ -134,6 +134,7 @@ module.exports = function (grunt) {
 					{expand: true, cwd: 'src/fonts', src: ['*'], dest: '<%= env.dev.distDir %>/fonts/', filter: 'isFile'},
 					{expand: true, cwd: 'src/backend', src: ['*'], dest: '<%= env.dev.distDir %>/backend/', filter: 'isFile'},
 					{expand: true, cwd: 'src/', src: ['*.html'], dest: '<%= env.dev.distDir %>/', filter: 'isFile'},
+					{expand: true, cwd: 'src/partials/', src: ['*.html'], dest: '<%= env.dev.distDir %>/partials', filter: 'isFile'},
 					// dev only files:
 					{expand: true, cwd: 'src/js', src: ['*.js'], dest: '<%= env.dev.distDir %>/js/', filter: 'isFile'}
 				]
@@ -148,8 +149,8 @@ module.exports = function (grunt) {
 					{expand: true, cwd: 'src/js', src: ['lib/*/*.js'], dest: '<%= env.prod.distDir %>/js/', filter: 'isFile'},
 					{expand: true, cwd: 'src/fonts', src: ['*'], dest: '<%= env.prod.distDir %>/fonts/', filter: 'isFile'},
 					{expand: true, cwd: 'src/backend', src: ['*'], dest: '<%= env.prod.distDir %>/backend/', filter: 'isFile'},
-					{expand: true, cwd: 'src/', src: ['*.html'], dest: '<%= env.prod.distDir %>/', filter: 'isFile'}
-
+					{expand: true, cwd: 'src/', src: ['*.html'], dest: '<%= env.prod.distDir %>/', filter: 'isFile'},
+					{expand: true, cwd: 'src/partials/', src: ['*.html'], dest: '<%= env.prod.distDir %>/partials', filter: 'isFile'}
 				]
 			}
 		},
