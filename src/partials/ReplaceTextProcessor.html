@@ -2,7 +2,7 @@
 	<fieldset>
 		<div class="form-group">
 			<label>Search for</label>
-			<input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
+			<input type="text" ng-trim="false" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
 
 			<p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
 		</div>
@@ -27,7 +27,7 @@
 	<fieldset>
 		<div class="form-group">
 			<label>and replace with. ({{ textProcessor.replacementsCount }} replacements)</label>
-			<input type="text" class="form-control input-sm" ng-model="textProcessor.replaceString" placeholder="replacement string"/>
+			<input type="text" ng-trim="false" class="form-control input-sm" ng-model="textProcessor.replaceString" placeholder="replacement string"/>
 			<ul ng-show="showHelp" class="help-block">
 				<li>$1, $2, $3 - for groups.</li>
 				<li>$$ Inserts a "$".</li>

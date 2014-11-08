@@ -2,7 +2,7 @@
 	<fieldset>
 		<div class="form-group">
 			<label>From each line, extract text matching (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
-			<input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
+			<input type="text" ng-trim="false" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
 
 			<p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
 		</div>

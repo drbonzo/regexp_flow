@@ -1,6 +1,7 @@
 # 0.13.2 (2014-11-08)
 
 * Refactored HTML for text processors. Now each text processor is in separate partial + is loaded with directive.
+* ng-trim on <input> and <textarea> allows to add whitespace at beginning and end of input text and regular expressions
 
 # 0.13.1 (2014-08-25)
 

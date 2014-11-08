@@ -33,12 +33,12 @@
 <div class="col-md-7 inputOutputColumn">
     <div class="row inputPanel">
         <h3>Input text</h3>
-        <textarea ng-model="input.text" class="inputText"></textarea>
+        <textarea ng-trim="false" ng-model="input.text" class="inputText"></textarea>
     </div>
     <div class="row outputPanel">
         <h3>Output text</h3>
 
-        <div class="outputPanel"><textarea ng-model="output.text" class="outputText"></textarea></div>
+        <div class="outputPanel"><textarea ng-trim="false" ng-model="output.text" class="outputText"></textarea></div>
     </div>
 </div>
 <div class="col-md-5 flowColumn">
