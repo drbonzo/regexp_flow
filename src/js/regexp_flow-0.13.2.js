@@ -60,7 +60,7 @@ regexpFlow.config(['$routeProvider', function ($routeProvider) {
  */
 regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeParams', '$location', function ($scope, $timeout, $http, $routeParams, $location) {
 
-    $scope.version = {name: 'RegexpFlow', version: '0.13.1'};
+    $scope.version = {name: 'RegexpFlow', version: '0.13.2'};
 
     $scope.infoPanelVisible = false;
 
@@ -377,3 +377,20 @@ regexpFlow.controller('MainController', ['$scope', '$timeout', '$http', '$routeP
 
     initializeFlow();
 }]);
+
+/**
+ * Loads partial for TextProcessor specified in `rf-type` attribute.
+ * Creates local scope for single textProcessor (`rf-text-processor`)
+ */
+regexpFlow.directive('rfTextProcessorElement', function () {
+	return {
+		restrict: 'E',
+		scope: {
+			textProcessor: '=rfTextProcessor'
+		},
+
+		templateUrl: function (elem, attr) {
+			return 'partials/' + attr.rfType + '.html';
+		}
+	};
+});

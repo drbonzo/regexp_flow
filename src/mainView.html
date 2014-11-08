@@ -33,12 +33,12 @@
 <div class="col-md-7 inputOutputColumn">
     <div class="row inputPanel">
         <h3>Input text</h3>
-        <textarea ng-model="input.text" class="inputText"></textarea>
+        <textarea ng-trim="false" ng-model="input.text" class="inputText"></textarea>
     </div>
     <div class="row outputPanel">
         <h3>Output text</h3>
 
-        <div class="outputPanel"><textarea ng-model="output.text" class="outputText"></textarea></div>
+        <div class="outputPanel"><textarea ng-trim="false" ng-model="output.text" class="outputText"></textarea></div>
     </div>
 </div>
 <div class="col-md-5 flowColumn">
@@ -125,169 +125,19 @@
                         </div>
                         <div class="textProcessorForm" ng-switch="textProcessor.typeName">
                             <div ng-switch-when="RegexpReplaceTextProcessor">
-                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <label>Search for</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
-
-                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
-                                        </div>
-                                        <div class="form-group form-inline">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" ng-model="textProcessor.searchFlagGlobal"> Global
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" ng-model="textProcessor.searchFlagMultiline"> Multiline
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <label>and replace with. ({{ textProcessor.replacementsCount }} replacements)</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.replaceString" placeholder="replacement string"/>
-                                            <ul ng-show="showHelp" class="help-block">
-                                                <li>$1, $2, $3 - for groups.</li>
-                                                <li>$$ Inserts a "$".</li>
-                                                <li>$& Inserts the matched substring.</li>
-                                                <li>$` Inserts the portion of the string that precedes the matched substring.</li>
-                                                <li>$' Inserts the portion of the string that follows the matched substring.</li>
-                                                <li>$n or $nn</li>
-                                                <li>Where n or nn are decimal digits, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object.</li>
-                                                <li>\t, \n - to insert tab/newline characters</li>
-                                            </ul>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset class="textProcessorDescription">
-                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
-                                            <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
-                                        </div>
-                                    </fieldset>
-                                </form>
+								<rf-text-processor-element rf-type="ReplaceTextProcessor" rf-text-processor="textProcessor"></rf-text-processor-element>
                             </div>
                             <div ng-switch-when="RegexpFindAllTextProcessor">
-                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <label>Find all matches (Found: {{ textProcessor.matchesCount }})</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
-
-                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
-                                        </div>
-                                        <div class="form-group form-inline">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-									<fieldset class="textProcessorDescription">
-                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
-                                            <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
-                                        </div>
-                                    </fieldset>
-                                </form>
+								<rf-text-processor-element rf-type="FindAllTextProcessor" rf-text-processor="textProcessor"></rf-text-processor-element>
                             </div>
                             <div ng-switch-when="RegexpMatchLineTextProcessor">
-                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <label>Get lines <span ng-show="textProcessor.flagInvertMatch">not</span> matching (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
-
-                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
-                                        </div>
-                                        <div class="form-group form-inline">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" ng-model="textProcessor.flagInvertMatch"> Invert match?
-                                                </label>
-                                            </div>
-                                            <ul ng-show="showHelp" class="help-block">
-                                                <li>returns whole lines that are matched by regular expression</li>
-                                                <li>if 'invert' flag is checked - then returns lines that DO NOT match regular expression</li>
-                                                <li>lines are returned, joined with \n character - not their original newline character!</li>
-                                            </ul>
-                                        </div>
-                                    </fieldset>
-									<fieldset class="textProcessorDescription">
-                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
-                                            <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
-                                        </div>
-                                    </fieldset>
-                                </form>
+								<rf-text-processor-element rf-type="MatchLineTextProcessor" rf-text-processor="textProcessor"></rf-text-processor-element>
                             </div>
                             <div ng-switch-when="RegexpMatchInLineTextProcessor">
-                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <label>From each line, extract text matching (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.searchString" placeholder="regular expression"/>
-
-                                            <p class="regExpErrorMessages" ng-hide="textProcessor.regexpIsValid">{{ textProcessor.regexpValidationMessage }}</p>
-                                        </div>
-                                        <div class="form-group form-inline">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" ng-model="textProcessor.searchFlagCaseInsensitive"> Case Insensitive
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <ul ng-show="showHelp" class="help-block">
-                                            <li>checks each line of input - if it matches regular expression</li>
-                                            <li>if line matches regular expression - then the match from regular expression is being returned
-                                                <ul>
-                                                    <li>if regular expression had no groups - then full match is being returned ($&/$0)</li>
-                                                    <li>if regular expression did had groups - then only first group is being returned ($1)</li>
-                                                </ul>
-                                            </li>
-                                            <li>if line does not match - then it is being ommited in result</li>
-                                        </ul>
-                                    </fieldset>
-									<fieldset class="textProcessorDescription">
-                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
-                                            <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
-                                        </div>
-                                    </fieldset>
-                                </form>
+								<rf-text-processor-element rf-type="MatchInLineTextProcessor" rf-text-processor="textProcessor"></rf-text-processor-element>
                             </div>
                             <div ng-switch-when="RegexpUniqueTextProcessor">
-                                <form ng-class="{ regExpErrors: !textProcessor.regexpIsValid } ">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <label>Show just unique lines (showing {{ textProcessor.linesMatchedCount }} of {{ textProcessor.totalLinesCount }} lines)</label>
-                                        </div>
-                                        <div class="form-group form-inline">
-                                        </div>
-                                        <ul ng-show="showHelp" class="help-block">
-                                        </ul>
-                                    </fieldset>
-									<fieldset class="textProcessorDescription">
-                                        <div class="form-group" ng-show="textProcessor.shouldShowDescription()">
-                                            <label>Description</label>
-                                            <input type="text" class="form-control input-sm" ng-model="textProcessor.description"/>
-                                        </div>
-                                    </fieldset>
-                                </form>
+								<rf-text-processor-element rf-type="UniqueTextProcessor" rf-text-processor="textProcessor"></rf-text-processor-element>
                             </div>
                         </div>
                     </div>
